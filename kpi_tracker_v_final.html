@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPI Tracker — Planhat Sales</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f7; color: #1a1a18; padding: 2rem; }
+.wrap { max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 18px; font-weight: 500; margin-bottom: 0.25rem; }
+.subtitle { font-size: 13px; color: #73726c; margin-bottom: 1.5rem; }
+.assumption-bar { display: flex; flex-wrap: wrap; gap: 16px; font-size: 11px; color: #73726c; background: #f1efe8; border-radius: 8px; padding: 8px 12px; margin-bottom: 1.25rem; }
+.assumption-bar strong { color: #1a1a18; font-weight: 500; }
+.metric-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.metric { background: #f1efe8; border-radius: 8px; padding: 0.75rem 1rem; }
+.metric-label { font-size: 11px; color: #73726c; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+.metric-val { font-size: 20px; font-weight: 500; color: #1a1a18; }
+.metric-sub { font-size: 11px; color: #888780; margin-top: 2px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 860px; }
+th { text-align: left; padding: 6px 10px; color: #73726c; font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid #d3d1c7; white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 0.5px solid #d3d1c7; color: #1a1a18; vertical-align: middle; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+tfoot td { border-top: 0.5px solid #b4b2a9; border-bottom: none; font-weight: 500; }
+tbody tr:hover { background: #f1efe8; }
+.badge { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 8px; font-weight: 500; white-space: nowrap; }
+.seg-mm { background: #E6F1FB; color: #0C447C; }
+.seg-le { background: #EAF3DE; color: #27500A; }
+.seg-ue { background: #EEEDFE; color: #3C3489; }
+.seg-mo { background: #FAECE7; color: #712B13; }
+.rep-name { font-weight: 500; }
+.weight-pill { font-size: 10px; color: #888780; margin-left: 2px; }
+.sep { border-left: 1px solid #d3d1c7; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.tab { padding: 6px 16px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: transparent; color: #73726c; font-size: 13px; cursor: pointer; font-family: inherit; }
+.tab.active { background: #f1efe8; color: #1a1a18; border-color: #5f5e5a; font-weight: 500; }
+.section { display: none; }
+.section.active { display: block; }
+.period-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+.period-row span { font-size: 13px; color: #73726c; }
+.period-btns { display: flex; gap: 6px; }
+.pbtn { padding: 4px 14px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: transparent; color: #73726c; font-size: 12px; cursor: pointer; font-family: inherit; }
+.pbtn.active { background: #f1efe8; color: #1a1a18; border-color: #5f5e5a; font-weight: 500; }
+.controls-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.controls-label { font-size: 11px; font-weight: 500; color: #73726c; text-transform: uppercase; letter-spacing: 0.04em; }
+.btn-reset { font-size: 11px; padding: 4px 12px; border-radius: 6px; border: 0.5px solid #b4b2a9; background: #fff; color: #73726c; cursor: pointer; font-family: inherit; }
+.btn-reset:hover { background: #f1efe8; color: #1a1a18; }
+.seg-defaults { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.seg-card { background: #f1efe8; border-radius: 8px; padding: 0.75rem 1rem; }
+.seg-card-label { font-size: 10px; color: #73726c; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.seg-card-label .badge { font-size: 9px; padding: 1px 5px; }
+.inp-wrap { display: flex; align-items: center; gap: 4px; }
+.inp-prefix { font-size: 13px; color: #73726c; }
+.seg-inp { width: 100%; border: 0.5px solid #b4b2a9; border-radius: 6px; padding: 5px 8px; font-size: 14px; font-weight: 500; font-family: inherit; background: #fff; color: #1a1a18; }
+.seg-inp:focus { outline: none; border-color: #5f5e5a; }
+.seg-hint { font-size: 10px; color: #888780; margin-top: 4px; }
+.rep-inp { width: 84px; border: 0.5px solid #b4b2a9; border-radius: 5px; padding: 3px 6px; font-size: 12px; font-family: inherit; background: #fff; color: #1a1a18; }
+.rep-inp:focus { outline: none; border-color: #5f5e5a; }
+.rep-inp.overridden { border-color: #1D9E75; background: #f0faf6; }
+.rep-inp-wrap { display: flex; align-items: center; gap: 3px; font-size: 11px; color: #73726c; }
+/* Targets panel */
+.targets-panel { margin-bottom: 2rem; }
+.targets-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; }
+.btn-targets { font-size: 12px; padding: 6px 16px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: #fff; color: #1a1a18; cursor: pointer; font-family: inherit; font-weight: 500; }
+.btn-targets:hover { background: #f1efe8; }
+.targets-hint { font-size: 11px; color: #888780; }
+.targets-body { display: none; margin-top: 1rem; background: #f1efe8; border-radius: 10px; padding: 1.25rem; }
+.targets-body.open { display: block; }
+.targets-body table { min-width: 500px; }
+.targets-body th { background: transparent; }
+.targets-body td { background: transparent; }
+.tgt-inp { width: 90px; border: 0.5px solid #b4b2a9; border-radius: 5px; padding: 3px 8px; font-size: 12px; font-family: inherit; background: #fff; color: #1a1a18; }
+.tgt-inp:focus { outline: none; border-color: #5f5e5a; }
+.tgt-inp.changed { border-color: #1D9E75; background: #f0faf6; }
+.ramp-badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 6px; background: #FEF3C7; color: #92400E; font-weight: 600; letter-spacing: 0.02em; vertical-align: middle; margin-left: 4px; }
+.ramp-note { font-size: 10px; color: #92400E; margin-left: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>KPI Tracker — Planhat Sales</h1>
+  <p class="subtitle">Quota: $250k / rep / qtr &nbsp;·&nbsp; Weighted safe bet: $150k (60%)</p>
+
+  <!-- TARGETS PANEL -->
+  <div class="targets-panel">
+    <div class="targets-toggle">
+      <button class="btn-targets" onclick="toggleTargets()">Targets ▾</button>
+      <span class="targets-hint">Edit quarterly targets per rep — updates all calculations</span>
+    </div>
+    <div class="targets-body" id="targets-body">
+      <div class="table-wrap">
+        <table id="targets-table">
+          <thead><tr>
+            <th>Rep</th>
+            <th>Region</th>
+            <th>Quota / qtr ($)</th>
+            <th>Pipeline coverage (×)</th>
+            <th>Disco → deal rate (%)</th>
+          </tr></thead>
+          <tbody id="targets-tbody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:11px;color:#73726c;margin-top:0.75rem">Green border = changed from default. Quotas below $250k are treated as ramped — activity KPIs (discos, deals, pipe) target full $250k so reps build pipeline aggressively.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('reps',this)">By rep</button>
+    <button class="tab" onclick="switchTab('segments',this)">By segment</button>
+    <button class="tab" onclick="switchTab('portfolio',this)">Portfolio</button>
+  </div>
+  <div class="period-row">
+    <span>Period:</span>
+    <div class="period-btns">
+      <button class="pbtn" onclick="switchPeriod('weekly',this)">Weekly</button>
+      <button class="pbtn" onclick="switchPeriod('monthly',this)">Monthly</button>
+      <button class="pbtn active" onclick="switchPeriod('quarterly',this)">Quarterly</button>
+    </div>
+  </div>
+
+  <div class="assumption-bar">
+    <span>Pipe target = quota × coverage · Discos = pipe ÷ (avg deal × 2/3) ÷ 13 wks</span>
+    <span>Min discos: <strong>1 / wk</strong></span>
+    <span>Weighted @ 60% of quota</span>
+  </div>
+
+  <div class="controls-row">
+    <div class="controls-label">Segment default avg deal — overridable per rep below</div>
+    <button class="btn-reset" onclick="resetAllAvg()">↺ Reset all to defaults</button>
+  </div>
+  <div class="seg-defaults">
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-mm">MM</span>Mid-Market</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-mm" value="45000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">200–1k FTE</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-le">LE</span>Lower Enterprise</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-le" value="75000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">1k–5k FTE</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-ue">UE</span>Upper Enterprise</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-ue" value="100000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">5k–10k FTE</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-mo">MO</span>Monsters</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-mo" value="150000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">10k+ FTE</div>
+    </div>
+  </div>
+
+  <div id="section-reps" class="section active"></div>
+  <div id="section-segments" class="section"></div>
+  <div id="section-portfolio" class="section"></div>
+</div>
+
+<script>
+// ── Constants ──────────────────────────────────────────────
+const DEF_QUOTA    = 250000;
+const DEF_COVERAGE = 4;
+const DEF_DEAL_RATE = 2/3;   // fraction (not %)
+const MIN_DISCOS_WK = 1;
+const WEEKS_QTR    = 13;
+const MONTHS_QTR   = 3;
+const CO_PER_DISCO = { mm: 5, le: 3, ue: 3, mo: 3 };
+const PLBL         = { weekly: 'wk', monthly: 'mo', quarterly: 'qtr' };
+
+const SEGS = {
+  mm: { label: 'Mid-Market',       short: 'MM', defAvg: 45000,  cls: 'seg-mm' },
+  le: { label: 'Lower Enterprise', short: 'LE', defAvg: 75000,  cls: 'seg-le' },
+  ue: { label: 'Upper Enterprise', short: 'UE', defAvg: 100000, cls: 'seg-ue' },
+  mo: { label: 'Monsters',         short: 'MO', defAvg: 150000, cls: 'seg-mo' },
+};
+
+// ── Rep definitions ────────────────────────────────────────
+// repAvg: null = use weighted segment defaults
+// targets: per-rep overrides for quota/coverage/dealRate (null = use defaults)
+const REPS = [
+  { name: 'Victor', region: 'AMER/EMEA', weights: { le: 0.40, ue: 0.40, mo: 0.20 }, repAvg: null, quota: null,   coverage: null, dealRate: null },
+  { name: 'Filip',  region: 'AMER',      weights: { mm: 1.00 },                       repAvg: null, quota: 50000,  coverage: null, dealRate: null },
+  { name: 'Josh',   region: 'AMER',      weights: { mm: 1.00 },                       repAvg: null, quota: 150000, coverage: null, dealRate: null },
+  { name: 'Ava',    region: 'EMEA',      weights: { le: 0.40, ue: 0.40, mo: 0.20 }, repAvg: null, quota: 150000, coverage: null, dealRate: null },
+  { name: 'Love',   region: 'AMER',      weights: { le: 0.80, ue: 0.20 },             repAvg: null, quota: null,   coverage: null, dealRate: null },
+  { name: 'Ben',    region: 'AMER',      weights: { ue: 0.80, mo: 0.20 },             repAvg: null, quota: 50000,  coverage: null, dealRate: null },
+  { name: 'Nick',   region: 'EMEA',      weights: { ue: 0.80, mo: 0.20 },             repAvg: null, quota: null,   coverage: null, dealRate: null },
+];
+
+// ── Helpers ────────────────────────────────────────────────
+function getSegAvg(seg) {
+  const v = parseFloat(document.getElementById('def-' + seg).value);
+  return (isNaN(v) || v <= 0) ? SEGS[seg].defAvg : v;
+}
+
+function getRepAvg(rep) {
+  if (rep.repAvg !== null && rep.repAvg > 0) return rep.repAvg;
+  let wa = 0;
+  Object.entries(rep.weights).forEach(([seg, w]) => { wa += w * getSegAvg(seg); });
+  return wa;
+}
+
+function getRepQuota(rep)    { return (rep.quota    !== null && rep.quota    > 0) ? rep.quota    : DEF_QUOTA; }
+function getRepCoverage(rep) { return (rep.coverage !== null && rep.coverage > 0) ? rep.coverage : DEF_COVERAGE; }
+function getRepDealRate(rep) { return (rep.dealRate !== null && rep.dealRate > 0) ? rep.dealRate / 100 : DEF_DEAL_RATE; }
+
+function isRamping(rep) {
+  const q = getRepQuota(rep);
+  return q < DEF_QUOTA;
+}
+
+function calcRep(rep, weekMult) {
+  const avg      = getRepAvg(rep);
+  const quota    = getRepQuota(rep);
+  const coverage = getRepCoverage(rep);
+  const dealRate = getRepDealRate(rep);
+  const ramping  = isRamping(rep);
+  // Ramping reps run activity targets toward full quota so they build toward $250k
+  const activityQuota = ramping ? DEF_QUOTA : quota;
+  const pipeTarget = activityQuota * coverage;
+  // discos/wk = pipeTarget / (WEEKS_QTR * dealRate * avg), floored at MIN_DISCOS_WK
+  const dWkRaw  = pipeTarget / (WEEKS_QTR * dealRate * avg);
+  const dWk     = Math.max(MIN_DISCOS_WK, dWkRaw);
+  const discos  = dWk * weekMult;
+  const deals   = discos * dealRate;
+  const pipe    = deals * avg;
+  const weighted60 = quota * 0.60;
+  let wtdCoPD   = 0;
+  Object.entries(rep.weights).forEach(([seg, w]) => { wtdCoPD += w * CO_PER_DISCO[seg]; });
+  const portfolio = Math.ceil(dWk * WEEKS_QTR * wtdCoPD);
+  return { avg, quota, activityQuota, coverage, dealRate, ramping, pipeTarget, dWk, discos, deals, pipe, weighted60, wtdCoPD, portfolio };
+}
+
+function fmt$(n) {
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  return '$' + Math.round(n/1000) + 'k';
+}
+function fmtN(n) { return n < 10 ? n.toFixed(1) : Math.round(n).toString(); }
+function fmtPct(r) { return Math.round(r * 100) + '%'; }
+
+// ── Targets panel ──────────────────────────────────────────
+function toggleTargets() {
+  const body = document.getElementById('targets-body');
+  const btn  = document.querySelector('.btn-targets');
+  const open = body.classList.toggle('open');
+  btn.textContent = open ? 'Targets ▴' : 'Targets ▾';
+}
+
+function buildTargetsTable() {
+  const tbody = document.getElementById('targets-tbody');
+  tbody.innerHTML = '';
+  REPS.forEach((rep, idx) => {
+    const qChanged  = rep.quota    !== null;
+    const cvChanged = rep.coverage !== null;
+    const drChanged = rep.dealRate !== null;
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td class="rep-name">${rep.name}</td>
+      <td style="color:#73726c;font-size:11px">${rep.region}</td>
+      <td>
+        <div class="rep-inp-wrap"><span>$</span>
+          <input class="tgt-inp${qChanged?' changed':''}" id="tgt-quota-${idx}"
+            type="number" value="${getRepQuota(rep)}" step="10000"
+            onchange="onTargetChange(${idx},'quota',this.value,this)">
+        </div>
+      </td>
+      <td>
+        <input class="tgt-inp${cvChanged?' changed':''}" id="tgt-cov-${idx}"
+          type="number" value="${getRepCoverage(rep)}" step="0.5" min="1"
+          onchange="onTargetChange(${idx},'coverage',this.value,this)">×
+      </td>
+      <td>
+        <input class="tgt-inp${drChanged?' changed':''}" id="tgt-dr-${idx}"
+          type="number" value="${Math.round(getRepDealRate(rep)*100)}" step="1" min="1" max="100"
+          onchange="onTargetChange(${idx},'dealRate',this.value,this)">%
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function onTargetChange(idx, field, val, el) {
+  const v = parseFloat(val);
+  REPS[idx][field] = (isNaN(v) || v <= 0) ? null : v;
+  el.classList.toggle('changed', REPS[idx][field] !== null);
+  render();
+}
+
+// ── Reset ──────────────────────────────────────────────────
+function resetAllAvg() {
+  // Reset segment defaults
+  ['mm','le','ue','mo'].forEach(seg => {
+    document.getElementById('def-' + seg).value = SEGS[seg].defAvg;
+  });
+  // Reset all per-rep overrides
+  REPS.forEach((rep, idx) => { rep.repAvg = null; });
+  render();
+}
+
+// ── Tab / period ───────────────────────────────────────────
+let activePeriod = 'quarterly';
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + tab).classList.add('active');
+  render();
+}
+
+function switchPeriod(p, el) {
+  activePeriod = p;
+  document.querySelectorAll('.pbtn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function onRepAvgChange(idx, val) {
+  const v = parseFloat(val);
+  REPS[idx].repAvg = (isNaN(v) || v <= 0) ? null : v;
+  render();
+}
+
+// ── Main render ────────────────────────────────────────────
+function render() {
+  const weekMult = { weekly: 1, monthly: MONTHS_QTR, quarterly: WEEKS_QTR }[activePeriod];
+  const lbl = PLBL[activePeriod];
+  renderReps(weekMult, lbl);
+  renderSegments(weekMult, lbl);
+  renderPortfolio();
+}
+
+function renderReps(weekMult, lbl) {
+  const results   = REPS.map((r, i) => ({ rep: r, idx: i, ...calcRep(r, weekMult) }));
+  const totDiscos = results.reduce((s, r) => s + r.discos, 0);
+  const totDeals  = results.reduce((s, r) => s + r.deals, 0);
+  const totPipe   = results.reduce((s, r) => s + r.pipe, 0);
+  const totW60    = results.reduce((s, r) => s + r.weighted60 * weekMult / WEEKS_QTR, 0);
+  const totQuota  = results.reduce((s, r) => s + getRepQuota(r.rep) * weekMult / WEEKS_QTR, 0);
+
+  let html = `
+  <div class="metric-row">
+    <div class="metric"><div class="metric-label">Team discos / ${lbl}</div><div class="metric-val">${fmtN(totDiscos)}</div><div class="metric-sub">min 1/wk per rep</div></div>
+    <div class="metric"><div class="metric-label">Deals created / ${lbl}</div><div class="metric-val">${fmtN(totDeals)}</div><div class="metric-sub">at rep deal rate</div></div>
+    <div class="metric"><div class="metric-label">Total pipe / ${lbl}</div><div class="metric-val">${fmt$(totPipe)}</div><div class="metric-sub">deals × avg deal size</div></div>
+    <div class="metric"><div class="metric-label">Team quota / ${lbl}</div><div class="metric-val">${fmt$(totQuota)}</div><div class="metric-sub">weighted safe bet: ${fmt$(totW60)}</div></div>
+  </div>
+  <p style="font-size:11px;color:#73726c;margin-bottom:0.75rem">Avg deal size drives discos needed. Edit per rep to override segment default — green border = override active. <span style="color:#92400E">RAMP reps have quota &lt; $250k but activity targets (discos / deals / pipe) are calculated toward full $250k — they should be building pipeline aggressively.</span></p>
+  <div class="table-wrap"><table><thead><tr>
+    <th>Rep</th>
+    <th>Region</th>
+    <th>Segments</th>
+    <th>Avg deal</th>
+    <th>Discos / ${lbl}</th>
+    <th>Deals / ${lbl}</th>
+    <th>Pipe / ${lbl}</th>
+    <th class="sep">Quota / ${lbl}</th>
+    <th>Weighted @ 60%</th>
+  </tr></thead><tbody>`;
+
+  results.forEach(({ rep, idx, avg, dWk, discos, deals, pipe, quota, activityQuota, ramping, weighted60 }) => {
+    const isOverride = rep.repAvg !== null;
+    const qPeriod    = quota * weekMult / WEEKS_QTR;
+    const w60Period  = weighted60 * weekMult / WEEKS_QTR;
+    const clamped    = dWk === MIN_DISCOS_WK;
+    const badges = Object.entries(rep.weights).map(([seg, w]) =>
+      `<span class="badge ${SEGS[seg].cls}">${SEGS[seg].short}</span><span class="weight-pill">${Math.round(w*100)}%</span>`
+    ).join(' ');
+    const rampLabel = ramping
+      ? `<span class="ramp-badge" title="Ramping — activity targets full $250k quota">RAMP</span>`
+      : '';
+    const rampPipeNote = ramping
+      ? `<span class="ramp-note" title="Targets full $250k quota to build pipeline">↑ full quota</span>`
+      : '';
+    html += `<tr>
+      <td class="rep-name">${rep.name}${rampLabel}</td>
+      <td style="color:#73726c;font-size:11px">${rep.region}</td>
+      <td>${badges}</td>
+      <td>
+        <div class="rep-inp-wrap"><span>$</span>
+          <input class="rep-inp${isOverride?' overridden':''}" id="rep-avg-${idx}"
+            type="number" value="${Math.round(avg)}" step="1000"
+            onchange="onRepAvgChange(${idx}, this.value)">
+        </div>
+      </td>
+      <td style="font-weight:500">${fmtN(discos)}${clamped ? ' <span style="color:#BA7517;font-size:10px" title="Floored at minimum">↑min</span>' : ''}${rampPipeNote}</td>
+      <td>${fmtN(deals)}${ramping ? `<span class="ramp-note"> ↑</span>` : ''}</td>
+      <td style="font-weight:500">${fmt$(pipe)}${rampPipeNote}</td>
+      <td class="sep">${fmt$(qPeriod)}<br><span style="font-size:10px;color:#92400E;font-weight:400">${ramping ? fmt$(activityQuota * weekMult / WEEKS_QTR) + ' activity base' : ''}</span></td>
+      <td style="font-weight:500;color:#0F6E56">${fmt$(w60Period)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody><tfoot><tr>
+    <td colspan="4" style="color:#73726c">Team total</td>
+    <td>${fmtN(totDiscos)}</td>
+    <td>${fmtN(totDeals)}</td>
+    <td>${fmt$(totPipe)}</td>
+    <td class="sep">${fmt$(totQuota)}</td>
+    <td style="color:#0F6E56">${fmt$(totW60)}</td>
+  </tr></tfoot></table></div>`;
+
+  document.getElementById('section-reps').innerHTML = html;
+}
+
+function renderSegments(weekMult, lbl) {
+  const segKeys = ['mm','le','ue','mo'];
+  const segT = {};
+  segKeys.forEach(k => { segT[k] = { discos:0, deals:0, pipe:0, repContribs:[] }; });
+
+  REPS.forEach(rep => {
+    const c = calcRep(rep, weekMult);
+    Object.entries(rep.weights).forEach(([seg, w]) => {
+      if (!w) return;
+      const discos = c.discos * w;
+      const deals  = discos * c.dealRate;
+      const pipe   = deals * c.avg;
+      segT[seg].discos += discos;
+      segT[seg].deals  += deals;
+      segT[seg].pipe   += pipe;
+      segT[seg].repContribs.push({ name: rep.name, w, override: rep.repAvg !== null });
+    });
+  });
+
+  const totDiscos = segKeys.reduce((s,k) => s + segT[k].discos, 0);
+  const totDeals  = segKeys.reduce((s,k) => s + segT[k].deals, 0);
+  const totPipe   = segKeys.reduce((s,k) => s + segT[k].pipe, 0);
+
+  let html = `
+  <div class="metric-row">
+    <div class="metric"><div class="metric-label">Total discos / ${lbl}</div><div class="metric-val">${fmtN(totDiscos)}</div><div class="metric-sub">weighted across segments</div></div>
+    <div class="metric"><div class="metric-label">Total deals / ${lbl}</div><div class="metric-val">${fmtN(totDeals)}</div><div class="metric-sub">at rep deal rate</div></div>
+    <div class="metric"><div class="metric-label">Total pipe / ${lbl}</div><div class="metric-val">${fmt$(totPipe)}</div><div class="metric-sub">by rep avg deal</div></div>
+  </div>
+  <div class="table-wrap"><table><thead><tr>
+    <th>Segment</th><th>Default avg deal</th><th>Reps</th>
+    <th>Discos / ${lbl}</th><th>Deals / ${lbl}</th><th>Pipe / ${lbl}</th>
+  </tr></thead><tbody>`;
+
+  segKeys.forEach(key => {
+    const seg = SEGS[key];
+    const t   = segT[key];
+    if (t.discos === 0) return;
+    const repStr = t.repContribs.map(r =>
+      `${r.name}${r.override?' ★':''} (${Math.round(r.w*100)}%)`
+    ).join(', ');
+    html += `<tr>
+      <td><span class="badge ${seg.cls}" style="font-size:11px;padding:3px 8px">${seg.label}</span></td>
+      <td>${fmt$(getSegAvg(key))}</td>
+      <td style="color:#73726c;font-size:11px">${repStr}</td>
+      <td>${fmtN(t.discos)}</td>
+      <td>${fmtN(t.deals)}</td>
+      <td style="font-weight:500">${fmt$(t.pipe)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody><tfoot><tr>
+    <td colspan="3" style="color:#73726c">Team total &nbsp;<span style="font-size:10px">★ = per-rep deal override</span></td>
+    <td>${fmtN(totDiscos)}</td><td>${fmtN(totDeals)}</td><td>${fmt$(totPipe)}</td>
+  </tr></tfoot></table></div>`;
+
+  document.getElementById('section-segments').innerHTML = html;
+}
+
+function renderPortfolio() {
+  const results     = REPS.map((r, i) => ({ rep: r, idx: i, ...calcRep(r, WEEKS_QTR) }));
+  const totPort     = results.reduce((s, r) => s + r.portfolio, 0);
+  const totDiscosWk = results.reduce((s, r) => s + r.dWk, 0);
+  const totDiscosQtr = results.reduce((s, r) => s + r.dWk * WEEKS_QTR, 0);
+
+  let html = `
+  <div class="assumption-bar" style="margin-bottom:1.25rem">
+    <span>MM: <strong>1 disco per 5 companies</strong></span>
+    <span>LE / UE / MO: <strong>1 disco per 3 companies</strong></span>
+    <span>Portfolio = companies to cycle through per quarter</span>
+    <span>★ = per-rep deal size override</span>
+  </div>
+  <div class="table-wrap"><table><thead><tr>
+    <th>Rep</th><th>Region</th><th>Segments</th>
+    <th>Avg deal</th><th>Quota / qtr</th><th>Pipe target</th>
+    <th>Discos / qtr</th><th>Discos / wk</th>
+    <th>Co / disco</th><th>Portfolio</th><th>Co / wk</th>
+  </tr></thead><tbody>`;
+
+  results.forEach(({ rep, avg, quota, activityQuota, ramping, pipeTarget, dWk, wtdCoPD, portfolio }) => {
+    const isOverride = rep.repAvg !== null;
+    const clamped    = dWk === MIN_DISCOS_WK;
+    const badges = Object.entries(rep.weights).map(([seg, w]) =>
+      `<span class="badge ${SEGS[seg].cls}">${SEGS[seg].short}</span><span class="weight-pill">${Math.round(w*100)}%</span>`
+    ).join(' ');
+    const rampLabel = ramping ? ` <span class="ramp-badge">RAMP</span>` : '';
+    html += `<tr>
+      <td class="rep-name">${rep.name}${rampLabel}</td>
+      <td style="color:#73726c;font-size:11px">${rep.region}</td>
+      <td>${badges}</td>
+      <td>${fmt$(avg)}${isOverride?' <span style="color:#0F6E56;font-size:10px">★</span>':''}</td>
+      <td>${fmt$(quota)}${ramping ? `<br><span style="font-size:10px;color:#92400E">${fmt$(activityQuota)} activity</span>` : ''}</td>
+      <td>${fmt$(pipeTarget)}</td>
+      <td style="font-weight:500">${fmtN(dWk * WEEKS_QTR)}${clamped?' <span style="color:#BA7517;font-size:10px">↑min</span>':''}</td>
+      <td>${dWk.toFixed(1)}</td>
+      <td style="color:#73726c">${wtdCoPD.toFixed(1)}</td>
+      <td style="font-weight:500;font-size:14px">${portfolio}</td>
+      <td>${(portfolio / WEEKS_QTR).toFixed(1)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody><tfoot><tr>
+    <td colspan="6" style="color:#73726c">Team total</td>
+    <td>${fmtN(totDiscosQtr)}</td>
+    <td>${totDiscosWk.toFixed(1)}</td>
+    <td>—</td>
+    <td>${totPort}</td>
+    <td>${(totPort / WEEKS_QTR).toFixed(1)}</td>
+  </tr></tfoot></table></div>`;
+
+  document.getElementById('section-portfolio').innerHTML = html;
+}
+
+// ── Init ───────────────────────────────────────────────────
+buildTargetsTable();
+render();
+</script>
+</body>
+</html>
