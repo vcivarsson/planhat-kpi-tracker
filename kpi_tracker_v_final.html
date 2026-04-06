@@ -466,15 +466,15 @@ function renderSegments(weekMult, lbl) {
 }
 
 function renderPortfolio() {
-  const results     = REPS.map((r, i) => ({ rep: r, idx: i, ...calcRep(r, WEEKS_QTR) }));
-  const totPort     = results.reduce((s, r) => s + r.portfolio, 0);
-  const totDiscosWk = results.reduce((s, r) => s + r.dWk, 0);
+  const results      = REPS.map((r, i) => ({ rep: r, idx: i, ...calcRep(r, WEEKS_QTR) }));
+  const totPort      = results.reduce((s, r) => s + r.portfolio, 0);
+  const totDiscosWk  = results.reduce((s, r) => s + r.dWk, 0);
   const totDiscosQtr = results.reduce((s, r) => s + r.dWk * WEEKS_QTR, 0);
+  const totDealsWk   = results.reduce((s, r) => s + r.dWk * r.dealRate, 0);
+  const totDealsQtr  = results.reduce((s, r) => s + r.dWk * WEEKS_QTR * r.dealRate, 0);
 
   let html = `
   <div class="assumption-bar" style="margin-bottom:1.25rem">
-    <span>MM: <strong>1 disco per 5 companies</strong></span>
-    <span>LE / UE / MO: <strong>1 disco per 3 companies</strong></span>
     <span>Portfolio = companies to cycle through per quarter</span>
     <span>★ = per-rep deal size override</span>
   </div>
@@ -482,16 +482,18 @@ function renderPortfolio() {
     <th>Rep</th><th>Region</th><th>Segments</th>
     <th>Avg deal</th><th>Quota / qtr</th><th>Pipe target</th>
     <th>Discos / qtr</th><th>Discos / wk</th>
-    <th>Co / disco</th><th>Portfolio</th><th>Co / wk</th>
+    <th>Deals / wk</th><th>Deals / qtr</th><th>Portfolio</th>
   </tr></thead><tbody>`;
 
-  results.forEach(({ rep, avg, quota, activityQuota, ramping, pipeTarget, dWk, wtdCoPD, portfolio }) => {
+  results.forEach(({ rep, avg, quota, activityQuota, ramping, pipeTarget, dWk, dealRate, portfolio }) => {
     const isOverride = rep.repAvg !== null;
     const clamped    = dWk === MIN_DISCOS_WK;
     const badges = Object.entries(rep.weights).map(([seg, w]) =>
       `<span class="badge ${SEGS[seg].cls}">${SEGS[seg].short}</span><span class="weight-pill">${Math.round(w*100)}%</span>`
     ).join(' ');
     const rampLabel = ramping ? ` <span class="ramp-badge">RAMP</span>` : '';
+    const dealsWk  = dWk * dealRate;
+    const dealsQtr = dWk * WEEKS_QTR * dealRate;
     html += `<tr>
       <td class="rep-name">${rep.name}${rampLabel}</td>
       <td style="color:#73726c;font-size:11px">${rep.region}</td>
@@ -500,20 +502,20 @@ function renderPortfolio() {
       <td>${fmt$(quota)}${ramping ? `<br><span style="font-size:10px;color:#92400E">${fmt$(activityQuota)} activity</span>` : ''}</td>
       <td>${fmt$(pipeTarget)}</td>
       <td style="font-weight:500">${fmtN(dWk * WEEKS_QTR)}${clamped?' <span style="color:#BA7517;font-size:10px">↑min</span>':''}</td>
-      <td>${dWk.toFixed(1)}</td>
-      <td style="color:#73726c">${wtdCoPD.toFixed(1)}</td>
+      <td>${dWk.toFixed(0)}</td>
+      <td>${fmtN(dealsWk)}</td>
+      <td style="font-weight:500">${fmtN(dealsQtr)}</td>
       <td style="font-weight:500;font-size:14px">${portfolio}</td>
-      <td>${(portfolio / WEEKS_QTR).toFixed(1)}</td>
     </tr>`;
   });
 
   html += `</tbody><tfoot><tr>
     <td colspan="6" style="color:#73726c">Team total</td>
     <td>${fmtN(totDiscosQtr)}</td>
-    <td>${totDiscosWk.toFixed(1)}</td>
-    <td>—</td>
+    <td>${totDiscosWk.toFixed(0)}</td>
+    <td>${fmtN(totDealsWk)}</td>
+    <td>${fmtN(totDealsQtr)}</td>
     <td>${totPort}</td>
-    <td>${(totPort / WEEKS_QTR).toFixed(1)}</td>
   </tr></tfoot></table></div>`;
 
   document.getElementById('section-portfolio').innerHTML = html;
