@@ -59,9 +59,9 @@ tbody tr:hover { background: #f1efe8; }
 .rep-inp:focus { outline: none; border-color: #5f5e5a; }
 .rep-inp.overridden { border-color: #1D9E75; background: #f0faf6; }
 .rep-inp-wrap { display: flex; align-items: center; gap: 3px; font-size: 11px; color: #73726c; }
-/* Targets panel */
+/* Targets / Last Quarter panels */
 .targets-panel { margin-bottom: 2rem; }
-.targets-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; }
+.targets-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; flex-wrap: wrap; }
 .btn-targets { font-size: 12px; padding: 6px 16px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: #fff; color: #1a1a18; cursor: pointer; font-family: inherit; font-weight: 500; }
 .btn-targets:hover { background: #f1efe8; }
 .targets-hint { font-size: 11px; color: #888780; }
@@ -86,7 +86,25 @@ tbody tr:hover { background: #f1efe8; }
   <div class="targets-panel">
     <div class="targets-toggle">
       <button class="btn-targets" onclick="toggleTargets()">Targets ▾</button>
+      <button class="btn-targets" onclick="toggleLastQ()" style="margin-left:4px">Last Quarter ▾</button>
       <span class="targets-hint">Edit quarterly targets per rep — updates all calculations</span>
+    </div>
+    <div class="targets-body" id="lastq-body">
+      <div class="table-wrap">
+        <table id="lastq-table">
+          <thead><tr>
+            <th>Rep</th>
+            <th>Accounts</th>
+            <th>Discos</th>
+            <th>Deals</th>
+            <th>Pipe ($)</th>
+            <th>Closed ($)</th>
+            <th>Live Deals</th>
+            <th>Live Pipe ($)</th>
+          </tr></thead>
+          <tbody id="lastq-tbody"></tbody>
+        </table>
+      </div>
     </div>
     <div class="targets-body" id="targets-body">
       <div class="table-wrap">
@@ -175,6 +193,11 @@ const SEGS = {
   mo: { label: 'Monsters',         short: 'MO', defAvg: 150000, cls: 'seg-mo' },
 };
 
+// ── Last Quarter data ──────────────────────────────────────
+// Parallel to REPS; all fields null = empty (not entered yet)
+const LAST_Q_FIELDS = ['accounts','discos','deals','pipe','closed','liveDeals','livePipe'];
+const LAST_Q = []; // populated after REPS is defined
+
 // ── Rep definitions ────────────────────────────────────────
 // repAvg: null = use weighted segment defaults
 // targets: per-rep overrides for quota/coverage/dealRate (null = use defaults)
@@ -240,6 +263,43 @@ function fmt$(n) {
 }
 function fmtN(n) { return n < 10 ? n.toFixed(1) : Math.round(n).toString(); }
 function fmtPct(r) { return Math.round(r * 100) + '%'; }
+
+// ── Last Quarter panel ─────────────────────────────────────
+function toggleLastQ() {
+  const body = document.getElementById('lastq-body');
+  const btn  = document.querySelectorAll('.btn-targets')[1];
+  const open = body.classList.toggle('open');
+  btn.textContent = open ? 'Last Quarter ▴' : 'Last Quarter ▾';
+}
+
+function buildLastQTable() {
+  const tbody = document.getElementById('lastq-tbody');
+  tbody.innerHTML = '';
+  const dollarFields = new Set(['pipe','closed','livePipe']);
+  const labels = { accounts:'Accounts', discos:'Discos', deals:'Deals', pipe:'Pipe ($)', closed:'Closed ($)', liveDeals:'Live Deals', livePipe:'Live Pipe ($)' };
+  REPS.forEach((rep, idx) => {
+    const row = document.createElement('tr');
+    const cells = LAST_Q_FIELDS.map(f => {
+      const val = LAST_Q[idx][f];
+      const isDollar = dollarFields.has(f);
+      return `<td>
+        <div class="rep-inp-wrap">${isDollar ? '<span>$</span>' : ''}
+          <input class="tgt-inp${val !== null ? ' changed' : ''}" id="lq-${f}-${idx}"
+            type="number" value="${val !== null ? val : ''}" step="${isDollar ? 10000 : 1}" min="0" placeholder="—"
+            onchange="onLastQChange(${idx},'${f}',this.value,this)">
+        </div>
+      </td>`;
+    }).join('');
+    row.innerHTML = `<td class="rep-name">${rep.name}</td>${cells}`;
+    tbody.appendChild(row);
+  });
+}
+
+function onLastQChange(idx, field, val, el) {
+  const v = parseFloat(val);
+  LAST_Q[idx][field] = (isNaN(v) || val === '') ? null : v;
+  el.classList.toggle('changed', LAST_Q[idx][field] !== null);
+}
 
 // ── Targets panel ──────────────────────────────────────────
 function toggleTargets() {
@@ -522,6 +582,12 @@ function renderPortfolio() {
 }
 
 // ── Init ───────────────────────────────────────────────────
+REPS.forEach(() => {
+  const row = {};
+  LAST_Q_FIELDS.forEach(f => { row[f] = null; });
+  LAST_Q.push(row);
+});
+buildLastQTable();
 buildTargetsTable();
 render();
 </script>
