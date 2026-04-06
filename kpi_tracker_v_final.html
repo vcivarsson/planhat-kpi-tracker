@@ -120,7 +120,7 @@ tbody tr:hover { background: #f1efe8; }
   </div>
 
   <div class="assumption-bar">
-    <span>Pipe target = quota × coverage · Discos = pipe ÷ (avg deal × 2/3) ÷ 13 wks</span>
+    <span>Pipe target = quota × coverage · Discos = pipe ÷ (avg deal × 2/3) ÷ 13 wks · rounded up to whole number</span>
     <span>Min discos: <strong>1 / wk</strong></span>
     <span>Weighted @ 60% of quota</span>
   </div>
@@ -219,9 +219,11 @@ function calcRep(rep, weekMult) {
   // Ramping reps run activity targets toward full quota so they build toward $250k
   const activityQuota = ramping ? DEF_QUOTA : quota;
   const pipeTarget = activityQuota * coverage;
-  // discos/wk = pipeTarget / (WEEKS_QTR * dealRate * avg), floored at MIN_DISCOS_WK
-  const dWkRaw  = pipeTarget / (WEEKS_QTR * dealRate * avg);
-  const dWk     = Math.max(MIN_DISCOS_WK, dWkRaw);
+  // Ramping reps cap avg deal at MM so disco targets stay high regardless of segment
+  const discoAvg = ramping ? Math.min(avg, getSegAvg('mm')) : avg;
+  // discos/wk = pipeTarget / (WEEKS_QTR * dealRate * discoAvg), ceiled to whole number
+  const dWkRaw  = pipeTarget / (WEEKS_QTR * dealRate * discoAvg);
+  const dWk     = Math.max(MIN_DISCOS_WK, Math.ceil(dWkRaw));
   const discos  = dWk * weekMult;
   const deals   = discos * dealRate;
   const pipe    = deals * avg;
@@ -346,7 +348,7 @@ function renderReps(weekMult, lbl) {
     <div class="metric"><div class="metric-label">Total pipe / ${lbl}</div><div class="metric-val">${fmt$(totPipe)}</div><div class="metric-sub">deals × avg deal size</div></div>
     <div class="metric"><div class="metric-label">Team quota / ${lbl}</div><div class="metric-val">${fmt$(totQuota)}</div><div class="metric-sub">weighted safe bet: ${fmt$(totW60)}</div></div>
   </div>
-  <p style="font-size:11px;color:#73726c;margin-bottom:0.75rem">Avg deal size drives discos needed. Edit per rep to override segment default — green border = override active. <span style="color:#92400E">RAMP reps have quota &lt; $250k but activity targets (discos / deals / pipe) are calculated toward full $250k — they should be building pipeline aggressively.</span></p>
+  <p style="font-size:11px;color:#73726c;margin-bottom:0.75rem">Avg deal size drives discos needed. Edit per rep to override segment default — green border = override active. <span style="color:#92400E">RAMP reps have quota &lt; $250k but activity targets are calculated toward full $250k. Disco count uses MM avg deal size as a cap so all ramping reps run the same high-activity motion.</span></p>
   <div class="table-wrap"><table><thead><tr>
     <th>Rep</th>
     <th>Region</th>
