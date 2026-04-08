@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTM Sales Playbook — Planhat MSP/IT/Telco</title>
+<style>
+/* ── Reset ────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f7; color: #1a1a18; }
+
+/* ── App shell ────────────────────────────────────────────── */
+.app { display: flex; min-height: 100vh; }
+.sidebar { width: 210px; min-height: 100vh; background: #1a1a18; color: #d3d1c7; position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100; display: flex; flex-direction: column; }
+.main { margin-left: 210px; flex: 1; padding: 2.5rem 2.5rem 4rem; }
+.page { display: none; max-width: 1080px; }
+.page.active { display: block; }
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+.sidebar-header { padding: 1.25rem 1.25rem 1rem; border-bottom: 0.5px solid #2e2e2b; }
+.sidebar-title { font-size: 13px; font-weight: 600; color: #f9f9f7; line-height: 1.3; }
+.sidebar-sub { font-size: 10px; color: #5f5e5a; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+.sidebar-nav { padding: 0.5rem 0 1rem; }
+.nav-group { padding: 0.9rem 1.25rem 0.2rem; font-size: 9px; color: #5f5e5a; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+.nav-item { display: block; padding: 6px 1.25rem; font-size: 13px; color: #a8a7a2; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: inherit; }
+.nav-item:hover { color: #f9f9f7; background: #252521; }
+.nav-item.active { color: #f9f9f7; background: #2a2a27; font-weight: 500; }
+
+/* ── Page headers ─────────────────────────────────────────── */
+.page-header { margin-bottom: 1.75rem; padding-bottom: 1rem; border-bottom: 0.5px solid #d3d1c7; }
+.page-title { font-size: 20px; font-weight: 500; margin-bottom: 0.2rem; }
+.page-subtitle { font-size: 13px; color: #73726c; }
+
+/* ── Generic cards ────────────────────────────────────────── */
+.card { background: #f1efe8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+.card-title { font-size: 10px; font-weight: 600; color: #73726c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+.card-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+.card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+.card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+
+/* ── Tables ───────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 6px 10px; color: #73726c; font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid #d3d1c7; white-space: nowrap; }
+td { padding: 8px 10px; border-bottom: 0.5px solid #d3d1c7; color: #1a1a18; vertical-align: top; line-height: 1.45; }
+tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #f5f3ec; }
+tfoot td { border-top: 0.5px solid #b4b2a9; border-bottom: none; font-weight: 500; }
+
+/* ── Badges ───────────────────────────────────────────────── */
+.badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 8px; font-weight: 500; white-space: nowrap; }
+.badge-blue   { background: #E6F1FB; color: #0C447C; }
+.badge-green  { background: #EAF3DE; color: #27500A; }
+.badge-purple { background: #EEEDFE; color: #3C3489; }
+.badge-red    { background: #FAECE7; color: #712B13; }
+.badge-yellow { background: #FEF3C7; color: #92400E; }
+.badge-gray   { background: #EBEBEB; color: #5f5e5a; }
+
+/* ── Pitch / script cards ─────────────────────────────────── */
+.pitch-card { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+.pitch-tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #73726c; margin-bottom: 0.4rem; }
+.pitch-title { font-size: 15px; font-weight: 500; margin-bottom: 1rem; }
+.pitch-label { font-size: 10px; color: #73726c; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem; margin-top: 1rem; }
+.pitch-label:first-of-type { margin-top: 0; }
+.quote-block { font-size: 13px; color: #1a1a18; line-height: 1.65; background: #f9f9f7; border-left: 3px solid #b4b2a9; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; }
+
+/* ── Script block ─────────────────────────────────────────── */
+.script-block { background: #f1efe8; border-radius: 8px; padding: 1rem 1.25rem; font-size: 13px; line-height: 1.7; color: #1a1a18; white-space: pre-line; }
+.script-note { font-size: 11px; color: #73726c; font-style: italic; margin-top: 4px; }
+
+/* ── Accordion ────────────────────────────────────────────── */
+.acc-group { margin-bottom: 6px; border: 0.5px solid #d3d1c7; border-radius: 8px; overflow: hidden; }
+.acc-header { padding: 10px 1rem; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #f1efe8; user-select: none; }
+.acc-header:hover { background: #ebe9e1; }
+.acc-arrow { font-size: 11px; color: #73726c; transition: transform 0.15s; }
+.acc-body { display: none; padding: 0.75rem 1rem; border-top: 0.5px solid #d3d1c7; background: #fff; }
+.acc-body.open { display: block; }
+.obj-q { font-size: 12px; font-style: italic; color: #3a3a38; margin-top: 0.6rem; margin-bottom: 2px; }
+.obj-q:first-child { margin-top: 0; }
+.obj-a { font-size: 12px; color: #1a1a18; line-height: 1.55; padding-left: 0.75rem; border-left: 2px solid #d3d1c7; margin-bottom: 0.5rem; }
+
+/* ── Stage timeline ───────────────────────────────────────── */
+.stages { display: flex; border: 0.5px solid #d3d1c7; border-radius: 10px; overflow: hidden; margin-bottom: 1.25rem; }
+.stage { flex: 1; min-width: 120px; padding: 1rem; background: #f1efe8; border-right: 0.5px solid #d3d1c7; }
+.stage:last-child { border-right: none; }
+.stage-num { font-size: 9px; color: #73726c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; font-weight: 600; }
+.stage-name { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.stage-desc { font-size: 11px; color: #5f5e5a; line-height: 1.45; }
+.stage-outcome { font-size: 10px; color: #0F6E56; font-weight: 500; margin-top: 8px; }
+
+/* ── Collateral items ─────────────────────────────────────── */
+.collateral-item { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 0.75rem 1rem; }
+.collateral-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+.collateral-type { font-size: 10px; color: #73726c; }
+
+/* ── Segment badges (KPI tracker) ─────────────────────────── */
+.seg-mm { background: #E6F1FB; color: #0C447C; }
+.seg-le { background: #EAF3DE; color: #27500A; }
+.seg-ue { background: #EEEDFE; color: #3C3489; }
+.seg-mo { background: #FAECE7; color: #712B13; }
+
+/* ── KPI Tracker styles ───────────────────────────────────── */
+.assumption-bar { display: flex; flex-wrap: wrap; gap: 16px; font-size: 11px; color: #73726c; background: #f1efe8; border-radius: 8px; padding: 8px 12px; margin-bottom: 1.25rem; }
+.assumption-bar strong { color: #1a1a18; font-weight: 500; }
+.metric-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.metric { background: #f1efe8; border-radius: 8px; padding: 0.75rem 1rem; }
+.metric-label { font-size: 11px; color: #73726c; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+.metric-val { font-size: 20px; font-weight: 500; color: #1a1a18; }
+.metric-sub { font-size: 11px; color: #888780; margin-top: 2px; }
+.kpi-table-wrap { overflow-x: auto; }
+.kpi-table-wrap table { min-width: 860px; }
+.kpi-section { display: none; }
+.kpi-section.active { display: block; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.tab { padding: 6px 16px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: transparent; color: #73726c; font-size: 13px; cursor: pointer; font-family: inherit; }
+.tab.active { background: #f1efe8; color: #1a1a18; border-color: #5f5e5a; font-weight: 500; }
+.period-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+.period-row span { font-size: 13px; color: #73726c; }
+.period-btns { display: flex; gap: 6px; }
+.pbtn { padding: 4px 14px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: transparent; color: #73726c; font-size: 12px; cursor: pointer; font-family: inherit; }
+.pbtn.active { background: #f1efe8; color: #1a1a18; border-color: #5f5e5a; font-weight: 500; }
+.controls-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.controls-label { font-size: 11px; font-weight: 500; color: #73726c; text-transform: uppercase; letter-spacing: 0.04em; }
+.btn-reset { font-size: 11px; padding: 4px 12px; border-radius: 6px; border: 0.5px solid #b4b2a9; background: #fff; color: #73726c; cursor: pointer; font-family: inherit; }
+.btn-reset:hover { background: #f1efe8; color: #1a1a18; }
+.seg-defaults { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.seg-card { background: #f1efe8; border-radius: 8px; padding: 0.75rem 1rem; }
+.seg-card-label { font-size: 10px; color: #73726c; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.seg-card-label .badge { font-size: 9px; padding: 1px 5px; }
+.inp-wrap { display: flex; align-items: center; gap: 4px; }
+.inp-prefix { font-size: 13px; color: #73726c; }
+.seg-inp { width: 100%; border: 0.5px solid #b4b2a9; border-radius: 6px; padding: 5px 8px; font-size: 14px; font-weight: 500; font-family: inherit; background: #fff; color: #1a1a18; }
+.seg-inp:focus { outline: none; border-color: #5f5e5a; }
+.seg-hint { font-size: 10px; color: #888780; margin-top: 4px; }
+.rep-inp { width: 84px; border: 0.5px solid #b4b2a9; border-radius: 5px; padding: 3px 6px; font-size: 12px; font-family: inherit; background: #fff; color: #1a1a18; }
+.rep-inp:focus { outline: none; border-color: #5f5e5a; }
+.rep-inp.overridden { border-color: #1D9E75; background: #f0faf6; }
+.rep-inp-wrap { display: flex; align-items: center; gap: 3px; font-size: 11px; color: #73726c; }
+.sep { border-left: 1px solid #d3d1c7; }
+.weight-pill { font-size: 10px; color: #888780; margin-left: 2px; }
+.rep-name { font-weight: 500; }
+.targets-panel { margin-bottom: 2rem; }
+.targets-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; flex-wrap: wrap; }
+.btn-targets { font-size: 12px; padding: 6px 16px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: #fff; color: #1a1a18; cursor: pointer; font-family: inherit; font-weight: 500; }
+.btn-targets:hover { background: #f1efe8; }
+.targets-hint { font-size: 11px; color: #888780; }
+.targets-body { display: none; margin-top: 1rem; background: #f1efe8; border-radius: 10px; padding: 1.25rem; }
+.targets-body.open { display: block; }
+.targets-body table { min-width: 500px; }
+.targets-body th { background: transparent; }
+.targets-body td { background: transparent; }
+.tgt-inp { width: 90px; border: 0.5px solid #b4b2a9; border-radius: 5px; padding: 3px 8px; font-size: 12px; font-family: inherit; background: #fff; color: #1a1a18; }
+.tgt-inp:focus { outline: none; border-color: #5f5e5a; }
+.tgt-inp.changed { border-color: #1D9E75; background: #f0faf6; }
+.ramp-badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 6px; background: #FEF3C7; color: #92400E; font-weight: 600; letter-spacing: 0.02em; vertical-align: middle; margin-left: 4px; }
+.ramp-note { font-size: 10px; color: #92400E; margin-left: 2px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">GTM Sales Playbook</div>
+    <div class="sidebar-sub">Planhat MSP / IT / Telco</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">Planning</div>
+    <button class="nav-item active" onclick="showPage('kpi',this)">KPI Tracker</button>
+
+    <div class="nav-group">Market</div>
+    <button class="nav-item" onclick="showPage('icp',this)">ICP &amp; Segments</button>
+    <button class="nav-item" onclick="showPage('competitors',this)">Competitors</button>
+
+    <div class="nav-group">Selling</div>
+    <button class="nav-item" onclick="showPage('process',this)">Sales Process</button>
+    <button class="nav-item" onclick="showPage('pitches',this)">Pitches &amp; Scripts</button>
+    <button class="nav-item" onclick="showPage('objections',this)">Objection Handling</button>
+
+    <div class="nav-group">Outbound</div>
+    <button class="nav-item" onclick="showPage('prospecting',this)">Prospecting</button>
+    <button class="nav-item" onclick="showPage('templates',this)">Templates &amp; Copy</button>
+
+    <div class="nav-group">Resources</div>
+    <button class="nav-item" onclick="showPage('collateral',this)">Sales Material</button>
+    <button class="nav-item" onclick="showPage('pricing',this)">Pricing</button>
+  </nav>
+</aside>
+
+<!-- ── MAIN ────────────────────────────────────────────────── -->
+<main class="main">
+
+<!-- ════════════════════════════════════════════════════════════
+     KPI TRACKER
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-kpi" class="page active">
+  <div class="page-header">
+    <div class="page-title">KPI Tracker</div>
+    <div class="page-subtitle">Quota: $250k / rep / qtr &nbsp;·&nbsp; Weighted safe bet: $150k (60%)</div>
+  </div>
+
+  <!-- TARGETS PANEL -->
+  <div class="targets-panel">
+    <div class="targets-toggle">
+      <button class="btn-targets" onclick="toggleTargets()">Targets ▾</button>
+      <button class="btn-targets" onclick="toggleLastQ()" style="margin-left:4px">Last Quarter ▾</button>
+      <span class="targets-hint">Edit quarterly targets per rep — updates all calculations</span>
+    </div>
+    <div class="targets-body" id="lastq-body">
+      <div class="table-wrap">
+        <table id="lastq-table">
+          <thead><tr>
+            <th>Rep</th><th>Accounts</th><th>Discos</th><th>Deals</th>
+            <th>Pipe ($)</th><th>Closed ($)</th><th>Live Deals</th><th>Live Pipe ($)</th>
+          </tr></thead>
+          <tbody id="lastq-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="targets-body" id="targets-body">
+      <div class="table-wrap">
+        <table id="targets-table">
+          <thead><tr>
+            <th>Rep</th><th>Region</th><th>Quota / qtr ($)</th>
+            <th>Pipeline coverage (×)</th><th>Disco → deal rate (%)</th>
+          </tr></thead>
+          <tbody id="targets-tbody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:11px;color:#73726c;margin-top:0.75rem">Green border = changed from default. Quotas below $250k are treated as ramped — activity KPIs (discos, deals, pipe) target full $250k so reps build pipeline aggressively.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('reps',this)">By rep</button>
+    <button class="tab" onclick="switchTab('segments',this)">By segment</button>
+    <button class="tab" onclick="switchTab('portfolio',this)">Portfolio</button>
+  </div>
+  <div class="period-row">
+    <span>Period:</span>
+    <div class="period-btns">
+      <button class="pbtn" onclick="switchPeriod('weekly',this)">Weekly</button>
+      <button class="pbtn" onclick="switchPeriod('monthly',this)">Monthly</button>
+      <button class="pbtn active" onclick="switchPeriod('quarterly',this)">Quarterly</button>
+    </div>
+  </div>
+  <div class="assumption-bar">
+    <span>Pipe target = quota × coverage · Discos = pipe ÷ (avg deal × 2/3) ÷ 12 wks · rounded up to whole number</span>
+    <span>Min discos: <strong>1 / wk</strong></span>
+    <span>Weighted @ 60% of quota</span>
+  </div>
+  <div class="controls-row">
+    <div class="controls-label">Segment default avg deal — overridable per rep below</div>
+    <button class="btn-reset" onclick="resetAllAvg()">↺ Reset all to defaults</button>
+  </div>
+  <div class="seg-defaults">
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-mm">MM</span>Mid-Market</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-mm" value="45000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">200–1k FTE</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-le">LE</span>Lower Enterprise</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-le" value="75000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">1k–5k FTE</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-ue">UE</span>Upper Enterprise</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-ue" value="100000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">5k–10k FTE</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-card-label"><span class="badge seg-mo">MO</span>Monsters</div>
+      <div class="inp-wrap"><span class="inp-prefix">$</span><input class="seg-inp" type="number" id="def-mo" value="150000" step="1000" onchange="render()"></div>
+      <div class="seg-hint">10k+ FTE</div>
+    </div>
+  </div>
+  <div id="section-reps" class="kpi-section active"></div>
+  <div id="section-segments" class="kpi-section"></div>
+  <div id="section-portfolio" class="kpi-section"></div>
+</div><!-- /pg-kpi -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     ICP & SEGMENTS
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-icp" class="page">
+  <div class="page-header">
+    <div class="page-title">ICP &amp; Segments</div>
+    <div class="page-subtitle">Who we sell to, how they're segmented, and what they care about</div>
+  </div>
+
+  <div class="card-grid-4">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Minimum bar</div>
+      <div style="font-size:22px;font-weight:500">200+</div>
+      <div style="font-size:12px;color:#73726c;margin-top:2px">FTE or $100M+ revenue</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Vertical</div>
+      <div style="font-size:13px;font-weight:500;line-height:1.5">IT Services, MSP, Telco, Telecom Carriers</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Must-have signal</div>
+      <div style="font-size:13px;font-weight:500;line-height:1.5">Post-sale motion — CS, AM, renewals, or lifecycle team</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Pipe outbound</div>
+      <div style="font-size:22px;font-weight:500">82%+</div>
+      <div style="font-size:12px;color:#73726c;margin-top:2px">Generated from outbound</div>
+    </div>
+  </div>
+  <div style="margin-bottom:1.25rem"></div>
+
+  <div class="card">
+    <div class="card-title">Segment breakdown</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Segment</th><th>FTE range</th><th>Avg deal (ACV)</th><th>EMEA reps</th><th>AMER reps</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="badge seg-mm">Mid-Market</span></td>
+            <td>200 – 1,000</td>
+            <td>$45k</td>
+            <td style="color:#73726c">Victor (assign)</td>
+            <td>Filip, Josh</td>
+          </tr>
+          <tr>
+            <td><span class="badge seg-le">Lower Enterprise</span></td>
+            <td>1,000 – 5,000</td>
+            <td>$75k</td>
+            <td>Ava</td>
+            <td>Love, Victor</td>
+          </tr>
+          <tr>
+            <td><span class="badge seg-ue">Upper Enterprise</span></td>
+            <td>5,000 – 10,000</td>
+            <td>$100k</td>
+            <td>Nick, Ava</td>
+            <td>Victor, Love, Ben</td>
+          </tr>
+          <tr>
+            <td><span class="badge seg-mo">Monsters</span></td>
+            <td>10,000+</td>
+            <td>$150k</td>
+            <td>Nick, Ava</td>
+            <td>Victor, Ben</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-grid-3">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Land angle 1 — Cisco</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Get to A-CX / Expert CX</div>
+      <div style="font-size:12px;color:#3a3a38;line-height:1.5">Cisco partners wanting to maximize rebates and hit Advanced or Expert CX specialization. Planhat maps directly to all 7 audit areas.</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Land angle 2 — Multi-Vendor MSP/IT</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Best platform for multi-vendor CS</div>
+      <div style="font-size:12px;color:#3a3a38;line-height:1.5">IT providers managing Cisco, Microsoft, Palo Alto, and others. Customer health and renewal data spread across systems — Planhat unifies them.</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Land angle 3 — Traditional CSP</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Commercial processes at scale</div>
+      <div style="font-size:12px;color:#3a3a38;line-height:1.5">Mature IT companies with established CS/AM teams looking to move from manual to automated lifecycle management and NRR growth.</div>
+    </div>
+  </div>
+  <div style="margin-bottom:1.25rem"></div>
+
+  <div class="card">
+    <div class="card-title">Tier 1 personas — who to target</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Persona group</th><th>Titles</th><th>What they care about</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:500">CS &amp; Experience Leaders</td>
+            <td style="font-size:11px;color:#3a3a38">CCO, CXO, VP Customer Success, Head of CS, Director of CS, VP Customer Experience</td>
+            <td style="font-size:12px">Unified health score, churn prevention, automated playbooks, expansion whitespace visibility</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">Service Delivery / Lifecycle</td>
+            <td style="font-size:11px;color:#3a3a38">VP Managed Services, Director Lifecycle Services, Program Manager Cisco</td>
+            <td style="font-size:12px">Time to value, scalability, cross-functional collaboration, process automation</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">Renewals &amp; Retention</td>
+            <td style="font-size:11px;color:#3a3a38">Head of Renewals, Director Customer Ops, VP Customer Service Ops</td>
+            <td style="font-size:12px">90-day automated renewal plays, early warning systems (3–6 months out), no surprise non-renewals</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">Account Management</td>
+            <td style="font-size:11px;color:#3a3a38">Head of AM, Director of AM, VP Account Management</td>
+            <td style="font-size:12px">Expansion revenue, vCIO / QBR workflow, automated upsell triggers from usage/hardware data</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">LinkedIn industry filters (Sales Navigator)</div>
+    <div style="font-size:12px;color:#3a3a38;line-height:1.9">
+      IT Services and IT Consulting · IT System Custom Software Development · IT System Operations and Maintenance ·
+      IT System Data Services · IT System Design Services · Telecommunications · Telecommunications Carriers ·
+      Telephone Call Centers · Media and Telecommunications · Network and Space Technologies · Computer Networking Products
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Do Not Call</div>
+    <div style="font-size:12px;color:#73726c">Support &amp; Care Leaders · Channel · Delivery-only roles</div>
+  </div>
+</div><!-- /pg-icp -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     COMPETITORS
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-competitors" class="page">
+  <div class="page-header">
+    <div class="page-title">Competitors</div>
+    <div class="page-subtitle">Battle cards — how to position Planhat against each competitor</div>
+  </div>
+
+  <div class="card" style="background:#FEF3C7;border:0.5px solid #F5D98A">
+    <div style="font-size:12px;color:#92400E;line-height:1.55"><strong>Enterprise trust note:</strong> SFDC / Microsoft / ServiceNow dominate enterprise. "SFDC is too costly" is not a credible argument from Planhat — you must earn trust via logos, security credentials, and integrations first. As one Lumen exec put it: it's easier to approve $10M more with SFDC than $100k with an unknown vendor.</div>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Competitor</th><th>Category</th><th>Positioning</th><th>Key weakness vs Planhat</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:500">Gainsight</td>
+            <td><span class="badge badge-blue">CS Platform</span></td>
+            <td style="font-size:12px">Acknowledge market leader status — then pivot to speed and flexibility</td>
+            <td style="font-size:12px">Slower implementation, higher admin burden, less flexible AI. Planhat: native AI with BYO LLM (Claude, OpenAI, Gemini)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">ChurnZero</td>
+            <td><span class="badge badge-blue">CS Platform</span></td>
+            <td style="font-size:12px">Engagement automation only — no modular logic</td>
+            <td style="font-size:12px">Lacks the modular workflow logic Planhat has. No multi-vendor data model</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">Totango</td>
+            <td><span class="badge badge-blue">CS Platform</span></td>
+            <td style="font-size:12px">Predefined success blocks limit flexibility</td>
+            <td style="font-size:12px">Success blocks are rigid — Planhat's custom objects and workflows are fully configurable</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">Vitally</td>
+            <td><span class="badge badge-blue">CS Platform</span></td>
+            <td style="font-size:12px">Strong UX, weak data model</td>
+            <td style="font-size:12px">Weak time-series data and poor parent/child hierarchy — critical for MSPs managing multi-vendor accounts</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">Salesforce</td>
+            <td><span class="badge badge-gray">CRM</span></td>
+            <td style="font-size:12px">Linear sales tool — post-sale = expensive add-ons</td>
+            <td style="font-size:12px">No time-series data natively. Post-sale requires Service Cloud + custom dev. Planhat is built for the full lifecycle out of the box</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">HubSpot</td>
+            <td><span class="badge badge-gray">CRM</span></td>
+            <td style="font-size:12px">Not built for post-sale complexity</td>
+            <td style="font-size:12px">Works for SMB sales teams. Falls apart at scale post-sale — no health scoring, no lifecycle automation</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">ConnectWise</td>
+            <td><span class="badge badge-purple">PSA</span></td>
+            <td style="font-size:12px">Complement, don't replace</td>
+            <td style="font-size:12px">PSA / ticketing only. Position Planhat as the CS layer on top via API integration — not a rip and replace</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">Ray Allen / ScalePad</td>
+            <td><span class="badge badge-green">Asset Mgmt</span></td>
+            <td style="font-size:12px">Asset lifecycle only</td>
+            <td style="font-size:12px">No CS capabilities. Planhat ingests their asset data and adds health scoring, renewal automation, and expansion playbooks on top</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Planhat differentiators (use these first)</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div style="font-size:12px"><strong>Native AI with BYO LLM</strong><br><span style="color:#73726c">Claude, OpenAI, Gemini — not a locked model. Customer controls their AI stack</span></div>
+      <div style="font-size:12px"><strong>Multi-vendor data model</strong><br><span style="color:#73726c">Built to ingest Cisco, Microsoft, Palo Alto, and others into one Customer 360</span></div>
+      <div style="font-size:12px"><strong>Cisco authorized partner</strong><br><span style="color:#73726c">CX Partner of the Year 2025. Maps to all 7 Expert CX audit areas</span></div>
+      <div style="font-size:12px"><strong>Time-series data</strong><br><span style="color:#73726c">Track changes over time — critical for health trends, renewal forecasting, and expansion triggers</span></div>
+      <div style="font-size:12px"><strong>Fast implementation</strong><br><span style="color:#73726c">Faster to value than Gainsight. 50–100% of ARR in PS fees vs Gainsight's 2–3x</span></div>
+      <div style="font-size:12px"><strong>Custom objects &amp; modular logic</strong><br><span style="color:#73726c">Fully configurable — not predefined templates. Works for any vendor lifecycle model</span></div>
+    </div>
+  </div>
+</div><!-- /pg-competitors -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SALES PROCESS
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-process" class="page">
+  <div class="page-header">
+    <div class="page-title">Sales Process</div>
+    <div class="page-subtitle">Stage-by-stage methodology from prospecting to close</div>
+  </div>
+
+  <div class="stages">
+    <div class="stage">
+      <div class="stage-num">Stage 0</div>
+      <div class="stage-name">Prospecting</div>
+      <div class="stage-desc">LinkedIn, intent signals, closed lost, previous convos, Cisco partner locator</div>
+      <div class="stage-outcome">→ Meeting booked</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">Stage 1</div>
+      <div class="stage-name">Discovery</div>
+      <div class="stage-desc">Understand lifecycle processes, systems, ownership of onboarding / renewals / expansion. Identify KPIs (churn, NRR)</div>
+      <div class="stage-outcome">→ Confirm real problem. Schedule demo</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">Stage 2</div>
+      <div class="stage-name">Platform Demo</div>
+      <div class="stage-desc">Show Customer 360 visibility, lifecycle workflows, health scoring, renewal &amp; expansion view</div>
+      <div class="stage-outcome">→ Confirm interest. Schedule deep dive</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">Stage 3</div>
+      <div class="stage-name">Deep Dive</div>
+      <div class="stage-desc">Validate data sources &amp; integrations, object structure, telemetry, licensing data, system architecture</div>
+      <div class="stage-outcome">→ Confirm feasibility. Define eval approach</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">Stage 4</div>
+      <div class="stage-name">Commercial</div>
+      <div class="stage-desc">Platform pricing, implementation scope, deployment timeline, POC options</div>
+      <div class="stage-outcome">→ Contract or POC</div>
+    </div>
+  </div>
+
+  <div class="card-grid-3">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">POC Option 1 — Demo data</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Immediate access</div>
+      <div style="font-size:12px;color:#3a3a38;line-height:1.5">No cost. Limited user access. Supported by AE and TDS. Best for early-stage evaluation.</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">POC Option 2 — Sample data (NDA)</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Customer's own data</div>
+      <div style="font-size:12px;color:#3a3a38;line-height:1.5">Requires NDA. Takes 2–4 weeks to build proof environment. Best for mid-stage validation.</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">POC Option 3 — Enterprise POC (paid)</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Full paid engagement</div>
+      <div style="font-size:12px;color:#3a3a38;line-height:1.5">~3 months. Used for complex enterprise deals where full feasibility must be proven before contract.</div>
+    </div>
+  </div>
+  <div style="margin-bottom:1.25rem"></div>
+
+  <div class="card">
+    <div class="card-title">Demo guidance — three outcomes to demonstrate</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:5px">1. Visibility</div>
+        <div style="font-size:12px;color:#3a3a38;line-height:1.5">Planhat consolidates CRM, service tools, telemetry, and vendor portals into one Customer 360. Every account, every vendor, one view.</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:5px">2. Action</div>
+        <div style="font-size:12px;color:#3a3a38;line-height:1.5">Teams operate the full lifecycle — workflows, automations, tasks — from the same platform. No context-switching between tools.</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:5px">3. Growth</div>
+        <div style="font-size:12px;color:#3a3a38;line-height:1.5">Churn prevention, improved renewals, expansion triggers, and team alignment all driving NRR upward.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Demo environments</div>
+    <div class="card-grid-2" style="margin-bottom:0">
+      <div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Cisco / Multi-Vendor</div>
+        <div style="font-size:12px;color:#3a3a38;line-height:1.5">Use for Cisco partners, OEM vendor lifecycle, A-CX audit readiness, asset lifecycle demonstrations</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Standard CSP</div>
+        <div style="font-size:12px;color:#3a3a38;line-height:1.5">Use for MSPs, IT providers, general CS demos (Tenants: P2 Enterprise, Jan26)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Close criteria</div>
+    <div style="font-size:12px;color:#3a3a38;line-height:2">
+      Contract signed &nbsp;·&nbsp; Order confirmation completed &nbsp;·&nbsp; Implementation kickoff scheduled
+    </div>
+  </div>
+</div><!-- /pg-process -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     PITCHES & SCRIPTS
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-pitches" class="page">
+  <div class="page-header">
+    <div class="page-title">Pitches &amp; Scripts</div>
+    <div class="page-subtitle">Three core pitches, full phone opener, and discovery question bank</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-tag"><span class="badge badge-blue">Cisco / Expert CX</span></div>
+    <div class="pitch-title">Cisco Program Pitch</div>
+    <div class="pitch-label">Opener</div>
+    <div class="quote-block">"We work with Cisco partners preparing for Cisco 360 or Advanced/Expert CX. Most trying to improve PVI have adoption and renewal signals spread across multiple systems. Are you working toward A-CX or Expert CX?"</div>
+    <div class="pitch-label">Full opener</div>
+    <div class="quote-block">"Hi [Name], this is [X] from Planhat. (pause) Understood that you're responsible for [role] at [company], is that right? Cool, I'm not sure if this falls directly under you, but are you also involved in addressing Cisco 360 changes and how your team tracks adoption, renewals, and lifecycle across your Cisco portfolio?"</div>
+    <div class="pitch-label">Pitch</div>
+    <div class="quote-block">"We work with Cisco partners in [region / vertical]. Most are struggling to get visibility across their Cisco customer base — adoption signals, renewal health, LCA data — all in different places. Planhat brings that into one platform and maps directly to the A-CX and Expert CX audit requirements. A lot of our customers have used this to unlock additional Cisco rebates while actually improving how their team manages accounts."</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-tag"><span class="badge badge-green">Multi-Vendor MSP / IT</span></div>
+    <div class="pitch-title">Multi-Vendor Pitch</div>
+    <div class="pitch-label">Opener</div>
+    <div class="quote-block">"Customer, delivery, and renewal data spread across systems — it's hard to track adoption, prevent churn, and grow accounts when everything lives in different places."</div>
+    <div class="pitch-label">Full opener</div>
+    <div class="quote-block">"Hi [Name], this is [X] from Planhat. (pause) Understood that you're responsible for [role] at [company]? Cool — so you're also involved in how your Delivery, CS, and AM teams align across the lifecycle to drive retention and NRR / recurring revenue growth?"</div>
+    <div class="pitch-label">Pitch</div>
+    <div class="quote-block">"We work with IT service providers and MSPs managing customers across multiple vendors — Cisco, Microsoft, Palo Alto, and others. The challenge we hear most is that customer health, adoption signals, and renewal data are all in different systems, which makes it hard to manage at scale. Planhat brings all of that into one platform so your CS, delivery, and sales teams can operate from a single source of truth."</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-tag"><span class="badge badge-gray">Traditional CSP / Alliances</span></div>
+    <div class="pitch-title">CSP / Alliances Pitch</div>
+    <div class="pitch-label">Opener</div>
+    <div class="quote-block">"Cool, I'm not sure if this falls directly under you, but are you also involved in how your Delivery, Customer and Alliances teams work together to scale your business with vendors like Cisco and others, and grow your revenue?"</div>
+    <div class="pitch-label">Pitch</div>
+    <div class="quote-block">"We specifically help IT companies with multiple vendor relationships — like Cisco, Microsoft, and others — to bring together customer lifecycle and commercial data across those vendors. So your alliances team, your delivery teams and your commercial teams can operate from a single source of truth. Is your company working with multiple vendors like these?"</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Full phone opener script</div>
+    <div class="script-block">Hi [Name], this is X from Planhat.
+(pause — let them respond)
+
+[Name drop if you've spoken with someone from the company — Sr Director, VP, or C-Suite]
+
+Understood that you're responsible for [role] at [company], is that right?
+(confirmation)
+
+CS/CX &amp; Lifecycle: Cool, so you're also involved in how your Delivery, CS, and AM teams align across the lifecycle to drive retention and NRR / recurring revenue growth?
+
+Alliances &amp; Partnerships: Cool, I'm not sure if this falls directly under you, but are you also involved in how your Delivery, Customer and Alliances teams work together to scale your business with vendors like Cisco and others?
+
+Cisco: Cool, I'm not sure if this falls directly under you, but are you also involved in addressing 360 changes...
+(confirmation)
+
+Okay great, then it's good we're speaking.
+→ Pick the pitch that fits best</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5 key discovery questions</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td style="width:30px;color:#73726c;font-size:11px">1</td><td>"To understand if there's actually a good fit — who in your organization owns the renewal and expansion motion with your [Cisco / Microsoft / multi-vendor] customers?"</td></tr>
+          <tr><td style="color:#73726c;font-size:11px">2</td><td>"And at a high level, how is the adoption and lifecycle management of those customers handled currently? What tools and what process?"</td></tr>
+          <tr><td style="color:#73726c;font-size:11px">3</td><td>"You mentioned [X from their answer] — when you have a customer that's at risk of churning or not renewing, what's the trigger that alerts you or your team to take action?"</td></tr>
+          <tr><td style="color:#73726c;font-size:11px">4</td><td>"So do you feel like you have good enough visibility into your customer base to forecast renewals with confidence?"</td></tr>
+          <tr><td style="color:#73726c;font-size:11px">5</td><td>"Last thing — how are you currently thinking about or preparing for Cisco 360? Is that a priority internally?"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- /pg-pitches -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     OBJECTION HANDLING
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-objections" class="page">
+  <div class="page-header">
+    <div class="page-title">Objection Handling</div>
+    <div class="page-subtitle">Responses by category — click to expand</div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Time / Attention</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"This isn't a good time." / "Can you call me later?" / "Send me an email." / "About to jump into a meeting."</div>
+      <div class="obj-a">"Give me 30 seconds so I can explain the reasons for my call?" / "Can I call you back this afternoon?"</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>No Interest</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We're not interested."</div>
+      <div class="obj-a">"No probs. Can I just ask why — CS tool already in place? Not the right person? Bad time?"</div>
+      <div class="obj-q">"This isn't a priority right now."</div>
+      <div class="obj-a">"No probs. Where's your priority right now?" / "What would be a good time to reconnect?"</div>
+      <div class="obj-q">"I don't think we need this."</div>
+      <div class="obj-a">Probe into what they're using, what gaps exist in their current setup. Surface a pain they haven't articulated.</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Gainsight</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We use Gainsight."</div>
+      <div class="obj-a">Acknowledge their choice. Then: "Gainsight is a strong platform — a lot of teams come to us because of the implementation complexity and admin overhead. How long did it take to get fully live?" (Surface time-to-value and flexibility pain.) Key differentiators: faster implementation, lower admin burden, native AI with BYO LLM (Claude, OpenAI, Gemini).</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — ChurnZero</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We use ChurnZero."</div>
+      <div class="obj-a">ChurnZero is built for engagement automation but lacks modular workflow logic and a multi-vendor data model. Ask: "How do you handle renewal tracking across multiple vendor lines today — is that all in ChurnZero or are you pulling from other places too?"</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Totango / Vitally</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We use Totango." / "We use Vitally."</div>
+      <div class="obj-a"><strong>Totango:</strong> Predefined success blocks limit flexibility. Planhat's custom objects and workflows are fully configurable for any vendor lifecycle model.<br><br><strong>Vitally:</strong> Strong UX but weak time-series data and poor parent/child hierarchy — critical issues for MSPs managing multi-vendor portfolios at scale.</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Salesforce</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We do this in Salesforce." / "We already have Salesforce."</div>
+      <div class="obj-a">SFDC is a linear sales tool — post-sale needs (health scoring, lifecycle automation, time-series data) require expensive add-ons and significant customization. Don't argue against SFDC directly. Instead: "Totally — most of our customers still use SFDC for their sales CRM and run Planhat alongside it for the post-sale motion. We have a native integration. Who owns CS in your org — is that a separate team from sales?"</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — ConnectWise / ScalePad</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We use ConnectWise." / "We have ScalePad / Ray Allen."</div>
+      <div class="obj-a"><strong>ConnectWise:</strong> PSA / ticketing only — complement it, don't replace it. "We integrate with ConnectWise via API so your service data flows into Planhat automatically. You keep your PSA, we add the CS and lifecycle layer on top."<br><br><strong>ScalePad / Ray Allen:</strong> Asset lifecycle only — no CS capabilities. Planhat ingests their asset data and adds health scoring, renewal automation, and expansion playbooks.</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Enterprise / Trust Concerns</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"You're not big enough / we need an enterprise-grade solution."</div>
+      <div class="obj-a">Lead with logos: Lumen, Verizon, DXC, Telefónica, Comcast Business, Softcat, Telia Cygate. Reference security credentials (SOC 2, GDPR). Gartner named Planhat a Leader. "We work with companies like [relevant logo]. What specifically would you need to see from a security or enterprise readiness perspective?"</div>
+      <div class="obj-q">"We'd need to go through procurement / legal / InfoSec."</div>
+      <div class="obj-a">Good sign — they're engaged. Ask: "Who should I loop in from your side to make that process smooth? I can have our security documentation and SLA ready within 24 hours."</div>
+    </div>
+  </div>
+</div><!-- /pg-objections -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     PROSPECTING
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-prospecting" class="page">
+  <div class="page-header">
+    <div class="page-title">Prospecting</div>
+    <div class="page-subtitle">Outbound strategy, lead sourcing, and Cisco partner verification</div>
+  </div>
+
+  <div class="card-grid-4">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Outbound share</div>
+      <div style="font-size:28px;font-weight:500">82%+</div>
+      <div style="font-size:12px;color:#73726c">of pipe from outbound</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Primary source</div>
+      <div style="font-size:13px;font-weight:500;line-height:1.5">LinkedIn Sales Navigator + intent signals (G2, website)</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Secondary sources</div>
+      <div style="font-size:13px;font-weight:500;line-height:1.5">Closed lost deals · Previous conversations · Cisco Partner Locator</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Cisco partners globally</div>
+      <div style="font-size:28px;font-weight:500">43k+</div>
+      <div style="font-size:12px;color:#73726c">vs 400k Microsoft, 15k Palo Alto</div>
+    </div>
+  </div>
+  <div style="margin-bottom:1.25rem"></div>
+
+  <div class="card">
+    <div class="card-title">Proactive daily routine</div>
+    <div style="font-size:13px;color:#3a3a38;line-height:1.7">
+      1. Check <strong>"Competitors"</strong> tab on ICP company LinkedIn pages — find companies in the same space that fit the ICP<br>
+      2. Check <strong>"People Also Viewed"</strong> on ICP company pages — surfaces similar companies<br>
+      3. Review <strong>intent signals</strong> — G2 category views, website visits (if configured)<br>
+      4. Check <strong>closed lost deals</strong> — re-engage every 6–12 months
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Cisco partner verification — use before outreach</div>
+    <div style="font-size:12px;color:#3a3a38;line-height:1.7;margin-bottom:0.75rem">Go to <strong>locator.cisco.com</strong> and search the company. Look for:</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div style="background:#f9f9f7;border:0.5px solid #d3d1c7;border-radius:8px;padding:0.75rem">
+        <div style="font-size:12px;font-weight:500;margin-bottom:3px">Advanced CX</div>
+        <div style="font-size:11px;color:#73726c">Strong Cisco pitch. They're already investing in CX — close to Expert CX</div>
+      </div>
+      <div style="background:#f9f9f7;border:0.5px solid #d3d1c7;border-radius:8px;padding:0.75rem">
+        <div style="font-size:12px;font-weight:500;margin-bottom:3px">Expert CX</div>
+        <div style="font-size:11px;color:#73726c">Best-fit. Use audit readiness angle — Planhat maps to all 7 Expert CX areas</div>
+      </div>
+      <div style="background:#f9f9f7;border:0.5px solid #d3d1c7;border-radius:8px;padding:0.75rem">
+        <div style="font-size:12px;font-weight:500;margin-bottom:3px">Cisco Black Belt</div>
+        <div style="font-size:11px;color:#73726c">Strong signal. Use rebate angle — unlocking additional Cisco rebates via PVI</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Sales Navigator setup — key filters</div>
+    <div class="card-grid-2" style="margin-bottom:0">
+      <div>
+        <div style="font-size:12px;font-weight:500;margin-bottom:6px">Company filters</div>
+        <div style="font-size:12px;color:#3a3a38;line-height:1.7">
+          Industry: IT Services, IT Consulting, Telecom, MSP-related<br>
+          Headcount: 200–10,000+ FTE<br>
+          Geography: AMER or EMEA (by rep region)
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;margin-bottom:6px">Persona title filters</div>
+        <div style="font-size:12px;color:#3a3a38;line-height:1.7">
+          Head / Director / VP of Customer Success<br>
+          Chief Customer Officer · Chief Experience Officer<br>
+          VP Customer Experience · VP Managed Services<br>
+          Program Manager Cisco · Director Account Management
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /pg-prospecting -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     TEMPLATES & COPY
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-templates" class="page">
+  <div class="page-header">
+    <div class="page-title">Templates &amp; Copy</div>
+    <div class="page-subtitle">LinkedIn outreach templates and follow-up email copy</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-tag"><span class="badge badge-blue">LinkedIn</span></div>
+    <div class="pitch-title">Connection Request</div>
+    <div class="quote-block">"Hey [Name]! Saw you're leading the post-sale motion for [sector] accounts at [company]. Curious how you're approaching renewal performance there, especially around adoption and exec alignment. Cheers!"</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-tag"><span class="badge badge-blue">LinkedIn</span></div>
+    <div class="pitch-title">Message after connect — previous Planhat company</div>
+    <div class="quote-block">"[Name] hope things are going well at [company]. Are you familiar with Planhat from your time at [previous Planhat customer]? There's a lot Planhat can do to enhance your customer success strategy. I'd love to discuss if you have a few minutes to talk shop this week?"</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-tag"><span class="badge badge-blue">LinkedIn</span></div>
+    <div class="pitch-title">New year / start of year message</div>
+    <div class="quote-block">"Hi [Name], Great to be connected and hope all is well in [city]. [Something about their city you have common ground with]. As you continue to get settled into '26 I'd love to share the latest updates on Planhat and how we can drastically improve NRR targets and customize workflows? How does your availability look for Friday?"</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-tag"><span class="badge badge-gray">Email</span></div>
+    <div class="pitch-title">Nudge / follow-up between outreach touches</div>
+    <div style="font-size:11px;color:#73726c;margin-bottom:8px">Subject: Quick follow-up</div>
+    <div class="quote-block">"[Name], just circling back — [one-liner relevant to their vertical or recent news]. Happy to keep it to 20 minutes if the timing is better now. Let me know."</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Copywriting principles</div>
+    <div style="font-size:12px;color:#3a3a38;line-height:1.9">
+      Keep connection requests <strong>under 300 characters</strong> — get to the point fast<br>
+      Reference something <strong>specific</strong> — their role, company, city, or vertical signal<br>
+      Always end with a <strong>soft question</strong> — not a hard pitch<br>
+      Follow-up nudges should be <strong>one-liners</strong> — no re-pitching, just re-surfacing<br>
+      Personalize the Cisco angle only if they are a <strong>verified Cisco partner</strong>
+    </div>
+  </div>
+</div><!-- /pg-templates -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SALES MATERIAL
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-collateral" class="page">
+  <div class="page-header">
+    <div class="page-title">Sales Material</div>
+    <div class="page-subtitle">Collateral organized by pitch angle and use case</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Cisco</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div class="collateral-item"><div class="collateral-title">The Customer Platform for Cisco CX</div><div class="collateral-type">Discovery + Demo Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Planhat Cisco Advanced CX Checklist</div><div class="collateral-type">Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Planhat Cisco Expert CX Checklist</div><div class="collateral-type">Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Cisco &amp; Planhat Expert Timeline</div><div class="collateral-type">Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Cisco360 Commercial Deck</div><div class="collateral-type">Pricing + ROI</div></div>
+      <div class="collateral-item"><div class="collateral-title">Telia Cygate Global Partner of the Year</div><div class="collateral-type">Video</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Multi-Vendor / Customer Success</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div class="collateral-item"><div class="collateral-title">The Customer Platform for MSP, IT &amp; Telco</div><div class="collateral-type">Discovery + Demo Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Demo Video for MSP &amp; IT Services</div><div class="collateral-type">Video</div></div>
+      <div class="collateral-item"><div class="collateral-title">Driving Retention in Digital Transformation</div><div class="collateral-type">Video</div></div>
+      <div class="collateral-item"><div class="collateral-title">Planhat Data Structure</div><div class="collateral-type">Technical Data Validation Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Planhat IT Services Website</div><div class="collateral-type">Website — planhat.com/it-services</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Planhat general</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div class="collateral-item"><div class="collateral-title">Planhat Platform Overview</div><div class="collateral-type">Video — planhat.com/studio/platform-introduction</div></div>
+      <div class="collateral-item"><div class="collateral-title">Value Framework 3.0</div><div class="collateral-type">Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Gartner Names Planhat a Leader</div><div class="collateral-type">Whitepaper</div></div>
+      <div class="collateral-item"><div class="collateral-title">Planhat AI Demo</div><div class="collateral-type">Video</div></div>
+      <div class="collateral-item"><div class="collateral-title">Planhat PSA Demo</div><div class="collateral-type">Video</div></div>
+      <div class="collateral-item"><div class="collateral-title">Commercial Enablement</div><div class="collateral-type">Pricing, Proposals, Slides</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Competitive</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div class="collateral-item"><div class="collateral-title">Planhat vs CRMs</div><div class="collateral-type">Deck</div></div>
+      <div class="collateral-item"><div class="collateral-title">Gainsight comparison</div><div class="collateral-type">Website</div></div>
+      <div class="collateral-item"><div class="collateral-title">Totango comparison</div><div class="collateral-type">Website</div></div>
+      <div class="collateral-item"><div class="collateral-title">ChurnZero comparison</div><div class="collateral-type">Website</div></div>
+      <div class="collateral-item"><div class="collateral-title">Vitally comparison</div><div class="collateral-type">Website</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Customer proof</div>
+    <div class="card-grid-3" style="margin-bottom:0">
+      <div class="collateral-item"><div class="collateral-title">Wachter — IT Services</div><div class="collateral-type">Video testimonials</div></div>
+      <div class="collateral-item"><div class="collateral-title">Closed Won Customers</div><div class="collateral-type">Reference list</div></div>
+      <div class="collateral-item"><div class="collateral-title">Telia Cygate Case Study</div><div class="collateral-type">Video + written</div></div>
+    </div>
+  </div>
+</div><!-- /pg-collateral -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     PRICING
+═════════════════════════════════════════════════════════════ -->
+<div id="pg-pricing" class="page">
+  <div class="page-header">
+    <div class="page-title">Pricing</div>
+    <div class="page-subtitle">Standard packages, AI tiers, Cisco-specific pricing, and ROI model</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Standard packages</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Package</th><th>Price / yr</th><th>CRM records</th><th>Custom objects</th><th>Automation credits / mo</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:500">Starter</td><td>~$40k</td><td>—</td><td>—</td><td>—</td><td style="font-size:11px;color:#73726c">5 users, Professional tier + Services</td></tr>
+          <tr><td style="font-weight:500">Professional</td><td>$43,800</td><td>500k</td><td>2</td><td>150k</td><td style="font-size:11px;color:#73726c">+ $16,500 PS</td></tr>
+          <tr><td style="font-weight:500">Advanced</td><td>$43,800+</td><td>2.5M</td><td>5</td><td>500k</td><td style="font-size:11px;color:#73726c">Scales with usage</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:#73726c;margin-top:0.75rem">Implementation fees: 50–100% of ARR · Minimum 40 hours</div>
+  </div>
+
+  <div class="card-grid-2">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">AI tiers</div>
+      <table style="font-size:12px">
+        <tbody>
+          <tr><td style="font-weight:500">Standard</td><td style="color:#0F6E56">Free</td></tr>
+          <tr><td style="font-weight:500">Gold</td><td>$550 / mo</td></tr>
+          <tr><td style="font-weight:500">Platinum</td><td>$2,500 / mo</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:#73726c;margin-top:0.75rem">Supports BYO LLM — Claude, OpenAI, Gemini, etc.</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">Managed services / ADP</div>
+      <table style="font-size:12px">
+        <tbody>
+          <tr><td style="font-weight:500">Acceleration</td><td>$3,350 / mo (192h/yr consulting)</td></tr>
+          <tr><td style="font-weight:500">Custom</td><td>$5,000+ / mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div style="margin-bottom:1.25rem"></div>
+
+  <div class="card">
+    <div class="card-title">Cisco-specific deal (Cisco360 deck)</div>
+    <div style="font-size:13px;color:#3a3a38;line-height:1.8">
+      $43,800 / yr + $16,500 PS &nbsp;·&nbsp; 5 core users &nbsp;·&nbsp; 36-month term<br>
+      <strong>Expert CX Specialization</strong> = potential 10% additional Cisco rebate<br>
+      <strong>A-CX</strong> = extra 4% on net bookings
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ROI model — Cisco partner ($65M revenue base)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Value driver</th><th>Assumption</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Churn reduction</td><td>-1%</td><td style="font-weight:500;color:#0F6E56">$650k</td></tr>
+          <tr><td>Upsell increase</td><td>+2%</td><td style="font-weight:500;color:#0F6E56">$1.3M</td></tr>
+          <tr><td>LCI / VIP rebates</td><td>Cisco program optimization</td><td style="font-weight:500;color:#0F6E56">$1.125M</td></tr>
+          <tr><td>Efficiency gains</td><td>CSM headcount leverage</td><td style="font-weight:500;color:#0F6E56">$420k</td></tr>
+          <tr><td colspan="2" style="font-weight:500">Total annual value</td><td style="font-weight:500;color:#0F6E56;font-size:14px">$3.545M</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- /pg-pricing -->
+
+</main>
+</div><!-- /app -->
+
+<script>
+// ── Navigation ─────────────────────────────────────────────
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('pg-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── Accordion ──────────────────────────────────────────────
+function toggleAcc(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.acc-arrow');
+  const open = body.classList.toggle('open');
+  arrow.textContent = open ? '▴' : '▾';
+}
+
+// ══════════════════════════════════════════════════════════
+// KPI TRACKER
+// ══════════════════════════════════════════════════════════
+
+// ── Constants ──────────────────────────────────────────────
+const DEF_QUOTA    = 250000;
+const DEF_COVERAGE = 4;
+const DEF_DEAL_RATE = 2/3;
+const MIN_DISCOS_WK = 1;
+const WEEKS_QTR    = 12;
+const MONTHS_QTR   = 3;
+const CO_PER_DISCO = { mm: 5, le: 3, ue: 3, mo: 3 };
+const PLBL         = { weekly: 'wk', monthly: 'mo', quarterly: 'qtr' };
+
+const SEGS = {
+  mm: { label: 'Mid-Market',       short: 'MM', defAvg: 45000,  cls: 'seg-mm' },
+  le: { label: 'Lower Enterprise', short: 'LE', defAvg: 75000,  cls: 'seg-le' },
+  ue: { label: 'Upper Enterprise', short: 'UE', defAvg: 100000, cls: 'seg-ue' },
+  mo: { label: 'Monsters',         short: 'MO', defAvg: 150000, cls: 'seg-mo' },
+};
+
+// ── Last Quarter data ──────────────────────────────────────
+const LAST_Q_FIELDS = ['accounts','discos','deals','pipe','closed','liveDeals','livePipe'];
+const LAST_Q = [];
+
+// ── Rep definitions ────────────────────────────────────────
+const REPS = [
+  { name: 'Victor', region: 'AMER/EMEA', weights: { le: 0.40, ue: 0.40, mo: 0.20 }, repAvg: null, quota: null,   coverage: null, dealRate: null },
+  { name: 'Filip',  region: 'AMER',      weights: { mm: 1.00 },                      repAvg: null, quota: 50000,  coverage: null, dealRate: null },
+  { name: 'Josh',   region: 'AMER',      weights: { mm: 1.00 },                      repAvg: null, quota: 150000, coverage: null, dealRate: null },
+  { name: 'Ava',    region: 'EMEA',      weights: { le: 0.50, ue: 0.50 },            repAvg: null, quota: 150000, coverage: null, dealRate: null },
+  { name: 'Love',   region: 'EMEA',      weights: { le: 0.80, ue: 0.20 },            repAvg: null, quota: null,   coverage: null, dealRate: null },
+  { name: 'Ben',    region: 'AMER',      weights: { ue: 0.80, mo: 0.20 },            repAvg: null, quota: 50000,  coverage: null, dealRate: null },
+  { name: 'Nick',   region: 'EMEA',      weights: { ue: 0.80, mo: 0.20 },            repAvg: null, quota: null,   coverage: null, dealRate: null },
+];
+
+// ── Helpers ────────────────────────────────────────────────
+function getSegAvg(seg) {
+  const v = parseFloat(document.getElementById('def-' + seg).value);
+  return (isNaN(v) || v <= 0) ? SEGS[seg].defAvg : v;
+}
+function getRepAvg(rep) {
+  if (rep.repAvg !== null && rep.repAvg > 0) return rep.repAvg;
+  let wa = 0;
+  Object.entries(rep.weights).forEach(([seg, w]) => { wa += w * getSegAvg(seg); });
+  return wa;
+}
+function getRepQuota(rep)    { return (rep.quota    !== null && rep.quota    > 0) ? rep.quota    : DEF_QUOTA; }
+function getRepCoverage(rep) { return (rep.coverage !== null && rep.coverage > 0) ? rep.coverage : DEF_COVERAGE; }
+function getRepDealRate(rep) { return (rep.dealRate !== null && rep.dealRate > 0) ? rep.dealRate / 100 : DEF_DEAL_RATE; }
+function isRamping(rep) { return getRepQuota(rep) < DEF_QUOTA; }
+
+function calcRep(rep, weekMult) {
+  const avg      = getRepAvg(rep);
+  const quota    = getRepQuota(rep);
+  const coverage = getRepCoverage(rep);
+  const dealRate = getRepDealRate(rep);
+  const ramping  = isRamping(rep);
+  const activityQuota = ramping ? DEF_QUOTA : quota;
+  const pipeTarget = activityQuota * coverage;
+  const discoAvg = ramping ? Math.min(avg, getSegAvg('mm')) : avg;
+  const dWkRaw  = pipeTarget / (WEEKS_QTR * dealRate * discoAvg);
+  const dWk     = Math.max(MIN_DISCOS_WK, Math.ceil(dWkRaw));
+  const discos  = dWk * weekMult;
+  const deals   = discos * dealRate;
+  const pipe    = deals * avg;
+  const weighted60 = quota * 0.60;
+  let wtdCoPD   = 0;
+  Object.entries(rep.weights).forEach(([seg, w]) => { wtdCoPD += w * CO_PER_DISCO[seg]; });
+  const portfolio = Math.ceil(dWk * WEEKS_QTR * wtdCoPD);
+  return { avg, quota, activityQuota, coverage, dealRate, ramping, pipeTarget, dWk, discos, deals, pipe, weighted60, wtdCoPD, portfolio };
+}
+
+function fmt$(n) {
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  return '$' + Math.round(n/1000) + 'k';
+}
+function fmtN(n) { return n < 10 ? n.toFixed(1) : Math.round(n).toString(); }
+
+// ── Last Quarter panel ─────────────────────────────────────
+function toggleLastQ() {
+  const body = document.getElementById('lastq-body');
+  const btn  = document.querySelectorAll('.btn-targets')[1];
+  const open = body.classList.toggle('open');
+  btn.textContent = open ? 'Last Quarter ▴' : 'Last Quarter ▾';
+}
+
+function buildLastQTable() {
+  const tbody = document.getElementById('lastq-tbody');
+  tbody.innerHTML = '';
+  const dollarFields = new Set(['pipe','closed','livePipe']);
+  REPS.forEach((rep, idx) => {
+    const row = document.createElement('tr');
+    const cells = LAST_Q_FIELDS.map(f => {
+      const val = LAST_Q[idx][f];
+      const isDollar = dollarFields.has(f);
+      return `<td><div class="rep-inp-wrap">${isDollar ? '<span>$</span>' : ''}
+        <input class="tgt-inp${val !== null ? ' changed' : ''}" id="lq-${f}-${idx}"
+          type="number" value="${val !== null ? val : ''}" step="${isDollar ? 10000 : 1}" min="0" placeholder="—"
+          onchange="onLastQChange(${idx},'${f}',this.value,this)">
+      </div></td>`;
+    }).join('');
+    row.innerHTML = `<td class="rep-name">${rep.name}</td>${cells}`;
+    tbody.appendChild(row);
+  });
+}
+
+function onLastQChange(idx, field, val, el) {
+  const v = parseFloat(val);
+  LAST_Q[idx][field] = (isNaN(v) || val === '') ? null : v;
+  el.classList.toggle('changed', LAST_Q[idx][field] !== null);
+}
+
+// ── Targets panel ──────────────────────────────────────────
+function toggleTargets() {
+  const body = document.getElementById('targets-body');
+  const btn  = document.querySelector('.btn-targets');
+  const open = body.classList.toggle('open');
+  btn.textContent = open ? 'Targets ▴' : 'Targets ▾';
+}
+
+function buildTargetsTable() {
+  const tbody = document.getElementById('targets-tbody');
+  tbody.innerHTML = '';
+  REPS.forEach((rep, idx) => {
+    const qChanged  = rep.quota    !== null;
+    const cvChanged = rep.coverage !== null;
+    const drChanged = rep.dealRate !== null;
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td class="rep-name">${rep.name}</td>
+      <td style="color:#73726c;font-size:11px">${rep.region}</td>
+      <td><div class="rep-inp-wrap"><span>$</span>
+        <input class="tgt-inp${qChanged?' changed':''}" id="tgt-quota-${idx}"
+          type="number" value="${getRepQuota(rep)}" step="10000"
+          onchange="onTargetChange(${idx},'quota',this.value,this)">
+      </div></td>
+      <td><input class="tgt-inp${cvChanged?' changed':''}" id="tgt-cov-${idx}"
+        type="number" value="${getRepCoverage(rep)}" step="0.5" min="1"
+        onchange="onTargetChange(${idx},'coverage',this.value,this)">×</td>
+      <td><input class="tgt-inp${drChanged?' changed':''}" id="tgt-dr-${idx}"
+        type="number" value="${Math.round(getRepDealRate(rep)*100)}" step="1" min="1" max="100"
+        onchange="onTargetChange(${idx},'dealRate',this.value,this)">%</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function onTargetChange(idx, field, val, el) {
+  const v = parseFloat(val);
+  REPS[idx][field] = (isNaN(v) || v <= 0) ? null : v;
+  el.classList.toggle('changed', REPS[idx][field] !== null);
+  render();
+}
+
+// ── Reset ──────────────────────────────────────────────────
+function resetAllAvg() {
+  ['mm','le','ue','mo'].forEach(seg => {
+    document.getElementById('def-' + seg).value = SEGS[seg].defAvg;
+  });
+  REPS.forEach(rep => { rep.repAvg = null; });
+  render();
+}
+
+// ── Tab / period ───────────────────────────────────────────
+let activePeriod = 'quarterly';
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.kpi-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + tab).classList.add('active');
+  render();
+}
+
+function switchPeriod(p, el) {
+  activePeriod = p;
+  document.querySelectorAll('.pbtn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function onRepAvgChange(idx, val) {
+  const v = parseFloat(val);
+  REPS[idx].repAvg = (isNaN(v) || v <= 0) ? null : v;
+  render();
+}
+
+// ── Main render ────────────────────────────────────────────
+function render() {
+  const weekMult = { weekly: 1, monthly: MONTHS_QTR, quarterly: WEEKS_QTR }[activePeriod];
+  const lbl = PLBL[activePeriod];
+  renderReps(weekMult, lbl);
+  renderSegments(weekMult, lbl);
+  renderPortfolio();
+}
+
+function renderReps(weekMult, lbl) {
+  const results   = REPS.map((r, i) => ({ rep: r, idx: i, ...calcRep(r, weekMult) }));
+  const totDiscos = results.reduce((s, r) => s + r.discos, 0);
+  const totDeals  = results.reduce((s, r) => s + r.deals, 0);
+  const totPipe   = results.reduce((s, r) => s + r.pipe, 0);
+  const totW60    = results.reduce((s, r) => s + r.weighted60 * weekMult / WEEKS_QTR, 0);
+  const totQuota  = results.reduce((s, r) => s + getRepQuota(r.rep) * weekMult / WEEKS_QTR, 0);
+
+  let html = `
+  <div class="metric-row">
+    <div class="metric"><div class="metric-label">Team discos / ${lbl}</div><div class="metric-val">${fmtN(totDiscos)}</div><div class="metric-sub">min 1/wk per rep</div></div>
+    <div class="metric"><div class="metric-label">Deals created / ${lbl}</div><div class="metric-val">${fmtN(totDeals)}</div><div class="metric-sub">at rep deal rate</div></div>
+    <div class="metric"><div class="metric-label">Total pipe / ${lbl}</div><div class="metric-val">${fmt$(totPipe)}</div><div class="metric-sub">deals × avg deal size</div></div>
+    <div class="metric"><div class="metric-label">Team quota / ${lbl}</div><div class="metric-val">${fmt$(totQuota)}</div><div class="metric-sub">weighted safe bet: ${fmt$(totW60)}</div></div>
+  </div>
+  <p style="font-size:11px;color:#73726c;margin-bottom:0.75rem">Avg deal size drives discos needed. Edit per rep to override segment default — green border = override active. <span style="color:#92400E">RAMP reps have quota &lt; $250k but activity targets are calculated toward full $250k. Disco count uses MM avg deal size as a cap so all ramping reps run the same high-activity motion.</span></p>
+  <div class="kpi-table-wrap"><table><thead><tr>
+    <th>Rep</th><th>Region</th><th>Segments</th><th>Avg deal</th>
+    <th>Discos / ${lbl}</th><th>Deals / ${lbl}</th><th>Pipe / ${lbl}</th>
+    <th class="sep">Quota / ${lbl}</th><th>Weighted @ 60%</th>
+  </tr></thead><tbody>`;
+
+  results.forEach(({ rep, idx, avg, dWk, discos, deals, pipe, quota, activityQuota, ramping, weighted60 }) => {
+    const isOverride = rep.repAvg !== null;
+    const qPeriod    = quota * weekMult / WEEKS_QTR;
+    const w60Period  = weighted60 * weekMult / WEEKS_QTR;
+    const clamped    = dWk === MIN_DISCOS_WK;
+    const badges = Object.entries(rep.weights).map(([seg, w]) =>
+      `<span class="badge ${SEGS[seg].cls}">${SEGS[seg].short}</span><span class="weight-pill">${Math.round(w*100)}%</span>`
+    ).join(' ');
+    const rampLabel = ramping ? `<span class="ramp-badge" title="Ramping">RAMP</span>` : '';
+    const rampNote  = ramping ? `<span class="ramp-note">↑ full quota</span>` : '';
+    html += `<tr>
+      <td class="rep-name">${rep.name}${rampLabel}</td>
+      <td style="color:#73726c;font-size:11px">${rep.region}</td>
+      <td>${badges}</td>
+      <td><div class="rep-inp-wrap"><span>$</span>
+        <input class="rep-inp${isOverride?' overridden':''}" id="rep-avg-${idx}"
+          type="number" value="${Math.round(avg)}" step="1000"
+          onchange="onRepAvgChange(${idx}, this.value)">
+      </div></td>
+      <td style="font-weight:500">${fmtN(discos)}${clamped ? ' <span style="color:#BA7517;font-size:10px">↑min</span>' : ''}${rampNote}</td>
+      <td>${fmtN(deals)}${ramping ? '<span class="ramp-note"> ↑</span>' : ''}</td>
+      <td style="font-weight:500">${fmt$(pipe)}${rampNote}</td>
+      <td class="sep">${fmt$(qPeriod)}<br><span style="font-size:10px;color:#92400E">${ramping ? fmt$(activityQuota * weekMult / WEEKS_QTR) + ' activity base' : ''}</span></td>
+      <td style="font-weight:500;color:#0F6E56">${fmt$(w60Period)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody><tfoot><tr>
+    <td colspan="4" style="color:#73726c">Team total</td>
+    <td>${fmtN(totDiscos)}</td><td>${fmtN(totDeals)}</td><td>${fmt$(totPipe)}</td>
+    <td class="sep">${fmt$(totQuota)}</td><td style="color:#0F6E56">${fmt$(totW60)}</td>
+  </tr></tfoot></table></div>`;
+
+  document.getElementById('section-reps').innerHTML = html;
+}
+
+function renderSegments(weekMult, lbl) {
+  const segKeys = ['mm','le','ue','mo'];
+  const segT = {};
+  segKeys.forEach(k => { segT[k] = { discos:0, deals:0, pipe:0, repContribs:[] }; });
+
+  REPS.forEach(rep => {
+    const c = calcRep(rep, weekMult);
+    Object.entries(rep.weights).forEach(([seg, w]) => {
+      if (!w) return;
+      const discos = c.discos * w;
+      const deals  = discos * c.dealRate;
+      const pipe   = deals * c.avg;
+      segT[seg].discos += discos;
+      segT[seg].deals  += deals;
+      segT[seg].pipe   += pipe;
+      segT[seg].repContribs.push({ name: rep.name, w, override: rep.repAvg !== null });
+    });
+  });
+
+  const totDiscos = segKeys.reduce((s,k) => s + segT[k].discos, 0);
+  const totDeals  = segKeys.reduce((s,k) => s + segT[k].deals, 0);
+  const totPipe   = segKeys.reduce((s,k) => s + segT[k].pipe, 0);
+
+  let html = `
+  <div class="metric-row">
+    <div class="metric"><div class="metric-label">Total discos / ${lbl}</div><div class="metric-val">${fmtN(totDiscos)}</div><div class="metric-sub">weighted across segments</div></div>
+    <div class="metric"><div class="metric-label">Total deals / ${lbl}</div><div class="metric-val">${fmtN(totDeals)}</div><div class="metric-sub">at rep deal rate</div></div>
+    <div class="metric"><div class="metric-label">Total pipe / ${lbl}</div><div class="metric-val">${fmt$(totPipe)}</div><div class="metric-sub">by rep avg deal</div></div>
+  </div>
+  <div class="kpi-table-wrap"><table><thead><tr>
+    <th>Segment</th><th>Default avg deal</th><th>Reps</th>
+    <th>Discos / ${lbl}</th><th>Deals / ${lbl}</th><th>Pipe / ${lbl}</th>
+  </tr></thead><tbody>`;
+
+  segKeys.forEach(key => {
+    const seg = SEGS[key];
+    const t   = segT[key];
+    if (t.discos === 0) return;
+    const repStr = t.repContribs.map(r =>
+      `${r.name}${r.override?' ★':''} (${Math.round(r.w*100)}%)`
+    ).join(', ');
+    html += `<tr>
+      <td><span class="badge ${seg.cls}" style="font-size:11px;padding:3px 8px">${seg.label}</span></td>
+      <td>${fmt$(getSegAvg(key))}</td>
+      <td style="color:#73726c;font-size:11px">${repStr}</td>
+      <td>${fmtN(t.discos)}</td>
+      <td>${fmtN(t.deals)}</td>
+      <td style="font-weight:500">${fmt$(t.pipe)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody><tfoot><tr>
+    <td colspan="3" style="color:#73726c">Team total &nbsp;<span style="font-size:10px">★ = per-rep deal override</span></td>
+    <td>${fmtN(totDiscos)}</td><td>${fmtN(totDeals)}</td><td>${fmt$(totPipe)}</td>
+  </tr></tfoot></table></div>`;
+
+  document.getElementById('section-segments').innerHTML = html;
+}
+
+function renderPortfolio() {
+  const results      = REPS.map((r, i) => ({ rep: r, idx: i, ...calcRep(r, WEEKS_QTR) }));
+  const totPort      = results.reduce((s, r) => s + r.portfolio, 0);
+  const totDiscosWk  = results.reduce((s, r) => s + r.dWk, 0);
+  const totDiscosQtr = results.reduce((s, r) => s + r.dWk * WEEKS_QTR, 0);
+  const totDealsWk   = results.reduce((s, r) => s + r.dWk * r.dealRate, 0);
+  const totDealsQtr  = results.reduce((s, r) => s + r.dWk * WEEKS_QTR * r.dealRate, 0);
+
+  let html = `
+  <div class="assumption-bar" style="margin-bottom:1.25rem">
+    <span>Portfolio = companies to cycle through per quarter</span>
+    <span>★ = per-rep deal size override</span>
+  </div>
+  <div class="kpi-table-wrap"><table><thead><tr>
+    <th>Rep</th><th>Region</th><th>Segments</th>
+    <th>Avg deal</th><th>Quota / qtr</th><th>Pipe target</th>
+    <th>Discos / qtr</th><th>Discos / wk</th>
+    <th>Deals / wk</th><th>Deals / qtr</th><th>Portfolio</th>
+  </tr></thead><tbody>`;
+
+  results.forEach(({ rep, avg, quota, activityQuota, ramping, pipeTarget, dWk, dealRate, portfolio }) => {
+    const isOverride = rep.repAvg !== null;
+    const clamped    = dWk === MIN_DISCOS_WK;
+    const badges = Object.entries(rep.weights).map(([seg, w]) =>
+      `<span class="badge ${SEGS[seg].cls}">${SEGS[seg].short}</span><span class="weight-pill">${Math.round(w*100)}%</span>`
+    ).join(' ');
+    const rampLabel = ramping ? ` <span class="ramp-badge">RAMP</span>` : '';
+    const dealsWk   = dWk * dealRate;
+    const dealsQtr  = dWk * WEEKS_QTR * dealRate;
+    html += `<tr>
+      <td class="rep-name">${rep.name}${rampLabel}</td>
+      <td style="color:#73726c;font-size:11px">${rep.region}</td>
+      <td>${badges}</td>
+      <td>${fmt$(avg)}${isOverride?' <span style="color:#0F6E56;font-size:10px">★</span>':''}</td>
+      <td>${fmt$(quota)}${ramping ? `<br><span style="font-size:10px;color:#92400E">${fmt$(activityQuota)} activity</span>` : ''}</td>
+      <td>${fmt$(pipeTarget)}</td>
+      <td style="font-weight:500">${fmtN(dWk * WEEKS_QTR)}${clamped?' <span style="color:#BA7517;font-size:10px">↑min</span>':''}</td>
+      <td>${dWk.toFixed(0)}</td>
+      <td>${fmtN(dealsWk)}</td>
+      <td style="font-weight:500">${fmtN(dealsQtr)}</td>
+      <td style="font-weight:500;font-size:14px">${portfolio}</td>
+    </tr>`;
+  });
+
+  html += `</tbody><tfoot><tr>
+    <td colspan="6" style="color:#73726c">Team total</td>
+    <td>${fmtN(totDiscosQtr)}</td>
+    <td>${totDiscosWk.toFixed(0)}</td>
+    <td>${fmtN(totDealsWk)}</td>
+    <td>${fmtN(totDealsQtr)}</td>
+    <td>${totPort}</td>
+  </tr></tfoot></table></div>`;
+
+  document.getElementById('section-portfolio').innerHTML = html;
+}
+
+// ── Init ───────────────────────────────────────────────────
+REPS.forEach(() => {
+  const row = {};
+  LAST_Q_FIELDS.forEach(f => { row[f] = null; });
+  LAST_Q.push(row);
+});
+buildLastQTable();
+buildTargetsTable();
+render();
+</script>
+</body>
+</html>
