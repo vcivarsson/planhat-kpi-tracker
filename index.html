@@ -107,8 +107,13 @@ tfoot td { border-top: 0.5px solid #b4b2a9; border-bottom: none; font-weight: 50
 .stage-outcome { font-size: 10px; color: #0F6E56; font-weight: 500; margin-top: 8px; }
 
 /* ── Collateral items ─────────────────────────────────────── */
-.collateral-item { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 0.75rem 1rem; }
-.collateral-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+.collateral-item { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 0.75rem 1rem; display: block; text-decoration: none; color: inherit; transition: border-color 0.1s, box-shadow 0.1s; }
+a.collateral-item:hover { border-color: #5f5e5a; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+a.collateral-item .collateral-title { color: #1a1a18; }
+.collateral-item.no-link { cursor: default; }
+.collateral-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+.collateral-title .ext-icon { font-size: 9px; color: #b4b2a9; }
+a.collateral-item:hover .ext-icon { color: #5f5e5a; }
 .collateral-type { font-size: 10px; color: #73726c; }
 
 /* ── Segment badges (KPI tracker) ─────────────────────────── */
@@ -956,57 +961,58 @@ Okay great, then it's good we're speaking.
   <div class="card">
     <div class="card-title">Cisco</div>
     <div class="card-grid-3" style="margin-bottom:0">
-      <div class="collateral-item"><div class="collateral-title">The Customer Platform for Cisco CX</div><div class="collateral-type">Discovery + Demo Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Planhat Cisco Advanced CX Checklist</div><div class="collateral-type">Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Planhat Cisco Expert CX Checklist</div><div class="collateral-type">Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Cisco &amp; Planhat Expert Timeline</div><div class="collateral-type">Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Cisco360 Commercial Deck</div><div class="collateral-type">Pricing + ROI</div></div>
-      <div class="collateral-item"><div class="collateral-title">Telia Cygate Global Partner of the Year</div><div class="collateral-type">Video</div></div>
+      <a class="collateral-item" href="https://docs.google.com/presentation/d/1BcPkOQLcAYsFccXzWDjIKsccHj5Obto-9c98ZQR4cu0/edit?slide=id.g31ba9a6c4cc_0_585#slide=id.g31ba9a6c4cc_0_585" target="_blank"><div class="collateral-title">The Customer Platform for Cisco CX <span class="ext-icon">↗</span></div><div class="collateral-type">Discovery + Demo Deck</div></a>
+      <div class="collateral-item no-link"><div class="collateral-title">Planhat Cisco Advanced CX Checklist</div><div class="collateral-type">Deck — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Planhat Cisco Expert CX Checklist</div><div class="collateral-type">Deck — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Cisco &amp; Planhat Expert Timeline</div><div class="collateral-type">Deck — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Cisco360 Commercial Deck</div><div class="collateral-type">Pricing + ROI — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Telia Cygate Global Partner of the Year</div><div class="collateral-type">Video — add link</div></div>
     </div>
   </div>
 
   <div class="card">
     <div class="card-title">Multi-Vendor / Customer Success</div>
     <div class="card-grid-3" style="margin-bottom:0">
-      <div class="collateral-item"><div class="collateral-title">The Customer Platform for MSP, IT &amp; Telco</div><div class="collateral-type">Discovery + Demo Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Demo Video for MSP &amp; IT Services</div><div class="collateral-type">Video</div></div>
-      <div class="collateral-item"><div class="collateral-title">Driving Retention in Digital Transformation</div><div class="collateral-type">Video</div></div>
-      <div class="collateral-item"><div class="collateral-title">Planhat Data Structure</div><div class="collateral-type">Technical Data Validation Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Planhat IT Services Website</div><div class="collateral-type">Website — planhat.com/it-services</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">The Customer Platform for MSP, IT &amp; Telco</div><div class="collateral-type">Discovery + Demo Deck — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Demo Video for MSP &amp; IT Services</div><div class="collateral-type">Video — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Driving Retention in Digital Transformation</div><div class="collateral-type">Video — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Planhat Data Structure</div><div class="collateral-type">Technical Data Validation Deck — add link</div></div>
+      <a class="collateral-item" href="https://www.planhat.com/it-services" target="_blank"><div class="collateral-title">Planhat IT Services Website <span class="ext-icon">↗</span></div><div class="collateral-type">Website</div></a>
     </div>
   </div>
 
   <div class="card">
     <div class="card-title">Planhat general</div>
     <div class="card-grid-3" style="margin-bottom:0">
-      <div class="collateral-item"><div class="collateral-title">Planhat Platform Overview</div><div class="collateral-type">Video — planhat.com/studio/platform-introduction</div></div>
-      <div class="collateral-item"><div class="collateral-title">Value Framework 3.0</div><div class="collateral-type">Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Gartner Names Planhat a Leader</div><div class="collateral-type">Whitepaper</div></div>
-      <div class="collateral-item"><div class="collateral-title">Planhat AI Demo</div><div class="collateral-type">Video</div></div>
-      <div class="collateral-item"><div class="collateral-title">Planhat PSA Demo</div><div class="collateral-type">Video</div></div>
-      <div class="collateral-item"><div class="collateral-title">Commercial Enablement</div><div class="collateral-type">Pricing, Proposals, Slides</div></div>
+      <a class="collateral-item" href="https://www.planhat.com/studio/platform-introduction" target="_blank"><div class="collateral-title">Planhat Platform Overview <span class="ext-icon">↗</span></div><div class="collateral-type">Video</div></a>
+      <div class="collateral-item no-link"><div class="collateral-title">Value Framework 3.0</div><div class="collateral-type">Deck — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Gartner Names Planhat a Leader</div><div class="collateral-type">Whitepaper — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Planhat AI Demo</div><div class="collateral-type">Video — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Planhat PSA Demo</div><div class="collateral-type">Video — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Commercial Enablement</div><div class="collateral-type">Pricing, Proposals, Slides — add link</div></div>
     </div>
   </div>
 
   <div class="card">
     <div class="card-title">Competitive</div>
     <div class="card-grid-3" style="margin-bottom:0">
-      <div class="collateral-item"><div class="collateral-title">Planhat vs CRMs</div><div class="collateral-type">Deck</div></div>
-      <div class="collateral-item"><div class="collateral-title">Gainsight comparison</div><div class="collateral-type">Website</div></div>
-      <div class="collateral-item"><div class="collateral-title">Totango comparison</div><div class="collateral-type">Website</div></div>
-      <div class="collateral-item"><div class="collateral-title">ChurnZero comparison</div><div class="collateral-type">Website</div></div>
-      <div class="collateral-item"><div class="collateral-title">Vitally comparison</div><div class="collateral-type">Website</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Planhat vs CRMs</div><div class="collateral-type">Deck — add link</div></div>
+      <a class="collateral-item" href="https://www.planhat.com/compare/gainsight-alternative" target="_blank"><div class="collateral-title">Gainsight comparison <span class="ext-icon">↗</span></div><div class="collateral-type">Website</div></a>
+      <a class="collateral-item" href="https://www.planhat.com/compare/totango-alternative" target="_blank"><div class="collateral-title">Totango comparison <span class="ext-icon">↗</span></div><div class="collateral-type">Website</div></a>
+      <a class="collateral-item" href="https://www.planhat.com/compare/churnzero-alternative" target="_blank"><div class="collateral-title">ChurnZero comparison <span class="ext-icon">↗</span></div><div class="collateral-type">Website</div></a>
+      <a class="collateral-item" href="https://www.planhat.com/compare/vitally-alternative" target="_blank"><div class="collateral-title">Vitally comparison <span class="ext-icon">↗</span></div><div class="collateral-type">Website</div></a>
     </div>
   </div>
 
   <div class="card">
     <div class="card-title">Customer proof</div>
     <div class="card-grid-3" style="margin-bottom:0">
-      <div class="collateral-item"><div class="collateral-title">Wachter — IT Services</div><div class="collateral-type">Video testimonials</div></div>
-      <div class="collateral-item"><div class="collateral-title">Closed Won Customers</div><div class="collateral-type">Reference list</div></div>
-      <div class="collateral-item"><div class="collateral-title">Telia Cygate Case Study</div><div class="collateral-type">Video + written</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Wachter — IT Services</div><div class="collateral-type">Video testimonials — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Closed Won Customers</div><div class="collateral-type">Reference list — add link</div></div>
+      <div class="collateral-item no-link"><div class="collateral-title">Telia Cygate Case Study</div><div class="collateral-type">Video + written — add link</div></div>
     </div>
   </div>
+  <p style="font-size:11px;color:#73726c;margin-top:-0.5rem">Items marked "add link" — send me the URL and I'll wire it up.</p>
 </div><!-- /pg-collateral -->
 
 
