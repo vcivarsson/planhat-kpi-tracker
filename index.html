@@ -1052,210 +1052,374 @@ Most teams that switch from Gainsight come to us because of the implementation c
 <div id="pg-objections" class="page">
   <div class="page-header">
     <div class="page-title">Objection Handling</div>
-    <div class="page-subtitle">12 categories — click any to expand</div>
+    <div class="page-subtitle">30+ objections with responses — search or filter by category</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Time / Attention</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"This isn't a good time." / "Can you call me later?" / "Send me an email." / "About to jump into a meeting."</div>
-      <div class="obj-a">"Give me 30 seconds so I can explain the reasons for my call?" / "Can I call you back this afternoon?"</div>
+  <div class="pitch-filter-bar">
+    <div class="pitch-search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      <input class="pitch-search" id="obj-search" type="text" placeholder="Search objections…" oninput="filterObj()">
+    </div>
+    <div class="pitch-filters">
+      <button class="pf-btn active" data-filter="all" onclick="setObjFilter(this)">All</button>
+      <button class="pf-btn" data-filter="timing" onclick="setObjFilter(this)">Time / Attention</button>
+      <button class="pf-btn" data-filter="no interest" onclick="setObjFilter(this)">No Interest</button>
+      <button class="pf-btn" data-filter="have a tool" onclick="setObjFilter(this)">Have a Tool</button>
+      <button class="pf-btn" data-filter="gainsight" onclick="setObjFilter(this)">Gainsight</button>
+      <button class="pf-btn" data-filter="budget" onclick="setObjFilter(this)">Budget</button>
+      <button class="pf-btn" data-filter="authority" onclick="setObjFilter(this)">Authority</button>
+      <button class="pf-btn" data-filter="cisco" onclick="setObjFilter(this)">Cisco</button>
+      <button class="pf-btn" data-filter="security" onclick="setObjFilter(this)">Security</button>
+      <button class="pf-btn" data-filter="skepticism" onclick="setObjFilter(this)">Skepticism</button>
+      <button class="pf-btn" data-filter="data technical" onclick="setObjFilter(this)">Data / Technical</button>
     </div>
   </div>
+  <div class="pitch-no-results" id="obj-no-results">No results — try a different search or filter.</div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>No Interest</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We're not interested."</div>
-      <div class="obj-a">"No probs. Can I just ask why — CS tool already in place? Not the right person? Bad time?"</div>
-      <div class="obj-q">"This isn't a priority right now."</div>
-      <div class="obj-a">"No probs. Where's your priority right now?" / "What would be a good time to reconnect?"</div>
-      <div class="obj-q">"I don't think we need this."</div>
-      <div class="obj-a">"Let's take 2 minutes to make sure. From where are you currently managing your CS operations / customer lifecycle?"
+  <!-- ── TIME / ATTENTION ───────────────────────────────────── -->
+  <div class="pitch-card" data-tags="timing, time, attention, call later, email, meeting, busy">
+    <div class="pitch-tag"><span class="badge badge-gray">Time / Attention</span></div>
+    <div class="pitch-title">"This isn't a good time." / "Send me an email." / "I'm about to jump into a meeting."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Give me 30 seconds so I can explain the reasons for my call?"
 
-"You might not need it right now, but since some of your competitors and similar companies are using our solution (or one of our competitors) I'd hate for you to miss out. Mind if we take 2 minutes to see if it's relevant? If not, I promise you won't hear from me again."</div>
-    </div>
+"Can I call you back this afternoon / tonight?"</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Gainsight</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We use Gainsight."</div>
-      <div class="obj-a">Acknowledge their choice. Then: "Gainsight is a strong platform — a lot of teams come to us because of the implementation complexity and admin overhead. How long did it take to get fully live?" (Surface time-to-value and flexibility pain.) Key differentiators: faster implementation, lower admin burden, native AI with BYO LLM (Claude, OpenAI, Gemini).</div>
-    </div>
+  <!-- ── NO INTEREST ────────────────────────────────────────── -->
+  <div class="pitch-card" data-tags="no interest, not interested, priority, don't need, we're all set">
+    <div class="pitch-tag"><span class="badge badge-gray">No Interest</span></div>
+    <div class="pitch-title">"We're not interested."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"No probs. Can I just ask why — CS tool already in place? Not the right person? Bad time?"</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — ChurnZero</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We use ChurnZero."</div>
-      <div class="obj-a">ChurnZero is built for engagement automation but lacks modular workflow logic and a multi-vendor data model. Ask: "How do you handle renewal tracking across multiple vendor lines today — is that all in ChurnZero or are you pulling from other places too?"</div>
-    </div>
+  <div class="pitch-card" data-tags="no interest, priority, not a priority, reconnect, timing">
+    <div class="pitch-tag"><span class="badge badge-gray">No Interest</span></div>
+    <div class="pitch-title">"This isn't a priority right now."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"No probs. Where's your priority right now?"
+
+"What would be a good time to reconnect?"</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Totango / Vitally</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We use Totango." / "We use Vitally."</div>
-      <div class="obj-a"><strong>Totango:</strong> Predefined success blocks limit flexibility. Planhat's custom objects and workflows are fully configurable for any vendor lifecycle model.<br><br><strong>Vitally:</strong> Strong UX but weak time-series data and poor parent/child hierarchy — critical issues for MSPs managing multi-vendor portfolios at scale.</div>
-    </div>
+  <div class="pitch-card" data-tags="no interest, don't need, we're all set, competitors, miss out">
+    <div class="pitch-tag"><span class="badge badge-gray">No Interest</span></div>
+    <div class="pitch-title">"I don't think we need this." / "We're all set."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Let's take 2 minutes to make sure. From where are you currently managing your CS operations / customer lifecycle?"
+
+"You might not need it right now, but since some of your competitors and similar companies are using our solution (or one of our competitors) I'd hate for you to miss out. Mind if we take 2 minutes to see if it's relevant? If not, I promise you won't hear from me again."
+
+"Interesting — what CS tool are you currently using?"</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Salesforce</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We do this in Salesforce." / "We already have Salesforce."</div>
-      <div class="obj-a">SFDC is a linear sales tool — post-sale needs (health scoring, lifecycle automation, time-series data) require expensive add-ons and significant customization. Don't argue against SFDC directly. Instead: "Totally — most of our customers still use SFDC for their sales CRM and run Planhat alongside it for the post-sale motion. We have a native integration. Who owns CS in your org — is that a separate team from sales?"</div>
-    </div>
+  <!-- ── HAVE A TOOL — GENERIC ──────────────────────────────── -->
+  <div class="pitch-card" data-tags="have a tool, already use, another platform, satisfied, evaluation">
+    <div class="pitch-tag"><span class="badge badge-yellow">Have a Tool</span></div>
+    <div class="pitch-title">"We already use a tool for that." / "We're using another platform."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"What tool? Do you use a CRM (like Salesforce or D365) or a dedicated CS tool like Gainsight or Totango?"
+
+"Which one? Are you fully satisfied? I don't think Planhat was part of the evaluation, correct? Since Planhat is a leading CS Platform worldwide, and we haven't had the chance to connect yet, would you be open to comparing your current CS tool with our solution?"</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — ConnectWise / ScalePad</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We use ConnectWise." / "We have ScalePad / Ray Allen."</div>
-      <div class="obj-a"><strong>ConnectWise:</strong> PSA / ticketing only — complement it, don't replace it. "We integrate with ConnectWise via API so your service data flows into Planhat automatically. You keep your PSA, we add the CS and lifecycle layer on top."<br><br><strong>ScalePad / Ray Allen:</strong> Asset lifecycle only — no CS capabilities. Planhat ingests their asset data and adds health scoring, renewal automation, and expansion playbooks.</div>
-    </div>
+  <div class="pitch-card" data-tags="have a tool, happy, current solution, satisfied, year ahead">
+    <div class="pitch-tag"><span class="badge badge-yellow">Have a Tool</span></div>
+    <div class="pitch-title">"We're happy with our current solution."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Gotcha. Just curious — do you think your current solution is able to support your challenges for the year ahead?
+
+Since Planhat is a leading CS Platform worldwide and we haven't connected yet, would you be open to a quick comparison? No pressure — I just want to make sure you have the full picture."</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Enterprise / Trust Concerns</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"You're not big enough / we need an enterprise-grade solution."</div>
-      <div class="obj-a">Lead with logos: Lumen, Verizon, DXC, Telefónica, Comcast Business, Softcat, Telia Cygate. Reference security credentials (SOC 2, GDPR). Gartner named Planhat a Leader. "We work with companies like [relevant logo]. What specifically would you need to see from a security or enterprise readiness perspective?"</div>
-      <div class="obj-q">"We'd need to go through procurement / legal / InfoSec."</div>
-      <div class="obj-a">Good sign — they're engaged. Ask: "Who should I loop in from your side to make that process smooth? I can have our security documentation and SLA ready within 24 hours."</div>
-    </div>
+  <div class="pitch-card" data-tags="have a tool, recently implemented, new solution, problems">
+    <div class="pitch-tag"><span class="badge badge-yellow">Have a Tool</span></div>
+    <div class="pitch-title">"We recently implemented something."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"What tool? What is this new solution supposed to bring you — what problems are you trying to solve?"
+
+(Understand the use case. If it's a CRM or ticketing tool, position Planhat as the CS layer on top. If it's a competitor, park it and set a renewal follow-up.)</div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Cisco — "We're Already a Preferred Partner"</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We're a Preferred Partner already." / "We're close to achieving 7.5/10 PVI, we don't have any need."</div>
-      <div class="obj-a">"Congrats on that! Achieving the ACX certification, or more broadly the Preferred Partner status, is important for accessing the associated incentives and rebates — but the most important goal is to increase your business and revenue generated with Cisco, meaning retaining and growing your customers.
+  <div class="pitch-card" data-tags="have a tool, under contract, multi-year, competitor, renewal">
+    <div class="pitch-tag"><span class="badge badge-yellow">Have a Tool</span></div>
+    <div class="pitch-title">"We're under contract with another provider." / "We have a multi-year deal with [competitor]."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"What provider? Do you know when the contract runs until? That way I can follow up with you a few months before your renewal."
+
+"Even if it's 18 months out — would it be worth 20 minutes to see where Planhat differentiates, so you have a proper comparison when that time comes? A lot of teams use that window to evaluate whether the tool still fits as the business evolves."</div>
+  </div>
+
+  <!-- ── HAVE A TOOL — GAINSIGHT ────────────────────────────── -->
+  <div class="pitch-card" data-tags="gainsight, have a tool, competitor, implementation, admin, llm, ai">
+    <div class="pitch-tag"><span class="badge badge-red">Gainsight</span></div>
+    <div class="pitch-title">"We use Gainsight."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Gainsight is a strong platform — a lot of teams come to us because of the implementation complexity and admin overhead. How long did it take you to get fully live?"
+
+Key differentiators to hit: faster implementation, lower admin burden, native AI with BYO LLM (Claude, OpenAI, Gemini), better multi-vendor data model for MSP/IT environments.</div>
+    <div class="pitch-label">Switch pitch</div>
+    <div class="quote-block">"Hi [Name], calling from Planhat — the main competitor of Gainsight. Unless you're 100% satisfied with it, I'd love to understand what you're currently unable to do and explore whether Planhat could bring additional value."</div>
+  </div>
+
+  <!-- ── HAVE A TOOL — CHURNZERO ────────────────────────────── -->
+  <div class="pitch-card" data-tags="churnzero, have a tool, competitor, multi-vendor, renewal tracking">
+    <div class="pitch-tag"><span class="badge badge-yellow">ChurnZero</span></div>
+    <div class="pitch-title">"We use ChurnZero."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"ChurnZero is built for engagement automation but lacks modular workflow logic and a true multi-vendor data model."
+
+"How do you handle renewal tracking across multiple vendor lines today — is that all in ChurnZero or are you pulling from other places too?" (Surface the multi-vendor gap.)</div>
+  </div>
+
+  <!-- ── HAVE A TOOL — TOTANGO / VITALLY ───────────────────── -->
+  <div class="pitch-card" data-tags="totango, vitally, have a tool, competitor, hierarchy, workflow, time-series">
+    <div class="pitch-tag"><span class="badge badge-yellow">Totango / Vitally</span></div>
+    <div class="pitch-title">"We use Totango." / "We use Vitally."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block"><strong>Totango:</strong> Predefined success blocks limit flexibility. Planhat's custom objects and workflows are fully configurable for any vendor lifecycle model — no rigid templates.
+
+<strong>Vitally:</strong> Strong UX but weak time-series data and poor parent/child hierarchy — critical issues for MSPs managing multi-vendor portfolios at scale.</div>
+  </div>
+
+  <!-- ── HAVE A TOOL — SALESFORCE ──────────────────────────── -->
+  <div class="pitch-card" data-tags="salesforce, crm, dynamics, d365, have a tool, post-sale, integration, health scoring">
+    <div class="pitch-tag"><span class="badge badge-blue">Salesforce / CRM</span></div>
+    <div class="pitch-title">"We do this in Salesforce." / "We already have Salesforce / Dynamics."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Totally — most of our customers still use SFDC for their sales CRM and run Planhat alongside it for the post-sale motion. We have a native integration. SFDC is a linear sales tool — post-sale needs (health scoring, lifecycle automation, time-series data) require expensive add-ons and significant customization in SFDC.
+
+Who owns CS in your org — is that a separate team from sales?"</div>
+    <div class="pitch-label">Resource</div>
+    <a href="https://www.planhat.com/integrations" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500;margin-top:4px">→ Planhat Integrations ↗</a>
+  </div>
+
+  <!-- ── HAVE A TOOL — SALESFORCE + SERVICENOW ─────────────── -->
+  <div class="pitch-card" data-tags="salesforce, servicenow, have a tool, itsm, ticketing, differentiate, post-sale">
+    <div class="pitch-tag"><span class="badge badge-blue">Salesforce + ServiceNow</span></div>
+    <div class="pitch-title">"We're using Salesforce and ServiceNow — how do you differentiate?"</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"SFDC is a linear sales tool and ServiceNow is a ticketing/ITSM platform — neither is built for post-sale lifecycle management at the CS layer. Health scoring, renewal playbooks, lifecycle automation, and time-series data all require expensive customization in both.
+
+Most of our customers keep SFDC for sales CRM and ServiceNow for service management, and run Planhat alongside both for the post-sale motion. We have native integrations with both. Who owns CS in your org — is that a separate team from sales and delivery?"</div>
+    <div class="pitch-label">Resource</div>
+    <a href="https://www.planhat.com/integrations" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500;margin-top:4px">→ Planhat Integrations ↗</a>
+  </div>
+
+  <!-- ── HAVE A TOOL — CONNECTWISE / SCALEPAD ──────────────── -->
+  <div class="pitch-card" data-tags="connectwise, scalepad, rayallen, psa, ticketing, have a tool, asset, msp, complement">
+    <div class="pitch-tag"><span class="badge badge-blue">ConnectWise / ScalePad / RayAllen</span></div>
+    <div class="pitch-title">"We use ConnectWise." / "We have ScalePad / RayAllen."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block"><strong>ConnectWise:</strong> PSA / ticketing only — complement it, don't replace it. "We integrate with ConnectWise via API so your service data flows into Planhat automatically. You keep your PSA, we add the CS and lifecycle layer on top."
+
+<strong>ScalePad / RayAllen:</strong> Asset lifecycle only — no CS capabilities. Planhat ingests their asset data and adds health scoring, renewal automation, and expansion playbooks on top.</div>
+    <div class="pitch-label">Resource</div>
+    <a href="https://www.planhat.com/integrations" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500;margin-top:4px">→ Planhat Integrations ↗</a>
+  </div>
+
+  <!-- ── CISCO ──────────────────────────────────────────────── -->
+  <div class="pitch-card" data-tags="cisco, preferred partner, pvi, a-cx, acx, 360, rebates, certified">
+    <div class="pitch-tag"><span class="badge badge-blue">Cisco</span></div>
+    <div class="pitch-title">"We're already a Preferred Partner." / "We're close to 7.5/10 PVI — we don't have a need."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Congrats on that! Achieving the ACX certification or Preferred Partner status is important for accessing the associated incentives and rebates — but the most important goal is to increase your business and revenue generated with Cisco, meaning retaining and growing your customers.
 
 How do you stay proactive about risks and opportunities in your portfolio today?"</div>
+  </div>
+
+  <div class="pitch-card" data-tags="cisco, resources, 360, consultancy, glu, vortex6, rayallen, tool, audit">
+    <div class="pitch-tag"><span class="badge badge-blue">Cisco</span></div>
+    <div class="pitch-title">"We're already using resources / consultancy to address 360 changes."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"So, are you using a tool already, or is it more of a consultancy setup (like RayAllen, Glu, or Vortex6)?"
+
+<strong>If using a tool:</strong> "Would you be open to comparing your current tool and Planhat?"
+
+<strong>If consultancy:</strong> "Planhat solves for '4.0 Tools' in the ACX/Preferred Partner audit — a unique cockpit to understand customer trends, create collaborative workflows, track onboarding, adoption, renewals and expansion, and detect risks in real time. No consulting agency can offer that. The two are complementary."
+
+*If Glu or Vortex6 — highlight we're partners and already collaborating on several customers and prospects.*</div>
+  </div>
+
+  <!-- ── BUDGET ──────────────────────────────────────────────── -->
+  <div class="pitch-card" data-tags="budget, no budget, can't afford, cost, price, roi">
+    <div class="pitch-tag"><span class="badge badge-yellow">Budget</span></div>
+    <div class="pitch-title">"We don't have budget."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Even if there's no budget or immediate project, I'd love to connect and share how we help similar companies drive growth — also covering the ROI of using a solution like Planhat. A 30-min chat between CS experts is never a waste of time. What do you think?"</div>
+    <div class="pitch-label">Resource</div>
+    <a href="https://www.planhat.com/roi" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500;margin-top:4px">→ Planhat ROI Calculator ↗</a>
+  </div>
+
+  <div class="pitch-card" data-tags="budget, locked, end of year, next year, timing">
+    <div class="pitch-tag"><span class="badge badge-yellow">Budget</span></div>
+    <div class="pitch-title">"Budget is locked for the year."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"No worries! How about a quick 30-minute intro and demo? That way we get to meet, and we can reconnect at the end of the year if an opportunity comes up for next year. What do you think?"</div>
+  </div>
+
+  <div class="pitch-card" data-tags="budget, timing, next quarter, maybe later, changes">
+    <div class="pitch-tag"><span class="badge badge-yellow">Budget</span></div>
+    <div class="pitch-title">"Maybe next quarter."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"What changes do you expect by next quarter that might shake things up?"
+
+(Understand the trigger — then set a specific follow-up date locked in calendar.)</div>
+  </div>
+
+  <!-- ── AUTHORITY ───────────────────────────────────────────── -->
+  <div class="pitch-card" data-tags="authority, not right person, wrong person, who to contact, referral">
+    <div class="pitch-tag"><span class="badge badge-purple">Authority</span></div>
+    <div class="pitch-title">"I'm not the right person."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Who's the right person for me to connect with? What's your scope — what do you care about?"
+
+(Get a warm intro or at least a name to reach out to directly.)</div>
+  </div>
+
+  <div class="pitch-card" data-tags="authority, not decision maker, dm, champion, influence">
+    <div class="pitch-tag"><span class="badge badge-purple">Authority</span></div>
+    <div class="pitch-title">"I'm not the Decision-Maker."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"You might not be the DM, but you're aware of the business challenges and operational gaps — so you're likely the one who would benefit most from a solution like Planhat. Is that correct?"
+
+(Position them as the internal champion. Get them to forward you upward.)</div>
+  </div>
+
+  <div class="pitch-card" data-tags="authority, another team, procurement, purchasing, not my department">
+    <div class="pitch-tag"><span class="badge badge-purple">Authority</span></div>
+    <div class="pitch-title">"That's handled by another team." / "Procurement deals with that."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Makes sense. That said, before involving Procurement, it's important to connect with the person who really understands the business challenges and operational gaps — likely the one who would benefit most from Planhat. Would that be you?"</div>
+  </div>
+
+  <!-- ── INTERNAL PRIORITIES ────────────────────────────────── -->
+  <div class="pitch-card" data-tags="priority, bigger priorities, not now, internal, focus, nrr, cisco 360">
+    <div class="pitch-tag"><span class="badge badge-gray">Internal Priorities</span></div>
+    <div class="pitch-title">"We have bigger priorities right now."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"No rush. What are your bigger priorities?"
+
+(Listen — then connect Planhat to whatever they're focused on: NRR, Cisco 360, team efficiency, onboarding speed. Almost every priority ties back to CS operations.)</div>
+  </div>
+
+  <div class="pitch-card" data-tags="priority, reorganization, reorg, internal changes, restructuring, timing">
+    <div class="pitch-tag"><span class="badge badge-gray">Internal Priorities</span></div>
+    <div class="pitch-title">"We're going through internal changes." / "We're in the middle of a reorganization."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"In that case it's not the right time — I completely understand. What would be a good time to reconnect?"
+
+(Set a specific date 6–8 weeks out. Orgs that are reorganizing often buy once the dust settles — they need a tool to operationalize the new structure.)</div>
+  </div>
+
+  <!-- ── PROCESS / PROCUREMENT ──────────────────────────────── -->
+  <div class="pitch-card" data-tags="process, procurement, rfp, evaluation cycle, vendor list, preferred vendor">
+    <div class="pitch-tag"><span class="badge badge-gray">Process</span></div>
+    <div class="pitch-title">"We only evaluate vendors during RFP cycles." / "We already have preferred vendors."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Gotcha. When is your next RFP cycle? Do I need to introduce Planhat now to be listed as a preferred vendor or to be included when that cycle opens?"
+
+"What's the process to get on that preferred vendor list?"
+
+(Get into the pipeline before the next cycle opens — not after.)</div>
+  </div>
+
+  <!-- ── SKEPTICISM ─────────────────────────────────────────── -->
+  <div class="pitch-card" data-tags="skepticism, differentiation, how different, competitors, gartner, g2, idc">
+    <div class="pitch-tag"><span class="badge badge-green">Skepticism</span></div>
+    <div class="pitch-title">"How are you different from [X]?"</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"At Planhat, we're a Leader in the Gartner MQ, ranked #1 Customer Success Platform on IDC, #1 Momentum Leader on G2.
+
+Key differentiators for MSP/IT/Telco: multi-vendor data model built for complex partner environments, native Cisco integrations, fully configurable objects and workflows (no rigid templates), AI layer with BYO LLM (Claude, OpenAI, Gemini), and purpose-built for the post-sale motion — not a CRM add-on."</div>
+    <div class="pitch-label">Resource</div>
+    <a href="https://www.planhat.com/customers" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500;margin-top:4px">→ Customer stories ↗</a>
+  </div>
+
+  <div class="pitch-card" data-tags="skepticism, tried before, didn't work, past experience, failed">
+    <div class="pitch-tag"><span class="badge badge-green">Skepticism</span></div>
+    <div class="pitch-title">"We tried something like this before and it didn't work."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"What tool have you tried? What specifically didn't work for you?"
+
+(Surface the failure mode — implementation? data quality? user adoption? — then address it directly.)
+
+"That said, you've never checked out Planhat — think we could change your mind? 😉"</div>
+  </div>
+
+  <div class="pitch-card" data-tags="skepticism, these tools never work, data, integrations, confidentiality, complex">
+    <div class="pitch-tag"><span class="badge badge-green">Skepticism</span></div>
+    <div class="pitch-title">"These tools never work for us."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Why?" (Most of the time: integrations, data quality, or data confidentiality.)
+
+"We work with companies like Trend Micro, Thales, and Nasdaq — so we're very familiar with complex and highly confidential data environments. Our robust data platform is actually one of the key things that sets us apart from other solutions."</div>
+    <div class="pitch-label">Resource</div>
+    <a href="https://www.planhat.com/security" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500;margin-top:4px">→ Planhat Security &amp; Compliance ↗</a>
+  </div>
+
+  <div class="pitch-card" data-tags="skepticism, complicated, implementation, complex, gainsight, tools, impact, churn">
+    <div class="pitch-tag"><span class="badge badge-green">Skepticism</span></div>
+    <div class="pitch-title">"It's too complicated to implement."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"If you're thinking of Gainsight, I completely agree. With Planhat it's probably less than you think — what existing tools would we need to integrate with?
+
+And may I ask — what's the impact today of not being more proactive, in terms of churn risk or missed expansion opportunities?"</div>
+  </div>
+
+  <!-- ── SECURITY / ENTERPRISE ──────────────────────────────── -->
+  <div class="pitch-card" data-tags="security, enterprise, not big enough, logos, soc2, gdpr, compliance, trust">
+    <div class="pitch-tag"><span class="badge badge-red">Security / Enterprise</span></div>
+    <div class="pitch-title">"You're not big enough." / "We need an enterprise-grade solution."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"We work with Lumen, Verizon, DXC, Telefónica, Comcast Business, Softcat, Telia Cygate. We're SOC 2 Type II certified, GDPR compliant, and a Leader in the Gartner MQ.
+
+What specifically would you need to see from a security or enterprise readiness perspective?"</div>
+    <div class="pitch-label">Resources</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+      <a href="https://www.planhat.com/security" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500">→ Security Overview ↗</a>
+      <a href="https://www.planhat.com/customers" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500">→ Enterprise Customers ↗</a>
     </div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Cisco — "We're Already Using Resources for 360"</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We currently leverage other resources that help us address 360 changes."</div>
-      <div class="obj-a">"So, are you using a tool already, or is it more of a consultancy setup (like RayAllen, Glu, or Vortex6)?"
+  <div class="pitch-card" data-tags="security, infosec, legal, procurement, sso, saml, ip restrictions, soc2, gdpr, data">
+    <div class="pitch-tag"><span class="badge badge-red">Security / Enterprise</span></div>
+    <div class="pitch-title">"We'd need to go through InfoSec / Legal." / "Can you support SSO, SAML, IP restrictions?"</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Good sign — that means you're engaged. Who should I loop in from your side to make that process smooth? I can have our security documentation, SLA, and data processing agreement ready within 24 hours.
 
-→ <strong>If using a tool:</strong> "Would you be open to comparing your current tool and Planhat?"
-
-→ <strong>If consultancy:</strong> "Planhat solves for '4.0 Tools' in the ACX/Preferred Partner audit, and provides a unique cockpit where you can understand customer trends and behaviors over time, create collaborative workflows involving both your teams and your customers, track the progress of each workflow (onboarding, adoption, renewals, expansion), detect risks and opportunities in real time, and much more — no consulting agency can offer that. The two are complementary."
-
-<em>*If Glu or Vortex6, highlight that we're partners and already collaborating on several customers and prospects.*</em></div>
+On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-based access control, audit logs, and is SOC 2 Type II certified and GDPR compliant."</div>
+    <div class="pitch-label">Resources</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+      <a href="https://www.planhat.com/security" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500">→ Security &amp; Compliance ↗</a>
+      <a href="https://www.planhat.com/legal" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500">→ Legal &amp; Privacy ↗</a>
+      <a href="https://trust.planhat.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500">→ Trust Center ↗</a>
     </div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Salesforce + ServiceNow</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We're using Salesforce and ServiceNow — how do you differentiate?"</div>
-      <div class="obj-a">SFDC is a linear sales tool and ServiceNow is a ticketing/ITSM platform — neither is built for post-sale lifecycle management at the CS layer. Post-sale needs (health scoring, lifecycle automation, time-series data, renewal playbooks) require expensive customization in both.
+  <!-- ── DATA / TECHNICAL ───────────────────────────────────── -->
+  <div class="pitch-card" data-tags="data technical, messy data, integration, difficult, complex data, servicenow, salesforce, cisco portals">
+    <div class="pitch-tag"><span class="badge badge-blue">Data / Technical</span></div>
+    <div class="pitch-title">"Our data is too messy." / "Integration would be difficult."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"This is actually a reason to buy — not a reason to wait. We work specifically with complex, multi-system environments: Cisco portals, ServiceNow, Salesforce, telemetry feeds. We've done this for Trend Micro, Thales, Nasdaq. Messy data is our starting point, not a blocker."</div>
+    <div class="pitch-label">Resource</div>
+    <a href="https://www.planhat.com/integrations" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500;margin-top:4px">→ Planhat Integrations ↗</a>
+  </div>
 
-"Totally — most of our customers still use SFDC for their sales CRM and ServiceNow for service management, and run Planhat alongside both for the post-sale motion. We have native integrations with both. Who owns CS in your org — is that a separate team from sales and delivery?"
-
-<em>*Building additional detail with @Nick Sandbergen*</em></div>
+  <div class="pitch-card" data-tags="data technical, it approval, stack, complex, soc2, security docs, gdpr, infosec">
+    <div class="pitch-tag"><span class="badge badge-blue">Data / Technical</span></div>
+    <div class="pitch-title">"IT would never approve it." / "Our stack is already too complex."</div>
+    <div class="pitch-label">Response</div>
+    <div class="quote-block">"Makes sense — who in IT would be the right person to loop in early? We can get our security docs (SOC 2 Type II, GDPR, DPA) in front of them before a formal evaluation even starts, so you're not blocked later."</div>
+    <div class="pitch-label">Resources</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+      <a href="https://www.planhat.com/security" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500">→ Security Overview ↗</a>
+      <a href="https://www.planhat.com/integrations" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#d44a00;text-decoration:none;font-weight:500">→ Integrations ↗</a>
     </div>
   </div>
 
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Multi-Year Contract with Competitor</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We use [competitor]." / "We have a running multi-year contract with [competitor]."</div>
-      <div class="obj-a">"What provider? Do you know when the contract runs until? That way I can follow up with you a few months before your renewal."
-
-Even if it's 18 months out: "Would it be worth 20 minutes to show you where Planhat is differentiated, so you have a proper comparison when that time comes?"</div>
-      <div class="obj-q">"We recently implemented something."</div>
-      <div class="obj-a">"What tool? What is this new solution supposed to bring you — what problems are you trying to solve?" (Surface whether Planhat could still complement it or whether there's a future window.)</div>
-    </div>
-  </div>
-
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Solution — Generic Flow</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We already use a tool for that."</div>
-      <div class="obj-a">"What tool? Do you use a CRM (like Salesforce or D365) or a dedicated CS tool like Gainsight or Totango?"</div>
-      <div class="obj-q">"We're using another platform right now."</div>
-      <div class="obj-a">"Which one? Are you fully satisfied? I don't think Planhat was part of the evaluation, correct? Since Planhat is a leading CS Platform worldwide, and we haven't had the chance to connect yet, would you be open to comparing your current CS tool with our solution?"</div>
-      <div class="obj-q">"We're happy with our current solution."</div>
-      <div class="obj-a">"Gotcha. Just curious — do you think your current solution is able to support your challenges for the year ahead? Since Planhat is a leading CS Platform WW and we haven't connected yet, would you be open to a quick comparison?"</div>
-      <div class="obj-q">"We're all set."</div>
-      <div class="obj-a">"Interesting — what CS tool are you currently using?" (Probe to understand the setup, then qualify.)</div>
-    </div>
-  </div>
-
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Timing &amp; Budget</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We don't have budget."</div>
-      <div class="obj-a">"Even if there's no budget or immediate project, I'd love to connect and share how we help similar companies drive growth — also covering the ROI of using a solution like Planhat. A 30-min chat between CS experts is never a waste of time. What do you think?"</div>
-      <div class="obj-q">"Budget is locked for the year."</div>
-      <div class="obj-a">"No worries! How about a quick 30-minute intro and demo? That way we get to meet, and we can reconnect at the end of the year if an opportunity comes up for next year. What do you think?"</div>
-      <div class="obj-q">"Maybe next quarter."</div>
-      <div class="obj-a">"What changes do you expect by next quarter that might shake things up?" (Understand the trigger — then set a specific follow-up date.)</div>
-    </div>
-  </div>
-
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Authority &amp; Role</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"I'm not the right person."</div>
-      <div class="obj-a">"Who's the right person for me to connect with? What's your scope — what do you care about?" (Get a warm intro or at least a name.)</div>
-      <div class="obj-q">"I'm not the Decision-Maker."</div>
-      <div class="obj-a">"You might not be the DM, but you're aware of the business challenges and operational gaps, so you're likely the one who would benefit most from a solution like Planhat. Is that correct?" (Position them as the champion — get them to forward you up.)</div>
-      <div class="obj-q">"That's handled by another team." / "Procurement deals with that."</div>
-      <div class="obj-a">"Makes sense. That said, before involving the Procurement team, it's important to connect with the person who really understands the business challenges and operational gaps — likely the one who would benefit most from Planhat. Would that be you?"</div>
-    </div>
-  </div>
-
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Internal Priorities &amp; Timing</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We have bigger priorities right now."</div>
-      <div class="obj-a">"No rush. What are your bigger priorities?" (Listen — then connect Planhat to whatever they're focused on: NRR, Cisco 360, team efficiency, etc.)</div>
-      <div class="obj-q">"We're going through internal changes." / "We're in the middle of a reorganization."</div>
-      <div class="obj-a">"In that case it's not the right time — I completely understand. What would be a good time to reconnect?" (Set a specific date 6–8 weeks out — orgs that are reorganizing often buy once the dust settles.)</div>
-    </div>
-  </div>
-
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Process &amp; Procurement</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"We only evaluate vendors during RFP cycles."</div>
-      <div class="obj-a">"Gotcha. When is your next RFP cycle? Do I need to introduce Planhat now to be listed as a preferred vendor or to be included when that cycle opens?"</div>
-      <div class="obj-q">"We already have preferred vendors."</div>
-      <div class="obj-a">"What's the process to get on that list?" (Get yourself into the procurement pipeline before the next cycle — not after.)</div>
-    </div>
-  </div>
-
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Skepticism &amp; Past Experience</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"How are you different from [X]?"</div>
-      <div class="obj-a">Use the market recognition script (Gartner Leader, IDC #1, G2 Momentum Leader) then pivot to the specific differentiators relevant to their setup: multi-vendor data model, native Cisco integrations, configurable objects and workflows, AI layer with BYO LLM.</div>
-      <div class="obj-q">"We tried something like this before."</div>
-      <div class="obj-a">"What tool have you tried? What didn't work for you?" (Surface the specific failure mode — then show how Planhat addresses it specifically. "That said, you've never checked out Planhat — think we could change your mind?")</div>
-      <div class="obj-q">"These tools never work for us."</div>
-      <div class="obj-a">"Why?" (Most of the time the answer is around integrations, data quality, or data confidentiality.) "We work with companies like Trend Micro, Thales, and Nasdaq, so we're very familiar with complex and highly confidential data environments. Our robust data platform is actually one of the key things that sets us apart from other solutions."</div>
-      <div class="obj-q">"It's too complicated to implement."</div>
-      <div class="obj-a">"If you think about Gainsight, I completely agree. With Planhat it's probably less than you think — what existing tools would we need to integrate with? And may I ask — what's the impact today of not being more proactive, in terms of churn risk or missed expansion opportunities?"</div>
-    </div>
-  </div>
-
-  <div class="acc-group">
-    <div class="acc-header" onclick="toggleAcc(this)"><span>Data &amp; Technical Concerns</span><span class="acc-arrow">▾</span></div>
-    <div class="acc-body">
-      <div class="obj-q">"Our data is too messy." / "Integration would be difficult."</div>
-      <div class="obj-a">This is actually a reason to buy, not a reason to wait. "We work specifically with complex, multi-system environments — Cisco portals, ServiceNow, Salesforce, telemetry feeds. We've done this for Trend Micro, Thales, Nasdaq. Messy data is our starting point, not a blocker."</div>
-      <div class="obj-q">"IT would never approve it." / "Our stack is already complex."</div>
-      <div class="obj-a">"Makes sense — who in IT would be the right person to loop in early? We can get our security docs (SOC 2, GDPR, data processing agreements) in front of them before a formal evaluation even starts, so you're not blocked later."</div>
-    </div>
-  </div>
 </div><!-- /pg-objections -->
 
 
@@ -2768,6 +2932,29 @@ function filterPitches() {
     if (show) visible++;
   });
   document.getElementById('pitch-no-results').style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ── Objection filter ────────────────────────────────────────
+let activeObjFilter = 'all';
+function setObjFilter(btn) {
+  document.querySelectorAll('#pg-objections .pf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeObjFilter = btn.dataset.filter;
+  filterObj();
+}
+function filterObj() {
+  const q = (document.getElementById('obj-search').value || '').toLowerCase().trim();
+  const f = activeObjFilter;
+  const cards = document.querySelectorAll('#pg-objections [data-tags]');
+  let visible = 0;
+  cards.forEach(card => {
+    const tags = (card.dataset.tags || '').toLowerCase();
+    const text = card.textContent.toLowerCase();
+    const show = (f === 'all' || tags.includes(f)) && (!q || text.includes(q) || tags.includes(q));
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('obj-no-results').style.display = visible === 0 ? 'block' : 'none';
 }
 
 // ── Theme toggle ───────────────────────────────────────────
