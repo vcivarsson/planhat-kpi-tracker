@@ -186,9 +186,9 @@ a.collateral-item:hover .ext-icon { color: #5f5e5a; }
 
 /* ── Theme toggle ─────────────────────────────────────────── */
 .theme-toggle {
-  position: fixed; bottom: 1.25rem; left: 0; width: 210px;
-  display: flex; justify-content: center; gap: 4px;
-  z-index: 200; padding: 0 1rem;
+  display: flex; gap: 4px;
+  padding: 0.6rem 1rem 0.75rem;
+  border-bottom: 0.5px solid #2e2e2b;
 }
 .theme-btn {
   flex: 1; padding: 5px 0; font-size: 11px; font-family: inherit;
@@ -360,6 +360,11 @@ body.fire #flames-container { display: block; }
     <div class="sidebar-title">GTM Sales Playbook</div>
     <div class="sidebar-sub">Planhat MSP / IT / Telco</div>
   </div>
+  <div class="theme-toggle">
+    <button class="theme-btn active" id="btn-light" onclick="setTheme('light')" title="Light mode">☀ Light</button>
+    <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')" title="Dark mode">◑ Dark</button>
+    <button class="theme-btn fire-btn" id="btn-fire" onclick="setTheme('fire')" title="Fire mode">🔥 Fire</button>
+  </div>
   <nav class="sidebar-nav">
     <div class="nav-group">Planning</div>
     <button class="nav-item active" onclick="showPage('kpi',this)">KPI Tracker</button>
@@ -385,11 +390,6 @@ body.fire #flames-container { display: block; }
     <button class="nav-item" onclick="showPage('recordings',this)">Call Recordings</button>
     <button class="nav-item" onclick="showPage('pricing',this)">Pricing</button>
   </nav>
-  <div class="theme-toggle">
-    <button class="theme-btn active" id="btn-light" onclick="setTheme('light')" title="Light mode">☀ Light</button>
-    <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')" title="Dark mode">◑ Dark</button>
-    <button class="theme-btn fire-btn" id="btn-fire" onclick="setTheme('fire')" title="Fire mode">🔥 Fire</button>
-  </div>
 </aside>
 
 <!-- ── MAIN ────────────────────────────────────────────────── -->
