@@ -184,6 +184,28 @@ a.collateral-item:hover .ext-icon { color: #5f5e5a; }
 .ramp-badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 6px; background: #FEF3C7; color: #92400E; font-weight: 600; letter-spacing: 0.02em; vertical-align: middle; margin-left: 4px; }
 .ramp-note { font-size: 10px; color: #92400E; margin-left: 2px; }
 
+/* ── Pitches filter bar ───────────────────────────────────── */
+.pitch-filter-bar { margin-bottom: 1.25rem; }
+.pitch-search-wrap { position: relative; margin-bottom: 0.6rem; }
+.pitch-search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #b4b2a9; pointer-events: none; }
+.pitch-search { width: 100%; padding: 7px 12px 7px 32px; font-size: 13px; font-family: inherit; border: 0.5px solid #b4b2a9; border-radius: 8px; background: #fff; color: #1a1a18; outline: none; }
+.pitch-search:focus { border-color: #5f5e5a; }
+.pitch-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-btn { padding: 4px 12px; font-size: 12px; font-family: inherit; border: 0.5px solid #b4b2a9; border-radius: 20px; background: transparent; color: #73726c; cursor: pointer; white-space: nowrap; transition: all 0.1s; }
+.pf-btn:hover { border-color: #5f5e5a; color: #1a1a18; }
+.pf-btn.active { background: #1a1a18; color: #f9f9f7; border-color: #1a1a18; }
+.pitch-no-results { font-size: 13px; color: #73726c; padding: 1.5rem 0; display: none; }
+
+body.dark .pitch-search { background: #252521; border-color: #3a3a38; color: #d3d1c7; }
+body.dark .pitch-search:focus { border-color: #73726c; }
+body.dark .pf-btn { border-color: #3a3a38; color: #73726c; }
+body.dark .pf-btn:hover { border-color: #73726c; color: #d3d1c7; }
+body.dark .pf-btn.active { background: #d3d1c7; color: #1a1a18; border-color: #d3d1c7; }
+body.fire .pitch-search { background: #1a0b02; border-color: #5a2800; color: #f5d3a0; }
+body.fire .pf-btn { border-color: #3d1a00; color: #9a5020; }
+body.fire .pf-btn:hover { border-color: #ff6b35; color: #ffcba0; }
+body.fire .pf-btn.active { background: #ff4500; color: #fff; border-color: #ff4500; }
+
 /* ── Theme toggle ─────────────────────────────────────────── */
 .theme-toggle {
   display: flex; gap: 4px;
@@ -833,7 +855,26 @@ body.fire #flames-container { display: block; }
     <div class="page-subtitle">Three core pitches, full phone opener, and discovery question bank</div>
   </div>
 
-  <div class="pitch-card">
+  <!-- ── Filter bar ───────────────────────────────────────── -->
+  <div class="pitch-filter-bar">
+    <div class="pitch-search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      <input class="pitch-search" id="pitch-search" type="text" placeholder="Search pitches and scripts…" oninput="filterPitches()">
+    </div>
+    <div class="pitch-filters">
+      <button class="pf-btn active" data-filter="all" onclick="setPitchFilter(this)">All</button>
+      <button class="pf-btn" data-filter="cisco cx" onclick="setPitchFilter(this)">Cisco CX</button>
+      <button class="pf-btn" data-filter="gainsight" onclick="setPitchFilter(this)">Gainsight</button>
+      <button class="pf-btn" data-filter="multi-vendor" onclick="setPitchFilter(this)">Multi-Vendor</button>
+      <button class="pf-btn" data-filter="msp" onclick="setPitchFilter(this)">MSP</button>
+      <button class="pf-btn" data-filter="alliances" onclick="setPitchFilter(this)">Alliances</button>
+      <button class="pf-btn" data-filter="discovery" onclick="setPitchFilter(this)">Discovery</button>
+      <button class="pf-btn" data-filter="script" onclick="setPitchFilter(this)">Scripts</button>
+    </div>
+  </div>
+  <div class="pitch-no-results" id="pitch-no-results">No results — try a different search or filter.</div>
+
+  <div class="pitch-card" data-tags="cisco cx, cisco 360, a-cx, expert cx, rebates, pvi, lca, program, opener, script">
     <div class="pitch-tag"><span class="badge badge-blue">Cisco / Expert CX</span></div>
     <div class="pitch-title">Cisco Program Pitch</div>
     <div class="pitch-label">Opener</div>
@@ -844,7 +885,7 @@ body.fire #flames-container { display: block; }
     <div class="quote-block">"We work with Cisco partners in [region / vertical]. Most are struggling to get visibility across their Cisco customer base — adoption signals, renewal health, LCA data — all in different places. Planhat brings that into one platform and maps directly to the A-CX and Expert CX audit requirements. A lot of our customers have used this to unlock additional Cisco rebates while actually improving how their team manages accounts."</div>
   </div>
 
-  <div class="pitch-card">
+  <div class="pitch-card" data-tags="multi-vendor, msp, it, microsoft, palo alto, nrr, retention, cs, gainsight, churn, scale, opener, script">
     <div class="pitch-tag"><span class="badge badge-green">Multi-Vendor MSP / IT</span></div>
     <div class="pitch-title">Multi-Vendor Pitch</div>
     <div class="pitch-label">Opener</div>
@@ -855,7 +896,7 @@ body.fire #flames-container { display: block; }
     <div class="quote-block">"We work with IT service providers and MSPs managing customers across multiple vendors — Cisco, Microsoft, Palo Alto, and others. The challenge we hear most is that customer health, adoption signals, and renewal data are all in different systems, which makes it hard to manage at scale. Planhat brings all of that into one platform so your CS, delivery, and sales teams can operate from a single source of truth."</div>
   </div>
 
-  <div class="pitch-card">
+  <div class="pitch-card" data-tags="csp, alliances, multi-vendor, cisco, microsoft, gainsight, scale, partnerships, opener, script">
     <div class="pitch-tag"><span class="badge badge-gray">Traditional CSP / Alliances</span></div>
     <div class="pitch-title">CSP / Alliances Pitch</div>
     <div class="pitch-label">Opener</div>
@@ -864,7 +905,7 @@ body.fire #flames-container { display: block; }
     <div class="quote-block">"We specifically help IT companies with multiple vendor relationships — like Cisco, Microsoft, and others — to bring together customer lifecycle and commercial data across those vendors. So your alliances team, your delivery teams and your commercial teams can operate from a single source of truth. Is your company working with multiple vendors like these?"</div>
   </div>
 
-  <div class="card">
+  <div class="card" data-tags="script, phone, opener, cisco, cs, alliances">
     <div class="card-title">Full phone opener script</div>
     <div class="script-block">Hi [Name], this is X from Planhat.
 (pause — let them respond)
@@ -885,7 +926,7 @@ Okay great, then it's good we're speaking.
 → Pick the pitch that fits best</div>
   </div>
 
-  <div class="card">
+  <div class="card" data-tags="discovery, questions, cisco 360, renewal, churn, forecast">
     <div class="card-title">5 key discovery questions</div>
     <div class="table-wrap">
       <table>
@@ -2460,6 +2501,33 @@ buildTargetsTable();
 render();
 buildROIEffTable();
 calcROI();
+
+// ── Pitches filter ─────────────────────────────────────────
+let activePitchFilter = 'all';
+
+function setPitchFilter(btn) {
+  document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activePitchFilter = btn.dataset.filter;
+  filterPitches();
+}
+
+function filterPitches() {
+  const q = (document.getElementById('pitch-search').value || '').toLowerCase().trim();
+  const f = activePitchFilter;
+  const cards = document.querySelectorAll('#pg-pitches [data-tags]');
+  let visible = 0;
+  cards.forEach(card => {
+    const tags = (card.dataset.tags || '').toLowerCase();
+    const text = card.textContent.toLowerCase();
+    const matchesFilter = f === 'all' || tags.includes(f);
+    const matchesSearch = !q || text.includes(q) || tags.includes(q);
+    const show = matchesFilter && matchesSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('pitch-no-results').style.display = visible === 0 ? 'block' : 'none';
+}
 
 // ── Theme toggle ───────────────────────────────────────────
 function setTheme(mode) {
