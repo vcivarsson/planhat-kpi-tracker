@@ -856,7 +856,7 @@ body.fire #flames-container { display: block; }
 <div id="pg-pitches" class="page">
   <div class="page-header">
     <div class="page-title">Pitches &amp; Scripts</div>
-    <div class="page-subtitle">Three core pitches, full phone opener, and discovery question bank</div>
+    <div class="page-subtitle">Opener → persona pitches → Gainsight switch → references → CTA &amp; discovery</div>
   </div>
 
   <!-- ── Filter bar ───────────────────────────────────────── -->
@@ -878,68 +878,167 @@ body.fire #flames-container { display: block; }
   </div>
   <div class="pitch-no-results" id="pitch-no-results">No results — try a different search or filter.</div>
 
-  <div class="pitch-card" data-tags="cisco cx, cisco 360, a-cx, expert cx, rebates, pvi, lca, program, opener, script">
-    <div class="pitch-tag"><span class="badge badge-blue">Cisco / Expert CX</span></div>
-    <div class="pitch-title">Cisco Program Pitch</div>
-    <div class="pitch-label">Opener</div>
-    <div class="quote-block">"We work with Cisco partners preparing for Cisco 360 or Advanced/Expert CX. Most trying to improve PVI have adoption and renewal signals spread across multiple systems. Are you working toward A-CX or Expert CX?"</div>
-    <div class="pitch-label">Full opener</div>
-    <div class="quote-block">"Hi [Name], this is [X] from Planhat. (pause) Understood that you're responsible for [role] at [company], is that right? Cool, I'm not sure if this falls directly under you, but are you also involved in addressing Cisco 360 changes and how your team tracks adoption, renewals, and lifecycle across your Cisco portfolio?"</div>
-    <div class="pitch-label">Pitch</div>
-    <div class="quote-block">"We work with Cisco partners in [region / vertical]. Most are struggling to get visibility across their Cisco customer base — adoption signals, renewal health, LCA data — all in different places. Planhat brings that into one platform and maps directly to the A-CX and Expert CX audit requirements. A lot of our customers have used this to unlock additional Cisco rebates while actually improving how their team manages accounts."</div>
-  </div>
-
-  <div class="pitch-card" data-tags="multi-vendor, msp, it, microsoft, palo alto, nrr, retention, cs, gainsight, churn, scale, opener, script">
-    <div class="pitch-tag"><span class="badge badge-green">Multi-Vendor MSP / IT</span></div>
-    <div class="pitch-title">Multi-Vendor Pitch</div>
-    <div class="pitch-label">Opener</div>
-    <div class="quote-block">"Customer, delivery, and renewal data spread across systems — it's hard to track adoption, prevent churn, and grow accounts when everything lives in different places."</div>
-    <div class="pitch-label">Full opener</div>
-    <div class="quote-block">"Hi [Name], this is [X] from Planhat. (pause) Understood that you're responsible for [role] at [company]? Cool — so you're also involved in how your Delivery, CS, and AM teams align across the lifecycle to drive retention and NRR / recurring revenue growth?"</div>
-    <div class="pitch-label">Pitch</div>
-    <div class="quote-block">"We work with IT service providers and MSPs managing customers across multiple vendors — Cisco, Microsoft, Palo Alto, and others. The challenge we hear most is that customer health, adoption signals, and renewal data are all in different systems, which makes it hard to manage at scale. Planhat brings all of that into one platform so your CS, delivery, and sales teams can operate from a single source of truth."</div>
-  </div>
-
-  <div class="pitch-card" data-tags="csp, alliances, multi-vendor, cisco, microsoft, gainsight, scale, partnerships, opener, script">
-    <div class="pitch-tag"><span class="badge badge-gray">Traditional CSP / Alliances</span></div>
-    <div class="pitch-title">CSP / Alliances Pitch</div>
-    <div class="pitch-label">Opener</div>
-    <div class="quote-block">"Cool, I'm not sure if this falls directly under you, but are you also involved in how your Delivery, Customer and Alliances teams work together to scale your business with vendors like Cisco and others, and grow your revenue?"</div>
-    <div class="pitch-label">Pitch</div>
-    <div class="quote-block">"We specifically help IT companies with multiple vendor relationships — like Cisco, Microsoft, and others — to bring together customer lifecycle and commercial data across those vendors. So your alliances team, your delivery teams and your commercial teams can operate from a single source of truth. Is your company working with multiple vendors like these?"</div>
-  </div>
-
-  <div class="card" data-tags="script, phone, opener, cisco, cs, alliances">
-    <div class="card-title">Full phone opener script</div>
+  <!-- ── OPENER ─────────────────────────────────────────────── -->
+  <div class="card" data-tags="script, phone, opener, cisco, cs, alliances, lifecycle">
+    <div class="card-title">1 · Phone Opener</div>
     <div class="script-block">Hi [Name], this is X from Planhat.
 (pause — let them respond)
 
-[Name drop if you've spoken with someone from the company — Sr Director, VP, or C-Suite]
+*Name drop if you've already spoken with someone from the company — Sr Director, VP, or C-Suite*
 
 Understood that you're responsible for [role] at [company], is that right?
 (confirmation)
 
-CS/CX &amp; Lifecycle: Cool, so you're also involved in how your Delivery, CS, and AM teams align across the lifecycle to drive retention and NRR / recurring revenue growth?
+  CS/CX &amp; Lifecycle: Cool, so you're also involved in how your Delivery, CS, and AM teams align across the lifecycle to drive retention and NRR / recurring revenue growth?
 
-Alliances &amp; Partnerships: Cool, I'm not sure if this falls directly under you, but are you also involved in how your Delivery, Customer and Alliances teams work together to scale your business with vendors like Cisco and others?
+  Alliances &amp; Partnerships: Cool, I'm not sure if this falls directly under you, but are you also involved in how your Delivery, Customer and Alliances teams work together to scale your business with vendors like Cisco and others, and grow your revenue?
 
-Cisco: Cool, I'm not sure if this falls directly under you, but are you also involved in addressing 360 changes...
+  Cisco: Cool, I'm not sure if this falls directly under you, but are you also involved in addressing 360 changes?
+
 (confirmation)
 
 Okay great, then it's good we're speaking.
-→ Pick the pitch that fits best</div>
+→ Pick the pitch below that fits the persona best</div>
   </div>
 
-  <div class="card" data-tags="discovery, questions, cisco 360, renewal, churn, forecast">
-    <div class="card-title">5 key discovery questions</div>
+  <!-- ── PITCH: CS/CX LEADERS ──────────────────────────────── -->
+  <div class="pitch-card" data-tags="cs, cx, lifecycle, msp, it, salesforce, servicenow, crm, churn, renewal, nrr, onboarding, adoption, script">
+    <div class="pitch-tag"><span class="badge badge-purple">CS / CX / Lifecycle Leaders</span></div>
+    <div class="pitch-title">Customer Success &amp; Lifecycle Pitch</div>
+    <div class="pitch-label">Elevator pitch</div>
+    <div class="quote-block">"At Planhat I work with MSP and IT Providers with a recurring revenue model [like REFERENCE] and in many cases, we experience that they still manage the customer lifecycle — onboarding, adoption, renewals and expansion — from a new-business CRM, like Salesforce or Dynamics, which actually aren't built for that purpose.
+
+Therefore customer data is scattered across multiple systems (CRM, ServiceNow, Partner Experience portals, emails, etc) making it difficult for your teams to collaborate and adopt a proactive approach. Business impact is significant: slower time-to-value, lower adoption, poor CX, increased churn and missed revenue opportunities.
+
+I was curious — how are you guys set up to that end?"</div>
+    <div class="pitch-label" style="color:#d44a00;font-style:italic">Let them answer — LISTEN — then pitch. If they ask "why are you calling?" → pitch right away.</div>
+  </div>
+
+  <!-- ── PITCH: ALLIANCES LEADERS ──────────────────────────── -->
+  <div class="pitch-card" data-tags="alliances, partnerships, csp, cisco, microsoft, multi-vendor, salesforce, servicenow, lifecycle, churn, renewal, script">
+    <div class="pitch-tag"><span class="badge badge-gray">Alliances / Partnerships Leaders</span></div>
+    <div class="pitch-title">Alliances &amp; Partnerships Pitch</div>
+    <div class="pitch-label">Introduction</div>
+    <div class="quote-block">"I'm in touch with a lot of [role] in the [US/EMEA] at leading IT/MSPs and they're all facing the same challenge: customer data is scattered across multiple systems (Salesforce, ServiceNow, several Partner Experience systems, emails, etc) making it difficult for your teams to collaborate across the entire lifecycle and adopt a proactive approach. Business impact is significant: slower time-to-value, lower adoption, poor CX, increased churn and missed revenue opportunities.
+
+Does that resonate?"</div>
+    <div class="pitch-label">Response handling</div>
+    <div class="quote-block"><strong>"No"</strong> → Try to understand and qualify: "Curious, how did you solve this challenge?"
+<strong>"Yes"</strong> → Elevator pitch.</div>
+    <div class="pitch-label">Elevator pitch</div>
+    <div class="quote-block">"Great, and honestly, I think that resonates to everyone. That's why Planhat has been designed.
+
+Planhat centralizes and organizes your customer data (revenue data, conversations, license, telemetry, etc) to provide Delivery, Service Managers, Account Managers, Partner Managers, etc, a unique cockpit that will help them collaborate across the entire lifecycle — from onboarding and adoption to renewal and expansion.
+
+We help highly complex data environments — like Nasdaq, Trend Micro, Thales, Nutanix — turn data into actionable insights, and I'd love to explore how we could support [Company] secure and grow its recurring revenue in a similar way.
+
+How are you currently managing your assets?"</div>
+  </div>
+
+  <!-- ── PITCH: CISCO LEADERS ───────────────────────────────── -->
+  <div class="pitch-card" data-tags="cisco cx, cisco 360, a-cx, expert cx, rebates, pvi, lca, preferred partner, program, script">
+    <div class="pitch-tag"><span class="badge badge-blue">Cisco Leaders</span></div>
+    <div class="pitch-title">Cisco 360 &amp; A-CX Pitch</div>
+    <div class="pitch-label">Introduction</div>
+    <div class="quote-block">"I'm in touch with a lot of [role] in the [US/EMEA] at leading Cisco Partners and most of them are currently addressing 360 changes and aiming to achieve the Preferred Partner status.
+
+Is that something you're also considering?"</div>
+    <div class="pitch-label">Response handling</div>
+    <div class="quote-block"><strong>"No"</strong> → Try to understand and qualify: "Curious, how did you solve this challenge?"
+<strong>"Yes"</strong> → Elevator pitch.</div>
+    <div class="pitch-label">Elevator pitch</div>
+    <div class="quote-block">"Whether it's to pass the Advanced CX audit or to achieve a 10/10 PVI score on Engagement and Performance, Cisco requires its partners to use a customer management tool to drive onboarding, adoption, renewals, and expansion opportunities.
+
+Only 3 tools on the market address this, and Planhat is one of them.
+
+We help +30 Cisco partners (like Telefonica, Connection, Softcat, CBTS) improve their lifecycle practices, grow recurring revenue, and scale their business with Cisco.
+
+I'd love to explore how we could support [Company] in a similar way, either today or sometime next week. What do you think?"</div>
+    <div class="pitch-label">Close</div>
+    <div class="quote-block"><strong>"Next week"</strong> → Book meeting in calendar
+<strong>"Today"</strong> → Qualify
+<strong>"Neither today or next week"</strong> → Qualify</div>
+  </div>
+
+  <!-- ── PITCH: MULTI-VENDOR MSP ────────────────────────────── -->
+  <div class="pitch-card" data-tags="multi-vendor, msp, it, microsoft, palo alto, nrr, retention, cs, churn, scale, script">
+    <div class="pitch-tag"><span class="badge badge-green">Multi-Vendor MSP / IT</span></div>
+    <div class="pitch-title">Multi-Vendor MSP / IT Pitch</div>
+    <div class="pitch-label">Opener</div>
+    <div class="quote-block">"Cool, so you're also involved in how your Delivery, CS, and AM teams align across the lifecycle to drive retention and NRR / recurring revenue growth?"</div>
+    <div class="pitch-label">Pitch</div>
+    <div class="quote-block">"We work with IT service providers and MSPs managing customers across multiple vendors — Cisco, Microsoft, Palo Alto, and others. The challenge we hear most is that customer health, adoption signals, and renewal data are all in different systems, which makes it hard to manage at scale. Planhat brings all of that into one platform so your CS, delivery, and sales teams can operate from a single source of truth."</div>
+  </div>
+
+  <!-- ── PITCH: GAINSIGHT SWITCH ────────────────────────────── -->
+  <div class="pitch-card" data-tags="gainsight, switch, competitor, cs platform, churn, renewal, script">
+    <div class="pitch-tag"><span class="badge badge-red">Switch Play</span></div>
+    <div class="pitch-title">Switch: Gainsight → Planhat</div>
+    <div class="pitch-label">Introduction</div>
+    <div class="quote-block">"Hi [Name], [BDR] calling from Planhat, the customer success platform and main competitor of Gainsight.
+(pause — let them respond)
+
+I know this is an unexpected call, but I'd love to hear your thoughts on Gainsight at some point, and unless you're 100% satisfied with it, I'd be happy to understand what you're currently unable to do and explore whether Planhat could bring additional value."</div>
+    <div class="pitch-label">Response handling</div>
+    <div class="quote-block"><strong>"Not interested"</strong> → "Can I call you back later today? Why are you not interested? Might be relevant to reconnect a few months before you renew?"
+<strong>"Go ahead"</strong> → Elevator pitch.</div>
+    <div class="pitch-label">Elevator pitch</div>
+    <div class="quote-block">"At Planhat, we're a Leader in the Gartner MQ, ranked #1 Customer Success Platform on IDC, #1 Momentum Leader on G2 — and by far the best solution on the market when it comes to helping post-sales teams collaborate effectively, scale your business with vendors (like Cisco, Microsoft), and drive growth from your existing customer base.
+
+Most teams that switch from Gainsight come to us because of the implementation complexity and admin overhead. How long did it take you to get fully live?"</div>
+  </div>
+
+  <!-- ── REFERENCES ─────────────────────────────────────────── -->
+  <div class="card" data-tags="references, recognition, gartner, g2, idc, cisco, msp, telco, nutanix, softcat, telia, telefonica">
+    <div class="card-title">4 · Recognition &amp; References</div>
+    <div style="margin-bottom:1rem">
+      <div style="font-size:11px;font-weight:600;color:#121211;margin-bottom:6px">Market recognition script</div>
+      <div class="quote-block">"Interesting, so it sounds like you're currently doing [X]. That makes sense, and in that case I'm glad I called. At Planhat, we're a <strong>Leader in the Gartner MQ</strong>, ranked <strong>#1 Customer Success Platform on IDC</strong>, <strong>#1 Momentum Leader on G2</strong>, and by far the best solution on the market when it comes to helping post-sales teams collaborate effectively, scale your business with vendors (like Cisco, Microsoft), and drive growth from your existing customer base."</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+      <div>
+        <div style="font-size:10px;font-weight:600;color:#898886;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">MSP / IT</div>
+        <div style="font-size:12px;color:#393836;line-height:1.6"><strong>US/WW</strong> → Nutanix, Cognizant, Trend Micro, Thales, Telefonica, CBTS<br><strong>EMEA</strong> → Softcat, Telia Cygate, Trustmarque, Telefonica</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;color:#898886;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Telcos</div>
+        <div style="font-size:12px;color:#393836;line-height:1.6"><strong>WW</strong> → Telefonica, Telia Cygate, Nitel (part of Comcast)</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;color:#898886;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Cisco Partners</div>
+        <div style="font-size:12px;color:#393836;line-height:1.6"><strong>US/WW</strong> → Nutanix, Cognizant, Trend Micro, Thales, Telefonica, Connection, CBTS<br><strong>EMEA</strong> → Softcat, Telia Cygate, Trustmarque, Telefonica</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CALL TO ACTION ─────────────────────────────────────── -->
+  <div class="card" data-tags="discovery, call to action, meeting, booking, qualifying, gainsight, churnzero, totango, script">
+    <div class="card-title">5 · Call to Action &amp; Post-booking Discovery</div>
+    <div class="script-block">*Book meeting in calendar → then do further discovery*
+
+"Cool, so looking forward to our meeting on [moment]. Outside of what I've already prepared for you, I can tailor it further to what's relevant. You were just saying… [OR] To better understand that… [extra questions:]"
+
+→ Are you already familiar with Customer Success Platforms like Gainsight, ChurnZero and Totango?
+→ Where do your Delivery, CS, Renewals, Alliances teams get a complete 360 view of their portfolio?
+→ Do you know when you're up for renewal with [CRM tool]? How much are you paying for that?
+→ You're currently using [tool] — what do you like about it that you'd want to see in a new solution? And where do you feel limitations, so I can show you how Planhat might have solved for that?
+
+*Confirm meeting* → "Hey, just to confirm for our meeting — did you receive the invite? Perfect, if you confirm that one, then I'll put in the Zoom link and we'll be sure to see each other!"</div>
+  </div>
+
+  <!-- ── DISCOVERY QUESTIONS ────────────────────────────────── -->
+  <div class="card" data-tags="discovery, questions, cisco 360, renewal, churn, forecast, portfolio">
+    <div class="card-title">Key Discovery Questions</div>
     <div class="table-wrap">
       <table>
         <tbody>
-          <tr><td style="width:30px;color:#73726c;font-size:11px">1</td><td>"To understand if there's actually a good fit — who in your organization owns the renewal and expansion motion with your [Cisco / Microsoft / multi-vendor] customers?"</td></tr>
-          <tr><td style="color:#73726c;font-size:11px">2</td><td>"And at a high level, how is the adoption and lifecycle management of those customers handled currently? What tools and what process?"</td></tr>
-          <tr><td style="color:#73726c;font-size:11px">3</td><td>"You mentioned [X from their answer] — when you have a customer that's at risk of churning or not renewing, what's the trigger that alerts you or your team to take action?"</td></tr>
-          <tr><td style="color:#73726c;font-size:11px">4</td><td>"So do you feel like you have good enough visibility into your customer base to forecast renewals with confidence?"</td></tr>
-          <tr><td style="color:#73726c;font-size:11px">5</td><td>"Last thing — how are you currently thinking about or preparing for Cisco 360? Is that a priority internally?"</td></tr>
+          <tr><td style="width:30px;color:#898886;font-size:11px">1</td><td>"Who in your organization owns the renewal and expansion motion with your [Cisco / Microsoft / multi-vendor] customers?"</td></tr>
+          <tr><td style="color:#898886;font-size:11px">2</td><td>"How is the adoption and lifecycle management of those customers handled currently? What tools and what process?"</td></tr>
+          <tr><td style="color:#898886;font-size:11px">3</td><td>"When you have a customer at risk of churning or not renewing, what's the trigger that alerts you or your team to take action?"</td></tr>
+          <tr><td style="color:#898886;font-size:11px">4</td><td>"Do you feel like you have good enough visibility into your customer base to forecast renewals with confidence?"</td></tr>
+          <tr><td style="color:#898886;font-size:11px">5</td><td>"How are you currently thinking about or preparing for Cisco 360? Is that a priority internally?"</td></tr>
+          <tr><td style="color:#898886;font-size:11px">6</td><td>"Where do your Delivery, CS, Renewals, and Alliances teams get a complete 360 view of their portfolio today?"</td></tr>
+          <tr><td style="color:#898886;font-size:11px">7</td><td>"Do you know when you're up for renewal with [CRM tool]? How much are you paying now for that more or less?"</td></tr>
         </tbody>
       </table>
     </div>
@@ -1023,6 +1122,52 @@ Okay great, then it's good we're speaking.
       <div class="obj-a">Lead with logos: Lumen, Verizon, DXC, Telefónica, Comcast Business, Softcat, Telia Cygate. Reference security credentials (SOC 2, GDPR). Gartner named Planhat a Leader. "We work with companies like [relevant logo]. What specifically would you need to see from a security or enterprise readiness perspective?"</div>
       <div class="obj-q">"We'd need to go through procurement / legal / InfoSec."</div>
       <div class="obj-a">Good sign — they're engaged. Ask: "Who should I loop in from your side to make that process smooth? I can have our security documentation and SLA ready within 24 hours."</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Cisco — "We're Already a Preferred Partner"</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We're a Preferred Partner already." / "We're close to achieving 7.5/10 PVI, we don't have any need."</div>
+      <div class="obj-a">"Congrats on that! Achieving the ACX certification, or more broadly the Preferred Partner status, is important for accessing the associated incentives and rebates — but the most important goal is to increase your business and revenue generated with Cisco, meaning retaining and growing your customers.
+
+How do you stay proactive about risks and opportunities in your portfolio today?"</div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Cisco — "We're Already Using Resources for 360"</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We currently leverage other resources that help us address 360 changes."</div>
+      <div class="obj-a">"So, are you using a tool already, or is it more of a consultancy setup (like RayAllen, Glu, or Vortex6)?"
+
+→ <strong>If using a tool:</strong> "Would you be open to comparing your current tool and Planhat?"
+
+→ <strong>If consultancy:</strong> "Planhat solves for '4.0 Tools' in the ACX/Preferred Partner audit, and provides a unique cockpit where you can understand customer trends and behaviors over time, create collaborative workflows involving both your teams and your customers, track the progress of each workflow (onboarding, adoption, renewals, expansion), detect risks and opportunities in real time, and much more — no consulting agency can offer that. The two are complementary."
+
+<em>*If Glu or Vortex6, highlight that we're partners and already collaborating on several customers and prospects.*</em></div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Already Have a Tool — Salesforce + ServiceNow</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We're using Salesforce and ServiceNow — how do you differentiate?"</div>
+      <div class="obj-a">SFDC is a linear sales tool and ServiceNow is a ticketing/ITSM platform — neither is built for post-sale lifecycle management at the CS layer. Post-sale needs (health scoring, lifecycle automation, time-series data, renewal playbooks) require expensive customization in both.
+
+"Totally — most of our customers still use SFDC for their sales CRM and ServiceNow for service management, and run Planhat alongside both for the post-sale motion. We have native integrations with both. Who owns CS in your org — is that a separate team from sales and delivery?"
+
+<em>*Building additional detail with @Nick Sandbergen*</em></div>
+    </div>
+  </div>
+
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Multi-Year Contract with Competitor</span><span class="acc-arrow">▾</span></div>
+    <div class="acc-body">
+      <div class="obj-q">"We use [competitor]." / "We have a running multi-year contract with [competitor]."</div>
+      <div class="obj-a">Acknowledge it without dismissing. Then: "That makes sense — do you mind me asking when that comes up for renewal? Even if it's 18 months out, a lot of teams use that window to evaluate whether the tool is still the right fit as the business evolves. Would it be worth 20 minutes to show you where Planhat is differentiated, so you have a proper comparison when that time comes?"
+
+Use the market recognition script if needed: Gartner Leader, IDC #1, G2 Momentum Leader.</div>
     </div>
   </div>
 </div><!-- /pg-objections -->
