@@ -183,6 +183,160 @@ a.collateral-item:hover .ext-icon { color: #5f5e5a; }
 .tgt-inp.changed { border-color: #1D9E75; background: #f0faf6; }
 .ramp-badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 6px; background: #FEF3C7; color: #92400E; font-weight: 600; letter-spacing: 0.02em; vertical-align: middle; margin-left: 4px; }
 .ramp-note { font-size: 10px; color: #92400E; margin-left: 2px; }
+
+/* ── Theme toggle ─────────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; bottom: 1.25rem; left: 0; width: 210px;
+  display: flex; justify-content: center; gap: 4px;
+  z-index: 200; padding: 0 1rem;
+}
+.theme-btn {
+  flex: 1; padding: 5px 0; font-size: 11px; font-family: inherit;
+  border: 0.5px solid #3a3a38; border-radius: 6px; cursor: pointer;
+  background: transparent; color: #73726c; font-weight: 500;
+  transition: all 0.15s;
+}
+.theme-btn:hover { color: #f9f9f7; }
+.theme-btn.active { color: #f9f9f7; border-color: #f9f9f7; background: rgba(255,255,255,0.08); }
+.theme-btn.fire-btn { border-color: #ff6b35; color: #ff9a6c; }
+.theme-btn.fire-btn.active { background: rgba(255,80,0,0.25); border-color: #ff6b35; color: #ffcba0; }
+
+/* ── Dark mode ────────────────────────────────────────────── */
+body.dark {
+  background: #141412;
+  color: #d3d1c7;
+}
+body.dark .main { background: #141412; }
+body.dark .page-header { border-bottom-color: #2e2e2b; }
+body.dark .page-subtitle { color: #73726c; }
+body.dark .card { background: #1e1e1b; }
+body.dark .card-title { color: #73726c; }
+body.dark .pitch-card { background: #1e1e1b; border-color: #2e2e2b; }
+body.dark .quote-block { background: #252521; border-left-color: #3a3a38; color: #d3d1c7; }
+body.dark .script-block { background: #1e1e1b; color: #d3d1c7; }
+body.dark .acc-header { background: #1e1e1b; color: #d3d1c7; }
+body.dark .acc-header:hover { background: #252521; }
+body.dark .acc-body { background: #141412; border-top-color: #2e2e2b; color: #d3d1c7; }
+body.dark .acc-group { border-color: #2e2e2b; }
+body.dark .stage { background: #1e1e1b; border-right-color: #2e2e2b; }
+body.dark .stages { border-color: #2e2e2b; }
+body.dark th { color: #73726c; border-bottom-color: #2e2e2b; }
+body.dark td { color: #c8c6c0; border-bottom-color: #2e2e2b; }
+body.dark tfoot td { border-top-color: #2e2e2b; }
+body.dark tbody tr:hover { background: #1e1e1b; }
+body.dark .collateral-item { background: #1e1e1b; border-color: #2e2e2b; }
+body.dark a.collateral-item:hover { border-color: #73726c; }
+body.dark a.collateral-item .collateral-title { color: #d3d1c7; }
+body.dark .collateral-type { color: #73726c; }
+body.dark .metric { background: #1e1e1b; }
+body.dark .metric-val { color: #d3d1c7; }
+body.dark .seg-card { background: #1e1e1b; }
+body.dark .assumption-bar { background: #1e1e1b; color: #73726c; }
+body.dark .assumption-bar strong { color: #d3d1c7; }
+body.dark .tab { border-color: #2e2e2b; color: #73726c; }
+body.dark .tab.active { background: #1e1e1b; color: #d3d1c7; border-color: #5f5e5a; }
+body.dark .pbtn { border-color: #2e2e2b; color: #73726c; }
+body.dark .pbtn.active { background: #1e1e1b; color: #d3d1c7; border-color: #5f5e5a; }
+body.dark .btn-targets { background: #1e1e1b; border-color: #2e2e2b; color: #c8c6c0; }
+body.dark .btn-targets:hover { background: #252521; }
+body.dark .targets-body { background: #1e1e1b; }
+body.dark .seg-inp, body.dark .rep-inp, body.dark .tgt-inp,
+body.dark .roi-inp, body.dark .roi-hrs-inp {
+  background: #252521; border-color: #3a3a38; color: #d3d1c7;
+}
+body.dark .btn-reset { background: #252521; border-color: #3a3a38; color: #73726c; }
+body.dark .btn-reset:hover { background: #2e2e2b; color: #d3d1c7; }
+body.dark .badge-gray { background: #2e2e2b; color: #a8a7a2; }
+
+/* ── Fire mode ────────────────────────────────────────────── */
+body.fire {
+  background: #0d0501;
+  color: #f5d3a0;
+}
+body.fire .main { background: #0d0501; }
+body.fire .sidebar { background: #0f0603; border-right: 0.5px solid #3d1a00; }
+body.fire .sidebar-title { color: #ffcba0; }
+body.fire .sidebar-sub { color: #7a3a10; }
+body.fire .nav-group { color: #7a3a10; }
+body.fire .nav-item { color: #c07840; }
+body.fire .nav-item:hover { color: #ffcba0; background: #1a0b02; }
+body.fire .nav-item.active { color: #ffcba0; background: #1f0d03; }
+body.fire .page-header { border-bottom-color: #3d1a00; }
+body.fire .page-title { color: #ffcba0; }
+body.fire .page-subtitle { color: #9a5020; }
+body.fire .card { background: #150804; border: 0.5px solid #3d1a00; }
+body.fire .card-title { color: #9a5020; }
+body.fire .pitch-card { background: #150804; border-color: #3d1a00; }
+body.fire .quote-block { background: #1a0b02; border-left-color: #ff6b35; color: #f5d3a0; }
+body.fire .script-block { background: #150804; color: #f5d3a0; }
+body.fire .acc-header { background: #150804; color: #f5d3a0; }
+body.fire .acc-header:hover { background: #1f0d03; }
+body.fire .acc-body { background: #0d0501; border-top-color: #3d1a00; color: #f5d3a0; }
+body.fire .acc-group { border-color: #3d1a00; }
+body.fire .stage { background: #150804; border-right-color: #3d1a00; }
+body.fire .stages { border-color: #3d1a00; }
+body.fire th { color: #9a5020; border-bottom-color: #3d1a00; }
+body.fire td { color: #e0b080; border-bottom-color: #2a1000; }
+body.fire tbody tr:hover { background: #1a0b02; }
+body.fire tfoot td { border-top-color: #3d1a00; }
+body.fire .collateral-item { background: #150804; border-color: #3d1a00; }
+body.fire a.collateral-item:hover { border-color: #ff6b35; box-shadow: 0 0 10px rgba(255,80,0,0.2); }
+body.fire a.collateral-item .collateral-title { color: #ffcba0; }
+body.fire .metric { background: #150804; }
+body.fire .metric-val { color: #ffcba0; }
+body.fire .seg-card { background: #150804; }
+body.fire .assumption-bar { background: #150804; border: 0.5px solid #3d1a00; }
+body.fire .tab { border-color: #3d1a00; color: #9a5020; background: transparent; }
+body.fire .tab.active { background: #1f0d03; color: #ffcba0; border-color: #ff6b35; }
+body.fire .pbtn { border-color: #3d1a00; color: #9a5020; }
+body.fire .pbtn.active { background: #1f0d03; color: #ffcba0; border-color: #ff6b35; }
+body.fire .btn-targets { background: #150804; border-color: #3d1a00; color: #e0b080; }
+body.fire .btn-targets:hover { background: #1f0d03; }
+body.fire .targets-body { background: #150804; }
+body.fire .seg-inp, body.fire .rep-inp, body.fire .tgt-inp,
+body.fire .roi-inp, body.fire .roi-hrs-inp {
+  background: #1a0b02; border-color: #5a2800; color: #f5d3a0;
+}
+body.fire .btn-reset { background: #1a0b02; border-color: #3d1a00; color: #9a5020; }
+body.fire .badge-gray { background: #2a1000; color: #9a5020; }
+body.fire .roi-pill-inp { color: #fff !important; }
+body.fire .stage-outcome { color: #ff9a6c; }
+body.fire .ramp-badge { background: #3d1a00; color: #ff9a6c; }
+body.fire #gate { background: #0d0501; }
+body.fire .gate-logo { color: #ffcba0; }
+body.fire .gate-sub { color: #9a5020; }
+body.fire .gate-input { background: #1a0b02; border-color: #5a2800; color: #f5d3a0; }
+body.fire .gate-input:focus { border-color: #ff6b35; }
+body.fire .gate-btn { background: #ff4500; color: #fff; }
+body.fire .gate-btn:hover { background: #ff6b35; }
+body.fire .sep { border-left-color: #3d1a00; }
+
+/* ── Flame animation ──────────────────────────────────────── */
+#flames-container {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 180px; pointer-events: none; z-index: 9998;
+  overflow: hidden;
+}
+body.fire #flames-container { display: block; }
+.flame {
+  position: absolute; bottom: 0;
+  width: 30px; border-radius: 50% 50% 20% 20%;
+  transform-origin: bottom center;
+  animation: flicker var(--dur, 1.4s) ease-in-out infinite alternate;
+  filter: blur(1.5px);
+}
+@keyframes flicker {
+  0%   { transform: scaleX(1) scaleY(1) rotate(var(--tilt-a)); opacity: 0.85; }
+  30%  { transform: scaleX(0.88) scaleY(1.08) rotate(var(--tilt-b)); }
+  60%  { transform: scaleX(1.12) scaleY(0.93) rotate(var(--tilt-a)); }
+  100% { transform: scaleX(0.94) scaleY(1.12) rotate(var(--tilt-b)); opacity: 0.7; }
+}
+.flame-inner {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  border-radius: 50% 50% 20% 20%;
+  animation: flicker var(--dur2, 1.1s) ease-in-out infinite alternate;
+}
 </style>
 </head>
 <body>
@@ -231,6 +385,11 @@ a.collateral-item:hover .ext-icon { color: #5f5e5a; }
     <button class="nav-item" onclick="showPage('recordings',this)">Call Recordings</button>
     <button class="nav-item" onclick="showPage('pricing',this)">Pricing</button>
   </nav>
+  <div class="theme-toggle">
+    <button class="theme-btn active" id="btn-light" onclick="setTheme('light')" title="Light mode">☀ Light</button>
+    <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')" title="Dark mode">◑ Dark</button>
+    <button class="theme-btn fire-btn" id="btn-fire" onclick="setTheme('fire')" title="Fire mode">🔥 Fire</button>
+  </div>
 </aside>
 
 <!-- ── MAIN ────────────────────────────────────────────────── -->
@@ -2301,6 +2460,64 @@ buildTargetsTable();
 render();
 buildROIEffTable();
 calcROI();
+
+// ── Theme toggle ───────────────────────────────────────────
+function setTheme(mode) {
+  document.body.classList.remove('dark', 'fire');
+  ['light','dark','fire'].forEach(m => {
+    document.getElementById('btn-' + m).classList.remove('active');
+  });
+  if (mode !== 'light') document.body.classList.add(mode);
+  document.getElementById('btn-' + mode).classList.add('active');
+  localStorage.setItem('ph_theme', mode);
+  if (mode === 'fire') buildFlames();
+}
+
+function buildFlames() {
+  const container = document.getElementById('flames-container');
+  if (container.dataset.built) return;
+  container.dataset.built = '1';
+  const W = window.innerWidth;
+  // generate ~60 flames spread across the full width
+  for (let i = 0; i < 60; i++) {
+    const x = (i / 59) * W;
+    const jitter = (Math.random() - 0.5) * 28;
+    const baseH = 40 + Math.random() * 90;
+    const w = 18 + Math.random() * 28;
+    const dur = (1.0 + Math.random() * 1.2).toFixed(2);
+    const dur2 = (0.8 + Math.random() * 0.9).toFixed(2);
+    const delay = -(Math.random() * 2).toFixed(2);
+    const tiltA = ((Math.random() - 0.5) * 12).toFixed(1);
+    const tiltB = ((Math.random() - 0.5) * 12).toFixed(1);
+    // outer flame — orange/red
+    const outer = document.createElement('div');
+    outer.className = 'flame';
+    outer.style.cssText = `
+      left:${x + jitter}px; width:${w}px; height:${baseH}px;
+      background: radial-gradient(ellipse at bottom, #ff9a00 0%, #ff4500 45%, #c0200080 80%, transparent 100%);
+      --dur:${dur}s; --tilt-a:${tiltA}deg; --tilt-b:${tiltB}deg;
+      animation-delay:${delay}s;
+    `;
+    // inner flame — bright yellow core
+    const inner = document.createElement('div');
+    inner.className = 'flame-inner';
+    inner.style.cssText = `
+      width:${w * 0.45}px; height:${baseH * 0.55}px;
+      background: radial-gradient(ellipse at bottom, #fff9a0 0%, #ffcc00 50%, transparent 100%);
+      --dur2:${dur2}s; animation-delay:${delay}s;
+    `;
+    outer.appendChild(inner);
+    container.appendChild(outer);
+  }
+}
+
+// restore theme from localStorage
+(function() {
+  const saved = localStorage.getItem('ph_theme');
+  if (saved && saved !== 'light') setTheme(saved);
+})();
 </script>
+
+<div id="flames-container"></div>
 </body>
 </html>
