@@ -1103,198 +1103,258 @@ Okay great, then it's good we're speaking.
 ═════════════════════════════════════════════════════════════ -->
 <div id="pg-roi" class="page">
   <div class="page-header">
-    <div class="page-title">ROI Calculator</div>
-    <div class="page-subtitle">Interactive model — edit any input to recalculate. Based on Planhat's Cisco ROI framework.</div>
+    <div class="page-title">ROI Calculator — Cisco Partners</div>
+    <div class="page-subtitle">Edit any input to recalculate live. Based on Planhat's Cisco ROI framework.</div>
   </div>
 
-  <!-- ── Inputs ─────────────────────────────────────────────── -->
-  <div class="card-grid-2">
+  <!-- ── Legend ─────────────────────────────────────────────── -->
+  <div style="display:flex;gap:16px;align-items:center;margin-bottom:1.25rem;font-size:12px;color:#3a3a38">
+    <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#4A90D9"></span> Company Assumptions</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#1a2e4a"></span> Planhat / Cisco Assumptions</span>
+  </div>
 
-    <!-- Company assumptions -->
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title">Company assumptions</div>
-      <table style="width:100%;font-size:13px;border-collapse:collapse">
-        <tbody>
-          <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Total Cisco Revenue</td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <span style="font-size:12px;color:#73726c">€</span>
-                <input class="roi-inp" id="r-revenue" type="number" value="50000000" step="1000000" onchange="calcROI()">
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Eligible Revenue <span style="font-size:10px;color:#73726c">(recurring SKUs, % of total)</span></td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <input class="roi-inp" id="r-eligible-pct" type="number" value="25" step="1" min="1" max="100" onchange="calcROI()">
-                <span style="font-size:12px;color:#73726c">%</span>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">CS team size</td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <input class="roi-inp" id="r-team" type="number" value="10" step="1" min="1" onchange="calcROI()">
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:7px 0;color:#3a3a38">Avg annual CSM salary (incl. tax &amp; benefits)</td>
-            <td style="padding:7px 0;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <span style="font-size:12px;color:#73726c">€</span>
-                <input class="roi-inp" id="r-salary" type="number" value="65000" step="1000" onchange="calcROI()">
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid #e8e6df;font-size:11px;color:#73726c">
-        Hourly rate: <strong id="r-hourly">€44</strong> &nbsp;·&nbsp; Eligible revenue: <strong id="r-eligible-abs">€12.5M</strong>
+  <!-- ── Inputs table — mirrors PDF layout ─────────────────── -->
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="card-title">Inputs</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <tbody>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38;width:60%">Revenue (Total Cisco Revenue)</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#4A90D9;border-radius:20px;padding:4px 12px">
+              <span style="color:#fff;font-size:11px">€</span>
+              <input class="roi-pill-inp" id="r-revenue" type="number" value="50000000" step="1000000" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:120px;text-align:right;outline:none;font-family:inherit">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Eligible Revenue <span style="font-size:10px;color:#73726c">(recurring SKUs → % of total)</span></td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#4A90D9;border-radius:20px;padding:4px 12px">
+              <input class="roi-pill-inp" id="r-eligible-pct" type="number" value="25" step="1" min="1" max="100" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:40px;text-align:right;outline:none;font-family:inherit">
+              <span style="color:#fff;font-size:11px">%</span>
+              <span style="color:#cde;font-size:11px;margin-left:4px" id="r-eligible-abs">= €12.5M</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">CS team size</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;background:#4A90D9;border-radius:20px;padding:4px 12px">
+              <input class="roi-pill-inp" id="r-team" type="number" value="10" step="1" min="1" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:40px;text-align:center;outline:none;font-family:inherit">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Avg annual CSM salary incl. tax &amp; benefits</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#4A90D9;border-radius:20px;padding:4px 12px">
+              <span style="color:#fff;font-size:11px">€</span>
+              <input class="roi-pill-inp" id="r-salary" type="number" value="65000" step="1000" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:80px;text-align:right;outline:none;font-family:inherit">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#73726c;font-size:12px">Hourly salary per CSM (48 wks × 40 hrs/wk)</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right;font-size:12px;color:#73726c" id="r-hourly">€44</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Minimum increase LCI rebates with A-CX (%)</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#1a2e4a;border-radius:20px;padding:4px 12px">
+              <input class="roi-pill-inp" id="r-lci" type="number" value="2" step="0.5" min="0" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:40px;text-align:right;outline:none;font-family:inherit">
+              <span style="color:#8ab;font-size:11px">%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Minimum increase VIP rebates with A-CX (%)</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#1a2e4a;border-radius:20px;padding:4px 12px">
+              <input class="roi-pill-inp" id="r-vip" type="number" value="2.5" step="0.5" min="0" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:40px;text-align:right;outline:none;font-family:inherit">
+              <span style="color:#8ab;font-size:11px">%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Expected access to MDF Cisco (A-CX achieved)</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#1a2e4a;border-radius:20px;padding:4px 12px">
+              <span style="color:#8ab;font-size:11px">€</span>
+              <input class="roi-pill-inp" id="r-mdf" type="number" value="50000" step="10000" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:80px;text-align:right;outline:none;font-family:inherit">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Expected up-sales increase when using Planhat</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#1a2e4a;border-radius:20px;padding:4px 12px">
+              <input class="roi-pill-inp" id="r-upsell" type="number" value="2" step="0.5" min="0" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:40px;text-align:right;outline:none;font-family:inherit">
+              <span style="color:#8ab;font-size:11px">%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;color:#3a3a38">Churn reduction</td>
+          <td style="padding:8px 10px;text-align:right">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#1a2e4a;border-radius:20px;padding:4px 12px">
+              <input class="roi-pill-inp" id="r-churn" type="number" value="2" step="0.5" min="0" onchange="calcROI()" style="background:transparent;border:none;color:#fff;font-weight:600;font-size:13px;width:40px;text-align:right;outline:none;font-family:inherit">
+              <span style="color:#8ab;font-size:11px">%</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── ROI Breakdown table — mirrors PDF p.5 ─────────────── -->
+  <div class="card" style="margin-bottom:1.25rem">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1rem">
+      <div style="font-size:16px;font-weight:500">ROI for Channel Partners</div>
+      <div style="display:flex;gap:16px;font-size:11px;color:#73726c">
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#4A90D9;display:inline-block"></span> Company Assumptions</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#1a2e4a;display:inline-block"></span> Planhat Assumptions</span>
       </div>
     </div>
-
-    <!-- Planhat / Cisco assumptions -->
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title">Planhat / Cisco assumptions</div>
-      <table style="width:100%;font-size:13px;border-collapse:collapse">
+    <div class="table-wrap">
+      <table style="min-width:700px">
+        <thead>
+          <tr style="border-bottom:1px solid #d3d1c7">
+            <th style="width:36px">#</th>
+            <th></th>
+            <th style="text-align:center">Hrs saved / wk / CSM</th>
+            <th style="text-align:right">Weekly ROI / CSM</th>
+            <th style="text-align:right">€ Annual ROI</th>
+            <th style="text-align:center">Assumptions</th>
+            <th style="text-align:right">Annual Total</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Churn reduction</td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <input class="roi-inp" id="r-churn" type="number" value="2" step="0.5" min="0" onchange="calcROI()">
-                <span style="font-size:12px;color:#73726c">%</span>
-              </div>
-            </td>
+          <!-- CS KPIs section -->
+          <tr style="background:#f5f3ec">
+            <td colspan="6" style="padding:6px 10px;font-weight:600;font-size:11px;text-align:left;text-decoration:underline;color:#1a1a18;border-bottom:0.5px solid #d3d1c7">ROI on CS KPIs</td>
+            <td style="padding:6px 10px;font-weight:600;text-align:right;border-bottom:0.5px solid #d3d1c7" id="roi-cs-section">—</td>
           </tr>
           <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Upsell increase</td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <input class="roi-inp" id="r-upsell" type="number" value="2" step="0.5" min="0" onchange="calcROI()">
-                <span style="font-size:12px;color:#73726c">%</span>
-              </div>
-            </td>
+            <td style="color:#73726c;font-size:11px">1</td>
+            <td>Reduction in (gross) churn</td>
+            <td style="text-align:center;color:#73726c">—</td>
+            <td style="text-align:right;color:#73726c">—</td>
+            <td style="text-align:right;font-weight:500" id="roi-churn-val">—</td>
+            <td style="text-align:center"><span id="roi-churn-pct" style="background:#1a2e4a;color:#fff;border-radius:12px;padding:2px 8px;font-size:11px;font-weight:600">2%</span></td>
+            <td></td>
           </tr>
           <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">LCI rebate increase (A-CX)</td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <input class="roi-inp" id="r-lci" type="number" value="2" step="0.5" min="0" onchange="calcROI()">
-                <span style="font-size:12px;color:#73726c">%</span>
-              </div>
-            </td>
+            <td style="color:#73726c;font-size:11px">2</td>
+            <td>Increase in upsales</td>
+            <td style="text-align:center;color:#73726c">—</td>
+            <td style="text-align:right;color:#73726c">—</td>
+            <td style="text-align:right;font-weight:500" id="roi-upsell-val">—</td>
+            <td style="text-align:center"><span id="roi-upsell-pct" style="background:#1a2e4a;color:#fff;border-radius:12px;padding:2px 8px;font-size:11px;font-weight:600">2%</span></td>
+            <td></td>
+          </tr>
+          <!-- Cisco A-CX section -->
+          <tr style="background:#f5f3ec">
+            <td colspan="6" style="padding:6px 10px;font-weight:600;font-size:11px;text-align:left;text-decoration:underline;color:#1a1a18;border-bottom:0.5px solid #d3d1c7;border-top:1px solid #d3d1c7">ROI on Cisco A-CX</td>
+            <td style="padding:6px 10px;font-weight:600;text-align:right;border-bottom:0.5px solid #d3d1c7;border-top:1px solid #d3d1c7" id="roi-cisco-section">—</td>
           </tr>
           <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">VIP rebate increase (A-CX)</td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <input class="roi-inp" id="r-vip" type="number" value="2.5" step="0.5" min="0" onchange="calcROI()">
-                <span style="font-size:12px;color:#73726c">%</span>
-              </div>
-            </td>
+            <td style="color:#73726c;font-size:11px">3</td>
+            <td>Increase in LCI rebates</td>
+            <td style="text-align:center;color:#73726c">—</td>
+            <td style="text-align:right;color:#73726c">—</td>
+            <td style="text-align:right;font-weight:500" id="roi-lci-val">—</td>
+            <td style="text-align:center"><span id="roi-lci-pct" style="background:#1a2e4a;color:#fff;border-radius:12px;padding:2px 8px;font-size:11px;font-weight:600">2%</span></td>
+            <td></td>
           </tr>
           <tr>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">MDF access (A-CX achieved)</td>
-            <td style="padding:7px 0;border-bottom:0.5px solid #e8e6df;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <span style="font-size:12px;color:#73726c">€</span>
-                <input class="roi-inp" id="r-mdf" type="number" value="50000" step="10000" onchange="calcROI()">
-              </div>
-            </td>
+            <td style="color:#73726c;font-size:11px">4</td>
+            <td>Increase in VIP rebates</td>
+            <td style="text-align:center;color:#73726c">—</td>
+            <td style="text-align:right;color:#73726c">—</td>
+            <td style="text-align:right;font-weight:500" id="roi-vip-val">—</td>
+            <td style="text-align:center"><span id="roi-vip-pct" style="background:#1a2e4a;color:#fff;border-radius:12px;padding:2px 8px;font-size:11px;font-weight:600">2.5%</span></td>
+            <td></td>
           </tr>
-          <tr>
-            <td style="padding:7px 0;color:#3a3a38">Co-selling pipeline (Cisco)</td>
-            <td style="padding:7px 0;text-align:right">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px">
-                <input class="roi-inp" id="r-cosell" type="number" value="5" step="0.5" min="0" onchange="calcROI()">
-                <span style="font-size:12px;color:#73726c">%</span>
-              </div>
-            </td>
+          <!-- Efficiencies section -->
+          <tr style="background:#f5f3ec">
+            <td colspan="6" style="padding:6px 10px;font-weight:600;font-size:11px;text-align:left;text-decoration:underline;color:#1a1a18;border-bottom:0.5px solid #d3d1c7;border-top:1px solid #d3d1c7">Efficiencies</td>
+            <td style="padding:6px 10px;font-weight:600;text-align:right;border-bottom:0.5px solid #d3d1c7;border-top:1px solid #d3d1c7" id="roi-eff-section">—</td>
           </tr>
+          <tbody id="roi-eff-tbody"></tbody>
         </tbody>
+        <tfoot>
+          <tr style="border-top:2px solid #1a1a18;background:#f9f9f7">
+            <td colspan="2" style="font-weight:700;font-size:13px;padding:10px 10px;color:#1a1a18">TOTAL ROI</td>
+            <td style="text-align:center;font-weight:700" id="roi-eff-hrs-total">—</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align:right;font-weight:700;font-size:15px;color:#0F6E56" id="roi-grand-total">—</td>
+          </tr>
+        </tfoot>
       </table>
+    </div>
+    <div style="font-size:10px;color:#73726c;margin-top:0.75rem">* Total ROI is excl. co-selling and co-marketing. With A-CX or higher partner status in Cisco 360, you also get an approximated additional co-selling pipeline of 500k, and MDF funds of €50k–100k.</div>
+  </div>
+
+  <!-- ── Sensitivity matrices — mirrors PDF p.6 ────────────── -->
+  <div class="card-grid-2" style="align-items:start">
+
+    <!-- CSM efficiencies table -->
+    <div class="card" style="margin-bottom:0">
+      <div style="font-size:14px;font-weight:500;margin-bottom:1rem">Annual ROI: CSM efficiencies</div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr>
+          <th style="text-align:left;padding:6px 0;font-size:10px;color:#73726c;border-bottom:0.5px solid #d3d1c7">Hours saved / CSM / wk</th>
+          <th style="text-align:right;padding:6px 0;font-size:10px;color:#73726c;border-bottom:0.5px solid #d3d1c7">Annual ROI</th>
+        </tr></thead>
+        <tbody id="sens-eff-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Churn × upsell matrix -->
+    <div class="card" style="margin-bottom:0">
+      <div style="font-size:14px;font-weight:500;margin-bottom:0.5rem">Annual ROI: Churn &amp; upsell improvements</div>
+      <div style="font-size:11px;color:#73726c;margin-bottom:1rem">Based on current revenue input</div>
+      <div style="overflow-x:auto">
+        <table id="sens-matrix-table" style="width:100%;border-collapse:collapse;font-size:12px;text-align:center">
+        </table>
+      </div>
     </div>
   </div>
   <div style="margin-bottom:1.25rem"></div>
 
-  <!-- ── Efficiency breakdown ──────────────────────────────── -->
-  <div class="card">
-    <div class="card-title">CSM efficiency savings — hours saved per CSM per week</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th>#</th><th>Saving area</th>
-          <th style="text-align:right">Hrs / CSM / wk</th>
-          <th style="text-align:right">Wkly ROI / CSM</th>
-          <th style="text-align:right">Annual ROI</th>
-        </tr></thead>
-        <tbody id="roi-eff-tbody"></tbody>
-        <tfoot><tr>
-          <td colspan="2" style="font-weight:500;color:#73726c">Total efficiencies</td>
-          <td style="text-align:right;font-weight:500" id="roi-eff-hrs-total">—</td>
-          <td></td>
-          <td style="text-align:right;font-weight:500;color:#0F6E56" id="roi-eff-total">—</td>
-        </tr></tfoot>
-      </table>
-    </div>
-  </div>
-
-  <!-- ── Results ───────────────────────────────────────────── -->
-  <div class="card" style="background:#1a1a18;color:#f9f9f7">
-    <div class="card-title" style="color:#73726c">Total annual ROI</div>
-    <div style="font-size:40px;font-weight:500;color:#f9f9f7;margin-bottom:1.25rem" id="roi-grand-total">—</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
-      <div>
-        <div style="font-size:10px;color:#73726c;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">CS KPIs (churn + upsell)</div>
-        <div style="font-size:20px;font-weight:500" id="roi-cs-total">—</div>
-        <div style="font-size:11px;color:#5f5e5a;margin-top:2px" id="roi-cs-detail">—</div>
-      </div>
-      <div>
-        <div style="font-size:10px;color:#73726c;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Cisco A-CX rebates</div>
-        <div style="font-size:20px;font-weight:500" id="roi-cisco-total">—</div>
-        <div style="font-size:11px;color:#5f5e5a;margin-top:2px" id="roi-cisco-detail">—</div>
-      </div>
-      <div>
-        <div style="font-size:10px;color:#73726c;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Efficiency savings</div>
-        <div style="font-size:20px;font-weight:500" id="roi-eff-card">—</div>
-        <div style="font-size:11px;color:#5f5e5a;margin-top:2px" id="roi-eff-hrs-card">—</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="background:#f1efe8;border:0.5px solid #d3d1c7">
+  <!-- ── Additional upside ─────────────────────────────────── -->
+  <div class="card" style="background:#f1efe8">
     <div class="card-title">Additional upside — excluded from total ROI</div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem">
       <div>
-        <div style="font-size:12px;color:#73726c;margin-bottom:3px">Co-selling pipeline (Cisco)</div>
-        <div style="font-size:18px;font-weight:500" id="roi-cosell-out">—</div>
+        <div style="font-size:12px;color:#73726c;margin-bottom:3px">Co-selling pipeline (approx.)</div>
+        <div style="font-size:20px;font-weight:500" id="roi-cosell-out">—</div>
       </div>
       <div>
         <div style="font-size:12px;color:#73726c;margin-bottom:3px">MDF funds (A-CX achieved)</div>
-        <div style="font-size:18px;font-weight:500" id="roi-mdf-out">—</div>
+        <div style="font-size:20px;font-weight:500" id="roi-mdf-out">—</div>
       </div>
     </div>
-    <div style="font-size:11px;color:#73726c;margin-top:0.75rem">These are excluded from the total ROI figure but represent real additional value unlocked through the Cisco A-CX specialization.</div>
   </div>
 
-  <!-- ── Telia case study inset ────────────────────────────── -->
+  <!-- ── Telia reference ───────────────────────────────────── -->
   <div class="card" style="border:0.5px solid #b6d9a0;background:#EAF3DE">
     <div class="card-title" style="color:#27500A">Real-world reference — Telia Cygate</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
       <div>
         <div style="font-size:22px;font-weight:500;color:#1a1a18">10,000 hrs</div>
-        <div style="font-size:11px;color:#3a3a38">saved annually — equivalent to 12% of FTE capacity across 40 customer-facing roles</div>
+        <div style="font-size:11px;color:#3a3a38">saved annually — 12% of FTE capacity across 40 customer-facing roles</div>
       </div>
       <div>
         <div style="font-size:22px;font-weight:500;color:#1a1a18">€4–6M</div>
-        <div style="font-size:11px;color:#3a3a38">in annual Cisco kickbacks from achieving preferred partner status</div>
+        <div style="font-size:11px;color:#3a3a38">annual Cisco kickbacks from achieving preferred partner status</div>
       </div>
       <div>
         <div style="font-size:22px;font-weight:500;color:#1a1a18">56 vendors</div>
-        <div style="font-size:11px;color:#3a3a38">managed in one platform — from reactive and siloed to one-pane-of-glass across the full vendor portfolio</div>
+        <div style="font-size:11px;color:#3a3a38">managed in one platform — reactive/siloed to one-pane-of-glass</div>
       </div>
     </div>
   </div>
@@ -1714,72 +1774,134 @@ function buildROIEffTable() {
     tr.innerHTML = `
       <td style="color:#73726c;font-size:11px">${i+5}</td>
       <td style="font-size:13px">${item.label}</td>
-      <td style="text-align:right">
+      <td style="text-align:center">
         <input class="roi-hrs-inp" id="roi-hrs-${i}" type="number" value="${item.hrs}" min="0" step="0.5" onchange="ROI_EFF_ITEMS[${i}].hrs=parseFloat(this.value)||0;calcROI()">
       </td>
       <td style="text-align:right;font-size:12px;color:#73726c" id="roi-wkly-${i}">—</td>
       <td style="text-align:right;font-weight:500" id="roi-ann-${i}">—</td>
+      <td style="text-align:center;color:#73726c;font-size:11px">—</td>
+      <td style="text-align:right;font-weight:500" id="roi-totann-${i}">—</td>
     `;
     tbody.appendChild(tr);
   });
 }
 
+function buildSensEffTable(hourlyRate, teamSize) {
+  const tbody = document.getElementById('sens-eff-tbody');
+  tbody.innerHTML = '';
+  [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20].forEach(hrs => {
+    const annROI = hrs * hourlyRate * 48 * teamSize;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="padding:5px 0;border-bottom:0.5px solid #e8e6df;color:#3a3a38">${hrs} hrs / wk / CSM</td>
+      <td style="padding:5px 0;border-bottom:0.5px solid #e8e6df;text-align:right;font-weight:500">${fmtEur(annROI)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function buildSensMatrix(revenue, currentChurn, currentUpsell) {
+  const table = document.getElementById('sens-matrix-table');
+  table.innerHTML = '';
+  const churnVals  = [0, 1, 2, 3, 4, 5];
+  const upsellVals = [0, 1, 2, 3, 4, 5];
+
+  const thead = document.createElement('thead');
+  let hdr = '<tr><th style="padding:4px 8px;font-size:10px;color:#73726c;border-bottom:1px solid #d3d1c7;text-align:left;white-space:nowrap">Churn ↓ / Upsell →</th>';
+  upsellVals.forEach(u => {
+    hdr += `<th style="padding:4px 8px;font-size:10px;color:#73726c;border-bottom:1px solid #d3d1c7">${u}%</th>`;
+  });
+  hdr += '</tr>';
+  thead.innerHTML = hdr;
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  churnVals.forEach(c => {
+    let row = `<tr><td style="padding:4px 8px;font-size:11px;font-weight:600;color:#3a3a38;border-bottom:0.5px solid #e8e6df;white-space:nowrap">${c}%</td>`;
+    upsellVals.forEach(u => {
+      const roi = revenue * ((c + u) / 100);
+      const isActive = c === Math.round(currentChurn) && u === Math.round(currentUpsell);
+      const bg = isActive ? '#1a2e4a' : (roi === 0 ? '#f9f9f7' : (c + u >= 6 ? '#d4edda' : '#f0f7ff'));
+      const color = isActive ? '#fff' : '#1a1a18';
+      row += `<td style="padding:4px 8px;font-size:11px;border-bottom:0.5px solid #e8e6df;background:${bg};color:${color}">${fmtEur(roi)}</td>`;
+    });
+    row += '</tr>';
+    tbody.innerHTML += row;
+  });
+  table.appendChild(tbody);
+}
+
 function calcROI() {
-  const revenue    = parseFloat(document.getElementById('r-revenue').value)    || 0;
+  const revenue    = parseFloat(document.getElementById('r-revenue').value)      || 0;
   const eligPct    = parseFloat(document.getElementById('r-eligible-pct').value) || 0;
-  const teamSize   = parseFloat(document.getElementById('r-team').value)        || 0;
-  const salary     = parseFloat(document.getElementById('r-salary').value)      || 0;
-  const churnPct   = parseFloat(document.getElementById('r-churn').value)       || 0;
-  const upsellPct  = parseFloat(document.getElementById('r-upsell').value)      || 0;
-  const lciPct     = parseFloat(document.getElementById('r-lci').value)         || 0;
-  const vipPct     = parseFloat(document.getElementById('r-vip').value)         || 0;
-  const mdf        = parseFloat(document.getElementById('r-mdf').value)         || 0;
-  const cosellPct  = parseFloat(document.getElementById('r-cosell').value)      || 0;
+  const teamSize   = parseFloat(document.getElementById('r-team').value)         || 0;
+  const salary     = parseFloat(document.getElementById('r-salary').value)       || 0;
+  const churnPct   = parseFloat(document.getElementById('r-churn').value)        || 0;
+  const upsellPct  = parseFloat(document.getElementById('r-upsell').value)       || 0;
+  const lciPct     = parseFloat(document.getElementById('r-lci').value)          || 0;
+  const vipPct     = parseFloat(document.getElementById('r-vip').value)          || 0;
+  const mdf        = parseFloat(document.getElementById('r-mdf').value)          || 0;
 
-  const hourlyRate  = salary / (48 * 40);
-  const eligRev     = revenue * (eligPct / 100);
+  const hourlyRate = salary / (48 * 40);
+  const eligRev    = revenue * (eligPct / 100);
 
-  // CS KPIs
+  // CS KPIs — applied to total revenue
   const churnROI  = revenue * (churnPct  / 100);
   const upsellROI = revenue * (upsellPct / 100);
   const csTotal   = churnROI + upsellROI;
 
-  // Cisco A-CX
-  const lciROI    = revenue * (lciPct / 100);
-  const vipROI    = revenue * (vipPct / 100);
+  // Cisco A-CX — applied to eligible (recurring) revenue
+  const lciROI    = eligRev * (lciPct / 100);
+  const vipROI    = eligRev * (vipPct / 100);
   const ciscoTotal = lciROI + vipROI;
 
-  // Efficiencies
+  // Efficiencies — per-CSM annual × team size
   let effTotal = 0, effHrsTotal = 0;
   ROI_EFF_ITEMS.forEach((item, i) => {
     const wklyPerCSM = item.hrs * hourlyRate;
-    const annROI     = item.hrs * hourlyRate * 48 * teamSize;
-    effTotal    += annROI;
+    const annPerCSM  = wklyPerCSM * 48;
+    const annTeam    = annPerCSM * teamSize;
+    effTotal    += annTeam;
     effHrsTotal += item.hrs;
-    document.getElementById(`roi-wkly-${i}`).textContent = fmtEur(wklyPerCSM);
-    document.getElementById(`roi-ann-${i}`).textContent  = fmtEur(annROI);
+    document.getElementById(`roi-wkly-${i}`).textContent   = fmtEur(wklyPerCSM);
+    document.getElementById(`roi-ann-${i}`).textContent    = fmtEur(annPerCSM);
+    document.getElementById(`roi-totann-${i}`).textContent = fmtEur(annTeam);
   });
 
-  // Additional
-  const cosellPipeline = revenue * (cosellPct / 100);
-
-  // Grand total
   const grandTotal = csTotal + ciscoTotal + effTotal;
 
-  // Update display
-  document.getElementById('r-hourly').textContent      = fmtEur(hourlyRate);
-  document.getElementById('r-eligible-abs').textContent = fmtEur(eligRev);
-  document.getElementById('roi-grand-total').textContent = fmtEur(grandTotal);
-  document.getElementById('roi-cs-total').textContent    = fmtEur(csTotal);
-  document.getElementById('roi-cs-detail').textContent   = `Churn ${fmtEur(churnROI)} · Upsell ${fmtEur(upsellROI)}`;
-  document.getElementById('roi-cisco-total').textContent = fmtEur(ciscoTotal);
-  document.getElementById('roi-cisco-detail').textContent= `LCI ${fmtEur(lciROI)} · VIP ${fmtEur(vipROI)}`;
-  document.getElementById('roi-eff-card').textContent    = fmtEur(effTotal);
-  document.getElementById('roi-eff-hrs-card').textContent= `${effHrsTotal} hrs/CSM/wk saved`;
-  document.getElementById('roi-eff-hrs-total').textContent = effHrsTotal + ' hrs';
-  document.getElementById('roi-eff-total').textContent   = fmtEur(effTotal);
-  document.getElementById('roi-cosell-out').textContent  = fmtEur(cosellPipeline);
-  document.getElementById('roi-mdf-out').textContent     = fmtEur(mdf);
+  // Inputs / derived
+  document.getElementById('r-hourly').textContent        = fmtEur(hourlyRate);
+  document.getElementById('r-eligible-abs').textContent  = `= ${fmtEur(eligRev)}`;
+
+  // ROI table — individual line values
+  document.getElementById('roi-churn-val').textContent   = fmtEur(churnROI);
+  document.getElementById('roi-upsell-val').textContent  = fmtEur(upsellROI);
+  document.getElementById('roi-lci-val').textContent     = fmtEur(lciROI);
+  document.getElementById('roi-vip-val').textContent     = fmtEur(vipROI);
+
+  // ROI table — assumption badges (keep in sync with inputs)
+  document.getElementById('roi-churn-pct').textContent   = churnPct + '%';
+  document.getElementById('roi-upsell-pct').textContent  = upsellPct + '%';
+  document.getElementById('roi-lci-pct').textContent     = lciPct + '%';
+  document.getElementById('roi-vip-pct').textContent     = vipPct + '%';
+
+  // ROI table — section subtotals
+  document.getElementById('roi-cs-section').textContent    = fmtEur(csTotal);
+  document.getElementById('roi-cisco-section').textContent = fmtEur(ciscoTotal);
+  document.getElementById('roi-eff-section').textContent   = fmtEur(effTotal);
+
+  // Footer
+  document.getElementById('roi-eff-hrs-total').textContent = effHrsTotal + ' hrs / CSM / wk';
+  document.getElementById('roi-grand-total').textContent   = fmtEur(grandTotal);
+
+  // Additional upside (excluded)
+  document.getElementById('roi-cosell-out').textContent   = '≈ €500k';
+  document.getElementById('roi-mdf-out').textContent      = fmtEur(mdf);
+
+  // Sensitivity matrices
+  buildSensEffTable(hourlyRate, teamSize);
+  buildSensMatrix(revenue, churnPct, upsellPct);
 }
 
 // ── Navigation ─────────────────────────────────────────────
