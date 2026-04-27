@@ -227,6 +227,14 @@ body.fire .pf-btn.active { background: #ff4500; color: #fff; border-color: #ff45
 .theme-btn.active { color: #fff; border-color: #575551; background: rgba(255,255,255,0.06); }
 .theme-btn.fire-btn { border-color: #4a1a00; color: #c05020; }
 .theme-btn.fire-btn.active { background: rgba(212,74,0,0.2); border-color: #d44a00; color: #ff9a6c; }
+.curr-toggle { display:inline-flex; background:#ebebed; border-radius:9px; padding:3px; gap:2px; }
+.curr-btn {
+  padding:5px 16px; border-radius:7px; font-size:12px; font-weight:600;
+  font-family:inherit; border:none; cursor:pointer; background:transparent;
+  color:#73726c; transition:all 0.15s; letter-spacing:-.01em;
+}
+.curr-btn:hover { color:#121211; background:rgba(0,0,0,0.05); }
+.curr-btn.active { background:#121211; color:#fff; box-shadow:0 1px 3px rgba(0,0,0,.18); }
 
 /* ── Dark mode ────────────────────────────────────────────── */
 body.dark { background: #0e0e0d; color: #d3d1c7; }
@@ -1822,10 +1830,12 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
       <span style="display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#73726c" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span style="color:#73726c">Locked — Planhat/Cisco fixed assumption</span></span>
     </div>
     <div style="display:flex;align-items:center;gap:6px">
-      <span style="font-size:11px;color:#73726c;font-weight:500">Currency</span>
-      <button id="curr-btn-EUR" class="theme-btn active" onclick="setCurrency('EUR')">€ EUR</button>
-      <button id="curr-btn-GBP" class="theme-btn" onclick="setCurrency('GBP')">£ GBP</button>
-      <button id="curr-btn-USD" class="theme-btn" onclick="setCurrency('USD')">$ USD</button>
+      <span style="font-size:11px;color:#73726c;font-weight:500;margin-right:2px">Currency</span>
+      <div class="curr-toggle">
+        <button id="curr-btn-EUR" class="curr-btn active" onclick="setCurrency('EUR')">€ EUR</button>
+        <button id="curr-btn-GBP" class="curr-btn" onclick="setCurrency('GBP')">£ GBP</button>
+        <button id="curr-btn-USD" class="curr-btn" onclick="setCurrency('USD')">$ USD</button>
+      </div>
     </div>
   </div>
 
@@ -2500,7 +2510,10 @@ function fmtCurrency(n) {
 
 function setCurrency(c) {
   ROI_CURR = c;
-  ['EUR','GBP','USD'].forEach(x => document.getElementById('curr-btn-'+x).classList.toggle('active', x === c));
+  ['EUR','GBP','USD'].forEach(x => {
+    const btn = document.getElementById('curr-btn-'+x);
+    btn.classList.toggle('active', x === c);
+  });
   document.querySelectorAll('.curr-sym').forEach(el => el.textContent = CURR_SYM[c]);
   calcROI();
 }
