@@ -235,6 +235,20 @@ body.fire .pf-btn.active { background: #ff4500; color: #fff; border-color: #ff45
 }
 .curr-btn:hover { color:#121211; background:rgba(0,0,0,0.05); }
 .curr-btn.active { background:#121211; color:#fff; box-shadow:0 1px 3px rgba(0,0,0,.18); }
+.roi-slider {
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:5px; border-radius:3px; outline:none; cursor:pointer;
+  background:linear-gradient(to right,#d44a00 20%,#e8e6df 20%);
+}
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%;
+  background:#d44a00; cursor:pointer; border:2px solid #fff;
+  box-shadow:0 1px 5px rgba(212,74,0,.35);
+}
+.roi-slider::-moz-range-thumb {
+  width:20px; height:20px; border-radius:50%; background:#d44a00;
+  cursor:pointer; border:2px solid #fff; box-shadow:0 1px 5px rgba(212,74,0,.35);
+}
 
 /* ── Dark mode ────────────────────────────────────────────── */
 body.dark { background: #0e0e0d; color: #d3d1c7; }
@@ -2137,6 +2151,34 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
     <div style="font-size:10px;color:#73726c;margin-top:0.75rem">* Total ROI is excl. co-selling and co-marketing. With A-CX or higher partner status in Cisco 360, you also get an approximated additional co-selling pipeline of 500k, and MDF funds of €50k–100k.</div>
   </div>
 
+  <!-- ── Sliders ──────────────────────────────────────────── -->
+  <div class="card" style="margin-bottom:1rem">
+    <div style="font-size:13px;font-weight:600;color:#121211;margin-bottom:1.25rem;letter-spacing:-.01em">Adjust churn &amp; upsell assumptions <span style="font-size:11px;font-weight:400;color:#73726c;margin-left:6px">updates the ROI table and matrix live</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem">
+
+      <!-- Churn slider -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">
+          <label style="font-size:12px;font-weight:600;color:#121211">Churn reduction</label>
+          <span style="font-size:22px;font-weight:600;color:#d44a00;letter-spacing:-.02em" id="sl-churn-val">2%</span>
+        </div>
+        <input type="range" class="roi-slider" id="sl-churn" min="0" max="10" step="0.5" value="2" oninput="updateFromSlider('churn',this.value)">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#898886;margin-top:5px"><span>0%</span><span>5%</span><span>10%</span></div>
+      </div>
+
+      <!-- Upsell slider -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">
+          <label style="font-size:12px;font-weight:600;color:#121211">Upsell increase</label>
+          <span style="font-size:22px;font-weight:600;color:#d44a00;letter-spacing:-.02em" id="sl-upsell-val">2%</span>
+        </div>
+        <input type="range" class="roi-slider" id="sl-upsell" min="0" max="10" step="0.5" value="2" oninput="updateFromSlider('upsell',this.value)">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#898886;margin-top:5px"><span>0%</span><span>5%</span><span>10%</span></div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ── Sensitivity matrices — mirrors PDF p.6 ────────────── -->
   <div class="card-grid-2">
 
@@ -2620,6 +2662,38 @@ function fmtCurrency(n) {
   return s + Math.round(n);
 }
 
+function updateSliderTrack(slider) {
+  const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+  slider.style.background = `linear-gradient(to right,#d44a00 ${pct}%,#e8e6df ${pct}%)`;
+}
+
+function updateFromSlider(field, val) {
+  const v = parseFloat(val);
+  if (field === 'churn') {
+    document.getElementById('r-churn').value = v;
+    document.getElementById('sl-churn-val').textContent = v + '%';
+    updateSliderTrack(document.getElementById('sl-churn'));
+  } else {
+    document.getElementById('r-upsell').value = v;
+    document.getElementById('sl-upsell-val').textContent = v + '%';
+    updateSliderTrack(document.getElementById('sl-upsell'));
+  }
+  calcROI();
+}
+
+function syncSliders() {
+  const sc = document.getElementById('sl-churn');
+  const su = document.getElementById('sl-upsell');
+  if (!sc) return;
+  const c = parseFloat(document.getElementById('r-churn').value) || 0;
+  const u = parseFloat(document.getElementById('r-upsell').value) || 0;
+  sc.value = c; su.value = u;
+  document.getElementById('sl-churn-val').textContent  = c + '%';
+  document.getElementById('sl-upsell-val').textContent = u + '%';
+  updateSliderTrack(sc);
+  updateSliderTrack(su);
+}
+
 function setCurrency(c) {
   ROI_CURR = c;
   ['EUR','GBP','USD'].forEach(x => {
@@ -2767,6 +2841,7 @@ function calcROI() {
   // Sensitivity matrices
   buildSensEffTable(hourlyRate, teamSize);
   buildSensMatrix(revenue, churnPct, upsellPct);
+  syncSliders();
 }
 
 // ── Navigation ─────────────────────────────────────────────
