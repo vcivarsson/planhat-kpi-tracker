@@ -2006,7 +2006,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
   </div>
 
   <!-- ── Sensitivity matrices — mirrors PDF p.6 ────────────── -->
-  <div class="card-grid-2" style="align-items:start">
+  <div class="card-grid-2">
 
     <!-- CSM efficiencies table -->
     <div class="card" style="margin-bottom:0">
@@ -2021,11 +2021,11 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
     </div>
 
     <!-- Churn × upsell matrix -->
-    <div class="card" style="margin-bottom:0">
+    <div class="card" style="margin-bottom:0;display:flex;flex-direction:column">
       <div style="font-size:14px;font-weight:500;margin-bottom:0.5rem">Annual ROI: Churn &amp; upsell improvements</div>
       <div style="font-size:11px;color:#73726c;margin-bottom:1rem">Based on current revenue input</div>
-      <div style="overflow-x:auto">
-        <table id="sens-matrix-table" style="width:100%;border-collapse:collapse;font-size:12px;text-align:center">
+      <div style="overflow-x:auto;flex:1;display:flex;flex-direction:column">
+        <table id="sens-matrix-table" style="width:100%;border-collapse:collapse;font-size:12px;text-align:center;flex:1">
         </table>
       </div>
     </div>
@@ -2535,13 +2535,13 @@ function buildSensMatrix(revenue, currentChurn, currentUpsell) {
 
   const tbody = document.createElement('tbody');
   churnVals.forEach(c => {
-    let row = `<tr><td style="padding:4px 8px;font-size:11px;font-weight:600;color:#3a3a38;border-bottom:0.5px solid #e8e6df;white-space:nowrap">${c}%</td>`;
+    let row = `<tr style="height:1%"><td style="padding:10px 8px;font-size:11px;font-weight:600;color:#3a3a38;border-bottom:0.5px solid #e8e6df;white-space:nowrap">${c}%</td>`;
     upsellVals.forEach(u => {
       const roi = revenue * ((c + u) / 100);
       const isActive = c === Math.round(currentChurn) && u === Math.round(currentUpsell);
       const bg = isActive ? '#d44a00' : (roi === 0 ? '#f9f9fa' : (c + u >= 6 ? '#fff0eb' : '#f9f9fa'));
       const color = isActive ? '#fff' : '#1a1a18';
-      row += `<td style="padding:4px 8px;font-size:11px;border-bottom:0.5px solid #e8e6df;background:${bg};color:${color}">${fmtEur(roi)}</td>`;
+      row += `<td style="padding:10px 8px;font-size:11px;border-bottom:0.5px solid #e8e6df;background:${bg};color:${color}">${fmtEur(roi)}</td>`;
     });
     row += '</tr>';
     tbody.innerHTML += row;
