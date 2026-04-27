@@ -521,7 +521,7 @@ body.fire #flames-container { display: block; }
     <div class="page-subtitle">Who we sell to, how they're segmented, and what they care about</div>
   </div>
 
-  <div class="card-grid-4">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem">
     <div class="card" style="margin-bottom:0">
       <div class="card-title">Total addressable market</div>
       <div style="font-size:28px;font-weight:500">~16,000</div>
@@ -529,9 +529,17 @@ body.fire #flames-container { display: block; }
     </div>
     <div class="card" style="margin-bottom:0">
       <div class="card-title">Minimum bar</div>
-      <div style="font-size:22px;font-weight:500">200+</div>
-      <div style="font-size:12px;color:#73726c;margin-top:2px">FTE or $100M+ revenue</div>
+      <div style="font-size:22px;font-weight:500">200+ FTE</div>
+      <div style="font-size:12px;color:#73726c;margin-top:2px">or $100M+ revenue</div>
     </div>
+    <div class="card" style="margin-bottom:0;border-left:3px solid #d44a00">
+      <div class="card-title">High bar — qualify before engaging</div>
+      <div style="font-size:22px;font-weight:500">10,000+ FTE</div>
+      <div style="font-size:12px;color:#73726c;margin-top:4px;line-height:1.5">Not actively targeted outbound. Engage only if: <strong style="color:#121211">right persona</strong> (VP/Dir/Head of CS, CX, Renewals) + <strong style="color:#121211">active CSP tool</strong> + <strong style="color:#121211">budget line</strong>. Inbounds always OK.</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1rem">
     <div class="card" style="margin-bottom:0">
       <div class="card-title">Vertical</div>
       <div style="font-size:13px;font-weight:500;line-height:1.5">IT Services, MSP, Telco, Telecom Carriers</div>
@@ -541,7 +549,35 @@ body.fire #flames-container { display: block; }
       <div style="font-size:13px;font-weight:500;line-height:1.5">Post-sale motion — CS, AM, renewals, or lifecycle team</div>
     </div>
   </div>
-  <div style="margin-bottom:1.25rem"></div>
+
+  <div class="card" style="border-left:3px solid #121211;margin-bottom:1rem">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start">
+      <div style="text-align:center;min-width:80px">
+        <div style="font-size:11px;font-weight:600;color:#898886;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Target ACV</div>
+        <div style="font-size:28px;font-weight:500;color:#d44a00">$150k</div>
+      </div>
+      <div style="font-size:12px;color:#3a3a38;line-height:1.7;border-left:1px solid #f0f0f2;padding-left:1.25rem">
+        <strong style="color:#121211">Sweet spot: 500 – 10,000 FTE (1,000–5,000 ideal).</strong> This is where $150k deals are most achievable — decision-makers are reachable, budget processes are real, and cycles stay under 9 months.<br>
+        <span style="color:#73726c">Despite the larger logo appeal, 10,000+ FTE ("Monsters") are <em>less</em> likely to hit $150k ACV today. Credibility gaps and procurement complexity push cycles to 12+ months and land deals at $50–80k even with a company like DXC. Prioritise volume at the right segment over prestige at the wrong one.</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:1rem">
+      <div style="background:#f6f6f8;border-radius:8px;padding:0.6rem 0.75rem">
+        <div style="font-size:10px;font-weight:600;color:#898886;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Target cycle</div>
+        <div style="font-size:13px;font-weight:500">&lt;9 months</div>
+      </div>
+      <div style="background:#f6f6f8;border-radius:8px;padding:0.6rem 0.75rem">
+        <div style="font-size:10px;font-weight:600;color:#898886;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Monster reality</div>
+        <div style="font-size:13px;font-weight:500">12+ months</div>
+        <div style="font-size:11px;color:#73726c">even to land</div>
+      </div>
+      <div style="background:#f6f6f8;border-radius:8px;padding:0.6rem 0.75rem">
+        <div style="font-size:10px;font-weight:600;color:#898886;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Monster land size</div>
+        <div style="font-size:13px;font-weight:500">$50–80k</div>
+        <div style="font-size:11px;color:#73726c">vs $150k target</div>
+      </div>
+    </div>
+  </div>
 
   <div class="card">
     <div class="card-title">Segment breakdown</div>
