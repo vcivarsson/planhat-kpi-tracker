@@ -2977,11 +2977,35 @@ function calcROI() {
 }
 
 // ── Navigation ─────────────────────────────────────────────
-function showPage(id, el) {
+const PAGE_SLUGS = {
+  kpi:          'kpi-tracker',
+  roi:          'roi-calculator',
+  icp:          'icp-segments',
+  cisco:        'cisco-program',
+  competitors:  'competitors',
+  process:      'sales-process',
+  pitches:      'pitches',
+  objections:   'objections',
+  expansion:    'expansion',
+  prospecting:  'prospecting',
+  templates:    'templates',
+  collateral:   'collateral',
+  recordings:   'recordings',
+  pricing:      'pricing',
+};
+const SLUG_TO_PAGE = Object.fromEntries(Object.entries(PAGE_SLUGS).map(([k,v]) => [v,k]));
+const BASE_PATH = '/planhat-kpi-tracker';
+
+function showPage(id, el, push) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('pg-' + id).classList.add('active');
-  el.classList.add('active');
+  if (el) { el.classList.add('active'); }
+  else { document.querySelector(`.nav-item[onclick*="'${id}'"]`)?.classList.add('active'); }
+  if (push !== false) {
+    const slug = PAGE_SLUGS[id] || id;
+    history.pushState({ page: id }, '', BASE_PATH + '/' + slug);
+  }
 }
 
 // ── Accordion ──────────────────────────────────────────────
@@ -3514,6 +3538,30 @@ function buildFlames() {
     container.appendChild(outer);
   }
 }
+
+// ── URL routing ────────────────────────────────────────────
+(function() {
+  // Decode redirect from 404.html (?p=/roi-calculator)
+  const params = new URLSearchParams(location.search);
+  const redirected = params.get('p');
+  if (redirected) {
+    history.replaceState(null, null, BASE_PATH + redirected);
+  }
+  // Resolve page from current path
+  const path = location.pathname.replace(BASE_PATH, '').replace(/^\/|\/$/g, '');
+  const pageId = SLUG_TO_PAGE[path];
+  if (pageId) {
+    showPage(pageId, null, false);
+    history.replaceState({ page: pageId }, '', location.pathname);
+  } else {
+    // Default: set state for the active page so popstate works
+    history.replaceState({ page: 'kpi' }, '', location.pathname);
+  }
+  // Browser back/forward
+  window.addEventListener('popstate', function(e) {
+    if (e.state && e.state.page) showPage(e.state.page, null, false);
+  });
+})();
 
 // restore theme from localStorage
 (function() {

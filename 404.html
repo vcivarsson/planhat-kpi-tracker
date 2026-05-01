@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    // GitHub Pages SPA routing trick.
+    // Capture the requested path and forward it to index.html as a ?p= param.
+    var base = '/planhat-kpi-tracker';
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      base + '/?p=' + encodeURIComponent(l.pathname.slice(base.length) + l.search) +
+      l.hash
+    );
+  </script>
+</head>
+</html>
