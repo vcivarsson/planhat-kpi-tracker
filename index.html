@@ -2519,33 +2519,49 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
     <div class="page-subtitle">Annotated library — what to listen for in each recording</div>
   </div>
 
+  <input class="pitch-search" id="rec-search" type="text" placeholder="Search recordings…" oninput="filterRec()" style="margin-bottom:0.75rem">
+  <div class="pf-bar" style="margin-bottom:1.25rem">
+    <button class="pf-btn active" data-filter="all"          onclick="setRecFilter(this)">All</button>
+    <button class="pf-btn" data-filter="cold"               onclick="setRecFilter(this)">Cold Call</button>
+    <button class="pf-btn" data-filter="warm"               onclick="setRecFilter(this)">Warm / Inbound</button>
+    <button class="pf-btn" data-filter="discovery"          onclick="setRecFilter(this)">Discovery</button>
+    <button class="pf-btn" data-filter="demo"               onclick="setRecFilter(this)">Demo</button>
+    <button class="pf-btn" data-filter="workshop"           onclick="setRecFilter(this)">Workshop</button>
+    <button class="pf-btn" data-filter="multi-vendor"       onclick="setRecFilter(this)">Multi-Vendor</button>
+    <button class="pf-btn" data-filter="gainsight"          onclick="setRecFilter(this)">Gainsight</button>
+    <button class="pf-btn" data-filter="totango"            onclick="setRecFilter(this)">Totango</button>
+    <button class="pf-btn" data-filter="telco"              onclick="setRecFilter(this)">Telco</button>
+    <button class="pf-btn" data-filter="lesson"             onclick="setRecFilter(this)">Lesson</button>
+  </div>
+  <div id="rec-no-results" style="display:none;color:#73726c;font-size:13px;padding:1rem 0">No recordings match — try a different filter or search term.</div>
+
   <div class="card" style="background:#EAF3DE;border:0.5px solid #b6d9a0">
     <div class="card-title" style="color:#27500A">Meeting set — good examples</div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Contact</th><th>Company</th><th>What to learn</th></tr></thead>
         <tbody>
-          <tr>
+          <tr data-tags="cold, discovery, meeting-set, enterprise, pain, data fragmentation, red hat">
             <td style="font-weight:500">Salina Alie</td>
             <td style="font-size:12px">Director, Customer Success — Red Hat</td>
             <td style="font-size:12px">Strong enterprise discovery. Notice how the pain is surfaced around multi-system data fragmentation.</td>
           </tr>
-          <tr>
+          <tr data-tags="cold, discovery, meeting-set, enterprise, renewal, qualification, splunk">
             <td style="font-weight:500">Noah Van Dyke</td>
             <td style="font-size:12px">Director, Customer Success — Splunk</td>
             <td style="font-size:12px">Effective persona qualification early in the call. Pay attention to how renewal ownership is identified.</td>
           </tr>
-          <tr>
+          <tr data-tags="cold, discovery, meeting-set, multi-vendor, cisco, microsoft, tangoe">
             <td style="font-weight:500">Josh Caldwell</td>
             <td style="font-size:12px">Director, Customer Success — Tangoe</td>
             <td style="font-size:12px">Good example of the multi-vendor angle resonating. Tangoe manages Cisco + Microsoft — note how this is used.</td>
           </tr>
-          <tr>
+          <tr data-tags="cold, discovery, meeting-set, telco, lifecycle, cequens">
             <td style="font-weight:500">Hams Dabaieh</td>
             <td style="font-size:12px">Director, Customer Success — Cequens</td>
             <td style="font-size:12px">Telco/IT example. Notice how the lifecycle management pain is identified quickly.</td>
           </tr>
-          <tr>
+          <tr data-tags="warm, discovery, meeting-set, cx, nurture, ans group">
             <td style="font-weight:500">Melissa Johnson</td>
             <td style="font-size:12px">Director, Customer Experience — ANS Group</td>
             <td style="font-size:12px">Two-part call. Good for seeing how interest is nurtured across sessions. Part 1: discovery. Part 2: shaping the demo.</td>
@@ -2561,12 +2577,12 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
       <table>
         <thead><tr><th>Contact</th><th>Company</th><th>What went wrong / what to learn</th></tr></thead>
         <tbody>
-          <tr>
+          <tr data-tags="cold, lesson, discovery, multi-vendor, no pain, conres">
             <td style="font-weight:500">Ashton Lande</td>
             <td style="font-size:12px">Director of Cloud Services &amp; CS — ConRes</td>
             <td style="font-size:12px">Call intro solid, first questions good. Didn't dig enough into multi-vendor data gaps or business limits. No clear pain identified — prospect declined follow-up. <strong>Lesson:</strong> Always surface a specific pain before pivoting to the product.</td>
           </tr>
-          <tr>
+          <tr data-tags="cold, lesson, enterprise, gainsight, incumbent, ingram micro">
             <td style="font-weight:500">Nicole Dziedzic</td>
             <td style="font-size:12px">Director of Customer Success — Ingram Micro</td>
             <td style="font-size:12px">Large enterprise with established tooling. <strong>Lesson:</strong> Identify tool incumbency earlier — adjust to a long-term nurture play vs a hard push.</td>
@@ -2582,11 +2598,11 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
       <table>
         <thead><tr><th>Contact</th><th>Company</th><th>Context</th></tr></thead>
         <tbody>
-          <tr><td style="font-weight:500">Ines Alte</td><td style="font-size:12px">Customer Success Leader — DIGITALL</td><td style="font-size:12px">Inbound. Note how a warm lead changes the opener — less prospecting, more qualifying depth.</td></tr>
-          <tr><td style="font-weight:500">Arnold Van Hazendonk</td><td style="font-size:12px">Director of Vendor Management — Dustin</td><td style="font-size:12px">Inbound. Vendor management persona — listen for how the multi-vendor angle plays here.</td></tr>
-          <tr><td style="font-weight:500">Roger Rooney</td><td style="font-size:12px">VP Business Operations — Options Technology</td><td style="font-size:12px">Warm. Good example of executive-level discovery.</td></tr>
-          <tr><td style="font-weight:500">Janine Clements</td><td style="font-size:12px">Head of Services — Misco UK</td><td style="font-size:12px">Warm. Services leader persona — listen for delivery and lifecycle pain points surfaced.</td></tr>
-          <tr><td style="font-weight:500">Tobias Schill</td><td style="font-size:12px">VP Services — Komsa</td><td style="font-size:12px">Warm. VP-level services. Note the commercial alignment discussion toward the end.</td></tr>
+          <tr data-tags="warm, inbound, discovery, digitall"><td style="font-weight:500">Ines Alte</td><td style="font-size:12px">Customer Success Leader — DIGITALL</td><td style="font-size:12px">Inbound. Note how a warm lead changes the opener — less prospecting, more qualifying depth.</td></tr>
+          <tr data-tags="warm, inbound, discovery, multi-vendor, vendor management, dustin"><td style="font-weight:500">Arnold Van Hazendonk</td><td style="font-size:12px">Director of Vendor Management — Dustin</td><td style="font-size:12px">Inbound. Vendor management persona — listen for how the multi-vendor angle plays here.</td></tr>
+          <tr data-tags="warm, inbound, discovery, executive, options technology"><td style="font-weight:500">Roger Rooney</td><td style="font-size:12px">VP Business Operations — Options Technology</td><td style="font-size:12px">Warm. Good example of executive-level discovery.</td></tr>
+          <tr data-tags="warm, inbound, discovery, services, delivery, lifecycle, misco"><td style="font-weight:500">Janine Clements</td><td style="font-size:12px">Head of Services — Misco UK</td><td style="font-size:12px">Warm. Services leader persona — listen for delivery and lifecycle pain points surfaced.</td></tr>
+          <tr data-tags="warm, inbound, discovery, services, vp, commercial, komsa"><td style="font-weight:500">Tobias Schill</td><td style="font-size:12px">VP Services — Komsa</td><td style="font-size:12px">Warm. VP-level services. Note the commercial alignment discussion toward the end.</td></tr>
         </tbody>
       </table>
     </div>
@@ -2598,12 +2614,12 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
       <table>
         <thead><tr><th>Account</th><th>Type</th><th>What to watch for</th></tr></thead>
         <tbody>
-          <tr><td style="font-weight:500">People Driven Technology</td><td><span class="badge badge-blue">Discovery</span></td><td style="font-size:12px">MSP discovery. Good example of the multi-vendor data gap being confirmed by the prospect.</td></tr>
-          <tr><td style="font-weight:500">Connection INC</td><td><span class="badge badge-blue">Discovery</span></td><td style="font-size:12px">Fortune-1000 IT company. Note how the Cisco + Microsoft angle is navigated.</td></tr>
-          <tr><td style="font-weight:500">Telefónica</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Large telco. Watch how the demo is scoped to their specific lifecycle motion — not a generic walkthrough.</td></tr>
-          <tr><td style="font-weight:500">TELUS GROUP</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Enterprise telco. Passcode: B&amp;J1Ff$A. Note the executive stakeholders and how ROI is framed.</td></tr>
-          <tr><td style="font-weight:500">Ricoh USA</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Large enterprise. Watch how the platform is tailored to a complex org structure.</td></tr>
-          <tr><td style="font-weight:500">Emircom</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Middle East IT provider. Regional context matters — listen to how the pitch is adapted.</td></tr>
+          <tr data-tags="discovery, msp, multi-vendor, people driven technology"><td style="font-weight:500">People Driven Technology</td><td><span class="badge badge-blue">Discovery</span></td><td style="font-size:12px">MSP discovery. Good example of the multi-vendor data gap being confirmed by the prospect.</td></tr>
+          <tr data-tags="discovery, enterprise, cisco, microsoft, multi-vendor, connection"><td style="font-weight:500">Connection INC</td><td><span class="badge badge-blue">Discovery</span></td><td style="font-size:12px">Fortune-1000 IT company. Note how the Cisco + Microsoft angle is navigated.</td></tr>
+          <tr data-tags="demo, telco, enterprise, lifecycle, telefonica"><td style="font-weight:500">Telefónica</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Large telco. Watch how the demo is scoped to their specific lifecycle motion — not a generic walkthrough.</td></tr>
+          <tr data-tags="demo, telco, enterprise, executive, roi, telus"><td style="font-weight:500">TELUS GROUP</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Enterprise telco. Passcode: B&amp;J1Ff$A. Note the executive stakeholders and how ROI is framed.</td></tr>
+          <tr data-tags="demo, enterprise, ricoh"><td style="font-weight:500">Ricoh USA</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Large enterprise. Watch how the platform is tailored to a complex org structure.</td></tr>
+          <tr data-tags="demo, middle east, msp, emircom"><td style="font-weight:500">Emircom</td><td><span class="badge badge-purple">Demo</span></td><td style="font-size:12px">Middle East IT provider. Regional context matters — listen to how the pitch is adapted.</td></tr>
         </tbody>
       </table>
     </div>
@@ -3352,6 +3368,49 @@ function filterObj() {
     if (show) visible++;
   });
   document.getElementById('obj-no-results').style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ── Recordings filter ──────────────────────────────────────
+let activeRecFilter = 'all';
+function setRecFilter(btn) {
+  document.querySelectorAll('#pg-recordings .pf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeRecFilter = btn.dataset.filter;
+  filterRec();
+}
+function filterRec() {
+  const q = (document.getElementById('rec-search').value || '').toLowerCase().trim();
+  const f = activeRecFilter;
+  let visible = 0;
+
+  // Filter table rows
+  document.querySelectorAll('#pg-recordings tr[data-tags]').forEach(row => {
+    const tags = (row.dataset.tags || '').toLowerCase();
+    const text = row.textContent.toLowerCase();
+    const show = (f === 'all' || tags.includes(f)) && (!q || text.includes(q) || tags.includes(q));
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  // Filter standalone pitch-cards (e.g. Computacenter workshop)
+  document.querySelectorAll('#pg-recordings .pitch-card[data-tags]').forEach(card => {
+    const tags = (card.dataset.tags || '').toLowerCase();
+    const text = card.textContent.toLowerCase();
+    const show = (f === 'all' || tags.includes(f)) && (!q || text.includes(q) || tags.includes(q));
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  // Hide table-based cards if all their rows are hidden
+  document.querySelectorAll('#pg-recordings .card, #pg-recordings .pitch-card').forEach(card => {
+    const rows = card.querySelectorAll('tr[data-tags]');
+    if (rows.length > 0) {
+      const anyVisible = Array.from(rows).some(r => r.style.display !== 'none');
+      card.style.display = anyVisible ? '' : 'none';
+    }
+  });
+
+  document.getElementById('rec-no-results').style.display = visible === 0 ? 'block' : 'none';
 }
 
 // ── Theme toggle ───────────────────────────────────────────
