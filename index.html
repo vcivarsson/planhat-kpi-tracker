@@ -1948,6 +1948,13 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
     <div class="page-subtitle">Edit any input to recalculate live. Based on Planhat's Cisco ROI framework.</div>
   </div>
 
+  <!-- ── Sub-tab nav ──────────────────────────────────────────── -->
+  <div style="display:flex;gap:0;border-bottom:1.5px solid #e8e6df;margin-bottom:1.25rem">
+    <button id="roi-stab-calc" onclick="showROITab('calc')" style="padding:9px 20px;font-size:13px;font-weight:600;font-family:inherit;border:none;background:none;cursor:pointer;color:#121211;border-bottom:2.5px solid #d44a00;margin-bottom:-1.5px;transition:color 0.15s">Calculator</button>
+    <button id="roi-stab-examples" onclick="showROITab('examples')" style="padding:9px 20px;font-size:13px;font-weight:600;font-family:inherit;border:none;background:none;cursor:pointer;color:#73726c;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:color 0.15s">Real-World Examples</button>
+  </div>
+
+  <div id="roi-tab-calc">
   <!-- ── Currency + Legend ────────────────────────────────────── -->
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:1.25rem">
     <div style="display:flex;gap:16px;align-items:center;font-size:12px;color:#3a3a38">
@@ -2221,6 +2228,9 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
     </div>
   </div>
 
+  </div><!-- /roi-tab-calc -->
+
+  <div id="roi-tab-examples" style="display:none">
   <!-- ── Telia reference ───────────────────────────────────── -->
   <div class="card" style="border:0.5px solid #b6d9a0;background:#EAF3DE">
     <div class="card-title" style="color:#27500A">Real-world reference — Telia Cygate</div>
@@ -2283,6 +2293,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
       </div>
     </div>
   </div>
+  </div><!-- /roi-tab-examples -->
 </div><!-- /pg-roi -->
 
 
@@ -3006,6 +3017,18 @@ function showPage(id, el, push) {
     const slug = PAGE_SLUGS[id] || id;
     history.pushState({ page: id }, '', BASE_PATH + '/' + slug);
   }
+}
+
+// ── ROI sub-tabs ───────────────────────────────────────────
+function showROITab(tab) {
+  document.getElementById('roi-tab-calc').style.display     = tab === 'calc'     ? '' : 'none';
+  document.getElementById('roi-tab-examples').style.display = tab === 'examples' ? '' : 'none';
+  const calcBtn = document.getElementById('roi-stab-calc');
+  const exBtn   = document.getElementById('roi-stab-examples');
+  calcBtn.style.color            = tab === 'calc'     ? '#121211' : '#73726c';
+  calcBtn.style.borderBottomColor= tab === 'calc'     ? '#d44a00' : 'transparent';
+  exBtn.style.color              = tab === 'examples' ? '#121211' : '#73726c';
+  exBtn.style.borderBottomColor  = tab === 'examples' ? '#d44a00' : 'transparent';
 }
 
 // ── Accordion ──────────────────────────────────────────────
