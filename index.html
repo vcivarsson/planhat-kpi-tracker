@@ -2535,13 +2535,13 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
   </div>
   <div class="pf-bar" style="margin-bottom:1.25rem">
     <span style="font-size:11px;color:#73726c;font-weight:600;letter-spacing:0.04em;padding:4px 2px;white-space:nowrap">REP</span>
-    <button class="pf-btn" data-filter="ava"    onclick="setRecFilter(this)">Ava</button>
-    <button class="pf-btn" data-filter="victor" onclick="setRecFilter(this)">Victor</button>
-    <button class="pf-btn" data-filter="ben"    onclick="setRecFilter(this)">Ben</button>
-    <button class="pf-btn" data-filter="nick"   onclick="setRecFilter(this)">Nick</button>
-    <button class="pf-btn" data-filter="filip"  onclick="setRecFilter(this)">Filip</button>
-    <button class="pf-btn" data-filter="josh"   onclick="setRecFilter(this)">Josh</button>
-    <button class="pf-btn" data-filter="love"   onclick="setRecFilter(this)">Love</button>
+    <button class="pf-btn" data-filter="ava"    data-filter-group="rep" onclick="setRecFilter(this)">Ava</button>
+    <button class="pf-btn" data-filter="victor" data-filter-group="rep" onclick="setRecFilter(this)">Victor</button>
+    <button class="pf-btn" data-filter="ben"    data-filter-group="rep" onclick="setRecFilter(this)">Ben</button>
+    <button class="pf-btn" data-filter="nick"   data-filter-group="rep" onclick="setRecFilter(this)">Nick</button>
+    <button class="pf-btn" data-filter="filip"  data-filter-group="rep" onclick="setRecFilter(this)">Filip</button>
+    <button class="pf-btn" data-filter="josh"   data-filter-group="rep" onclick="setRecFilter(this)">Josh</button>
+    <button class="pf-btn" data-filter="love"   data-filter-group="rep" onclick="setRecFilter(this)">Love</button>
   </div>
   <div id="rec-no-results" style="display:none;color:#73726c;font-size:13px;padding:1rem 0">No recordings match — try a different filter or search term.</div>
 
@@ -3333,13 +3333,16 @@ calcROI();
 // ── Pitches filter ─────────────────────────────────────────
 // ── Shared multi-select filter helper ─────────────────────
 function makeFilterSystem(scope, searchId, noResultsId, getItems, onAfter) {
-  const active = new Set();
+  // Map of filter-value -> group-name (null = ungrouped, AND logic)
+  // Within a named group: OR logic. Between groups/ungrouped: AND logic.
+  const active = new Map();
   function syncAllBtn() {
     const allBtn = document.querySelector(`${scope} .pf-btn[data-filter="all"]`);
     if (allBtn) allBtn.classList.toggle('active', active.size === 0);
   }
   function toggle(btn) {
     const f = btn.dataset.filter;
+    const g = btn.dataset.filterGroup || null;
     if (f === 'all') {
       active.clear();
       document.querySelectorAll(`${scope} .pf-btn`).forEach(b => b.classList.remove('active'));
@@ -3347,19 +3350,26 @@ function makeFilterSystem(scope, searchId, noResultsId, getItems, onAfter) {
     } else {
       document.querySelector(`${scope} .pf-btn[data-filter="all"]`).classList.remove('active');
       if (active.has(f)) { active.delete(f); btn.classList.remove('active'); }
-      else               { active.add(f);    btn.classList.add('active'); }
+      else               { active.set(f, g); btn.classList.add('active'); }
       syncAllBtn();
     }
     run();
   }
   function run() {
     const q = (document.getElementById(searchId)?.value || '').toLowerCase().trim();
-    const filters = Array.from(active);
+    // Split into ungrouped (AND) and named groups (OR within group, AND between groups)
+    const ungrouped = [], groups = {};
+    active.forEach((grp, f) => {
+      if (grp) { (groups[grp] = groups[grp] || []).push(f); }
+      else { ungrouped.push(f); }
+    });
     let visible = 0;
     getItems().forEach(({ el, tags, text }) => {
       const t = tags.toLowerCase(), x = text.toLowerCase();
-      const show = (filters.length === 0 || filters.every(f => t.includes(f)))
-                && (!q || x.includes(q) || t.includes(q));
+      const andOk  = ungrouped.every(f => t.includes(f));
+      const grpOk  = Object.values(groups).every(fs => fs.some(f => t.includes(f)));
+      const show   = (active.size === 0 || (andOk && grpOk))
+                  && (!q || x.includes(q) || t.includes(q));
       el.style.display = show ? '' : 'none';
       if (show) visible++;
     });
