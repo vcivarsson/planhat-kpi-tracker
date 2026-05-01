@@ -1976,12 +1976,21 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
       <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#121211"></span> Planhat / Cisco Assumptions</span>
       <span style="display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#73726c" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span style="color:#73726c">Locked — Planhat/Cisco fixed assumption</span></span>
     </div>
-    <div style="display:flex;align-items:center;gap:6px">
-      <span style="font-size:11px;color:#73726c;font-weight:500;margin-right:2px">Currency</span>
-      <div class="curr-toggle">
-        <button id="curr-btn-EUR" class="curr-btn active" onclick="setCurrency('EUR')">€ EUR</button>
-        <button id="curr-btn-GBP" class="curr-btn" onclick="setCurrency('GBP')">£ GBP</button>
-        <button id="curr-btn-USD" class="curr-btn" onclick="setCurrency('USD')">$ USD</button>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:11px;color:#73726c;font-weight:500;margin-right:2px">Cisco</span>
+        <div class="curr-toggle">
+          <button id="cisco-btn-on"  class="curr-btn active" onclick="setCiscoMode(true)">On</button>
+          <button id="cisco-btn-off" class="curr-btn"        onclick="setCiscoMode(false)">Off</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:11px;color:#73726c;font-weight:500;margin-right:2px">Currency</span>
+        <div class="curr-toggle">
+          <button id="curr-btn-EUR" class="curr-btn active" onclick="setCurrency('EUR')">€ EUR</button>
+          <button id="curr-btn-GBP" class="curr-btn" onclick="setCurrency('GBP')">£ GBP</button>
+          <button id="curr-btn-USD" class="curr-btn" onclick="setCurrency('USD')">$ USD</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1992,7 +2001,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
     <table style="width:100%;border-collapse:collapse;font-size:13px">
       <tbody>
         <tr>
-          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38;width:60%">Revenue (Total Cisco Revenue)</td>
+          <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38;width:60%" id="lbl-revenue">Revenue (Total Cisco Revenue)</td>
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
             <div style="display:inline-flex;align-items:center;gap:4px;background:#d44a00;border-radius:20px;padding:4px 12px">
               <span class="curr-sym" style="color:#fff;font-size:11px">€</span>
@@ -2000,7 +2009,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
             </div>
           </td>
         </tr>
-        <tr>
+        <tr id="row-eligible">
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Eligible Revenue <span style="font-size:10px;color:#73726c">(recurring SKUs → % of total)</span></td>
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
             <div style="display:inline-flex;align-items:center;gap:6px;background:#d44a00;border-radius:20px;padding:4px 12px;opacity:0.8">
@@ -2031,7 +2040,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#73726c;font-size:12px">Hourly salary per CSM (48 wks × 40 hrs/wk)</td>
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right;font-size:12px;color:#73726c" id="r-hourly">€44</td>
         </tr>
-        <tr>
+        <tr id="row-lci-inp">
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Minimum increase LCI rebates with A-CX (%)</td>
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
             <div style="display:inline-flex;align-items:center;gap:6px;background:#121211;border-radius:20px;padding:4px 12px;opacity:0.75">
@@ -2040,7 +2049,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
             </div>
           </td>
         </tr>
-        <tr>
+        <tr id="row-vip-inp">
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Minimum increase VIP rebates with A-CX (%)</td>
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
             <div style="display:inline-flex;align-items:center;gap:6px;background:#121211;border-radius:20px;padding:4px 12px;opacity:0.75">
@@ -2049,7 +2058,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
             </div>
           </td>
         </tr>
-        <tr>
+        <tr id="row-mdf-inp">
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;color:#3a3a38">Expected access to MDF Cisco (A-CX achieved)</td>
           <td style="padding:8px 10px;border-bottom:0.5px solid #e8e6df;text-align:right">
             <div style="display:inline-flex;align-items:center;gap:6px;background:#121211;border-radius:20px;padding:4px 12px;opacity:0.75">
@@ -2128,11 +2137,11 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
             <td></td>
           </tr>
           <!-- Cisco A-CX section -->
-          <tr style="background:#fafafa">
+          <tr style="background:#fafafa" id="row-cisco-hdr">
             <td colspan="6" style="padding:6px 10px;font-weight:600;font-size:11px;text-align:left;text-decoration:underline;color:#1a1a18;border-bottom:0.5px solid #d3d1c7;border-top:1px solid #d3d1c7">ROI on Cisco A-CX</td>
             <td style="padding:6px 10px;font-weight:600;text-align:right;border-bottom:0.5px solid #d3d1c7;border-top:1px solid #d3d1c7" id="roi-cisco-section">—</td>
           </tr>
-          <tr>
+          <tr id="row-lci-roi">
             <td style="color:#73726c;font-size:11px">3</td>
             <td>Increase in LCI rebates</td>
             <td style="text-align:center;color:#73726c">—</td>
@@ -2141,7 +2150,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
             <td style="text-align:center"><span id="roi-lci-pct" style="background:#121211;color:#fff;border-radius:12px;padding:2px 8px;font-size:11px;font-weight:600">2%</span></td>
             <td></td>
           </tr>
-          <tr>
+          <tr id="row-vip-roi">
             <td style="color:#73726c;font-size:11px">4</td>
             <td>Increase in VIP rebates</td>
             <td style="text-align:center;color:#73726c">—</td>
@@ -2169,7 +2178,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
         </tfoot>
       </table>
     </div>
-    <div style="font-size:10px;color:#73726c;margin-top:0.75rem">* Total ROI is excl. co-selling and co-marketing. With A-CX or higher partner status in Cisco 360, you also get an approximated additional co-selling pipeline of 500k, and MDF funds of €50k–100k.</div>
+    <div id="roi-footnote" style="font-size:10px;color:#73726c;margin-top:0.75rem">* Total ROI is excl. co-selling and co-marketing. With A-CX or higher partner status in Cisco 360, you also get an approximated additional co-selling pipeline of 500k, and MDF funds of €50k–100k.</div>
   </div>
 
   <!-- ── Sliders ──────────────────────────────────────────── -->
@@ -2228,7 +2237,7 @@ On the technical side: Planhat supports SSO (SAML 2.0), IP allowlisting, role-ba
   <div style="margin-bottom:1.25rem"></div>
 
   <!-- ── Additional upside ─────────────────────────────────── -->
-  <div class="card" style="background:#f6f6f8">
+  <div id="roi-addl-upside" class="card" style="background:#f6f6f8">
     <div class="card-title">Additional upside — excluded from total ROI</div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem">
       <div>
@@ -2883,7 +2892,8 @@ const ROI_EFF_ITEMS = [
   { label: 'CSM task management/automation', hrs: 5 },
 ];
 
-let ROI_CURR = 'EUR';
+let ROI_CURR  = 'EUR';
+let ROI_CISCO = true;
 const CURR_SYM = { EUR: '€', GBP: '£', USD: '$' };
 
 function fmtCurrency(n) {
@@ -2928,10 +2938,25 @@ function syncSliders() {
 function setCurrency(c) {
   ROI_CURR = c;
   ['EUR','GBP','USD'].forEach(x => {
-    const btn = document.getElementById('curr-btn-'+x);
-    btn.classList.toggle('active', x === c);
+    document.getElementById('curr-btn-'+x).classList.toggle('active', x === c);
   });
   document.querySelectorAll('.curr-sym').forEach(el => el.textContent = CURR_SYM[c]);
+  calcROI();
+}
+
+function setCiscoMode(on) {
+  ROI_CISCO = on;
+  document.getElementById('cisco-btn-on').classList.toggle('active',  on);
+  document.getElementById('cisco-btn-off').classList.toggle('active', !on);
+  const ciscoIds = ['row-eligible','row-lci-inp','row-vip-inp','row-mdf-inp',
+                    'row-cisco-hdr','row-lci-roi','row-vip-roi',
+                    'roi-footnote','roi-addl-upside'];
+  ciscoIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = on ? '' : 'none';
+  });
+  document.getElementById('lbl-revenue').textContent =
+    on ? 'Revenue (Total Cisco Revenue)' : 'Revenue (Total Revenue)';
   calcROI();
 }
 
@@ -3020,9 +3045,9 @@ function calcROI() {
   const upsellROI = revenue * (upsellPct / 100);
   const csTotal   = churnROI + upsellROI;
 
-  // Cisco A-CX — applied to eligible (recurring) revenue
-  const lciROI    = eligRev * (lciPct / 100);
-  const vipROI    = eligRev * (vipPct / 100);
+  // Cisco A-CX — applied to eligible (recurring) revenue; zero when Cisco mode is off
+  const lciROI     = ROI_CISCO ? eligRev * (lciPct / 100) : 0;
+  const vipROI     = ROI_CISCO ? eligRev * (vipPct / 100) : 0;
   const ciscoTotal = lciROI + vipROI;
 
   // Efficiencies — per-CSM annual × team size
